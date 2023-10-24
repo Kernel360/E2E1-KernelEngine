@@ -1,0 +1,29 @@
+
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
+      database: mysql
+      dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: ${MYSQL_DATABASE_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_DATABASE_USERNAME}
+    password: ${MYSQL_DATABASE_PASSWORD}
+
+logging:
+  level:
+    com.example: debug
+#    org:
+#      springframework:
+#        data:
+#          elasticsearch:
+#            client:
+#              WIRE: TRACE
+##                WIRE=TRACE
+
+server:
+  port: 8080
