@@ -28,6 +28,9 @@ public class Blog {
     @Column(name = "blog_description")
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    private OwnerType ownerType; // attribute converter 로 변경하여야 할까요?
+
     @Column(name = "blog_lastBuiltDate")
     private LocalDateTime lastBuiltDate; // lastModified 가 어떨까요?
 
