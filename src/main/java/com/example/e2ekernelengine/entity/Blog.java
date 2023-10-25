@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "blog")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Blog {
     @Id
