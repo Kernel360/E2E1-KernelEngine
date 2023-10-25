@@ -11,7 +11,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 
-public class RSSFeedParser {
+public class JdomRSSFeedReader {
 
 	private final int rssCnt = 5; //가져올 포스트 개수
 	private final String rssFeed = "https://toss.tech/rss.xml"; //rss 주소
@@ -20,7 +20,7 @@ public class RSSFeedParser {
 	 *  테스트를 위한 메인메소드
 	 */
 	// public static void main(String[] args) {
-	// 	RSSFeedParser r = new RSSFeedParser();
+	// 	JdomRSSFeedReader r = new JdomRSSFeedReader();
 	// 	r.print();
 	//
 	// }
