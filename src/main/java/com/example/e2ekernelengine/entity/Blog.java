@@ -20,8 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "blog")
 public class Blog {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "blog_seq")
-	@SequenceGenerator(name = "blog_seq", allocationSize = 10, sequenceName = "blog_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "blog_id", columnDefinition = "BIGINT", nullable = false)
 	private Long blogId;
 
