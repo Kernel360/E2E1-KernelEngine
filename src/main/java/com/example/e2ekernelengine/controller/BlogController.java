@@ -28,6 +28,7 @@ public class BlogController {
 	//-- CREATE --//
 	// TODO :: 같은 주소에 대한 필터링 로직 추가 -> url 을 unique로 두면 되지 않나?
 	// TODO :: java.sql.SQLIntegrityConstraintViolationException 정의해서 intercept 하기
+	// TODO :: ResponseEntity의 원시 사용 지양
 	@PostMapping
 	public ResponseEntity save(@RequestBody BlogRequest request) {
 		blogService.saveBlog(request.toEntity());
