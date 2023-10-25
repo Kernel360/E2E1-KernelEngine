@@ -12,10 +12,7 @@ import org.jsoup.select.Elements;
 
 public class JsoupRSSFeedReader {
 	private static final JsoupRSSFeedReader instance = new JsoupRSSFeedReader();
-
-	private final int rssCnt = 5; //가져올 포스트 개수
-	// private final String rssFeedUrl = "https://techblog.woowahan.com/feed/"; //rss 주소
-
+	
 	private JsoupRSSFeedReader() {
 	}
 
@@ -37,7 +34,7 @@ public class JsoupRSSFeedReader {
 	 */
 	public void print() {
 		List<FeedData> arr = crawlFeedFromBlog("https://toss.tech/rss.xml", null);
-		for (int i = 0; i < rssCnt; i++) {
+		for (int i = 0; i < arr.size(); i++) {
 			System.out.println(arr.get(i).title);
 			System.out.println(arr.get(i).link);
 			System.out.println("pubData: " + arr.get(i).pubDate);
@@ -71,8 +68,6 @@ public class JsoupRSSFeedReader {
 				.lastCrawlDate(new Timestamp(System.currentTimeMillis()))
 				.build();
 
-		// TODO: 이코드 삭제하기
-		System.out.println(blogData.toString());
 		return blogData;
 	}
 
@@ -81,12 +76,6 @@ public class JsoupRSSFeedReader {
 		List<FeedData> feedDataList = new ArrayList<>();
 
 		for (Element element : elements) {
-			// Element element = null;
-			// try {
-			// 	// element = elements.get(i);
-			// } catch (IndexOutOfBoundsException e) {
-			// 	break;
-			// }
 			String pubDate = element.select("pubDate").text();
 			if (lastCrawlDate != null && StringToTimestamp.convertStringToTimestamp(pubDate).after(lastCrawlDate)) {
 				break;
@@ -112,23 +101,6 @@ public class JsoupRSSFeedReader {
 		BlogData blogData = getBlogData(document);
 		List<FeedData> feedDataList = getNewFeeds(document, lastCrawlDate);
 
-		// Elements elements = doc.select("item");
-		//
-		// for (int i = 0; i < rssCnt; i++) {
-		// 	Element element = null;
-		// 	try {
-		// 		element = elements.get(i);
-		// 	} catch (IndexOutOfBoundsException e) {
-		// 		break;
-		// 	}
-		// 	String link = element.select("link").text();
-		// 	String title = element.select("title").text();
-		// 	String pubDate = element.select("pubDate").text();
-		// 	String description = element.select("description").text();
-		// 	String content = element.select("content\\:encoded").text();
-		//
-		// 	postArray[i] = new FeedData(link, title, pubDate, description, content);
-		// }
 		return feedDataList;
 	}
 }
