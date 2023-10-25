@@ -18,8 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "feed")
 public class Feed {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "feed_seq")
-	@SequenceGenerator(name = "feed_seq", allocationSize = 10, sequenceName = "feed_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "feed_id", columnDefinition = "BIGINT", nullable = false)
 	private Long feedId;
 
