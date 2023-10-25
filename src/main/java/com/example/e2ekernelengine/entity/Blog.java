@@ -1,5 +1,7 @@
 package com.example.e2ekernelengine.entity;
 
+import java.sql.Timestamp;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -21,5 +23,5 @@ public class Blog {
     @Column(name = "blog_description",columnDefinition = "VARCHAR(255)")
     private String description;
     @Column(name = "blog_last_build_date", nullable = false)
-    private LocalDateTime lastBuildDate;
+    private TimeStamp lastBuildDate;
 }
