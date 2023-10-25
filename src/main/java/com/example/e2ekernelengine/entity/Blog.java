@@ -2,19 +2,13 @@ package com.example.e2ekernelengine.entity;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "blog")
@@ -39,7 +33,7 @@ public class Blog {
 	private OwnerType ownerType; // attribute converter 로 변경하여야 할까요?
 
 	@Column(name = "blog_lastBuiltDate", nullable = false)
-	private Timestamp lastBuiltDate; // lastModified 가 어떨까요?
+	private Timestamp lastBuildDate; // lastModified 가 어떨까요?
 
 	@Builder
 	public Blog(String rss, String url, String description) {
@@ -53,5 +47,4 @@ public class Blog {
 		this.url = url;
 		this.description = description;
 	}
-
 }
