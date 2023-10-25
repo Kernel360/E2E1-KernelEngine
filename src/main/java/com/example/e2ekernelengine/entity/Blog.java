@@ -2,49 +2,34 @@ package com.example.e2ekernelengine.entity;
 
 import java.sql.Timestamp;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "blog")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
 public class Blog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "blog_id", nullable = false, updatable = false)
+	@Column(name = "blog_id")
 	private Long id;
 
-	@Column(name = "blog_rss", nullable = false)
+	@Column(name = "blog_rss", columnDefinition = "VARCHAR(255)")
 	private String rss;
 
-	@Column(name = "blog_url")
+	@Column(name = "blog_url", columnDefinition = "VARCHAR(255)", nullable = false)
 	private String url;
 
-	@Column(name = "blog_description")
+	@Column(name = "blog_description", columnDefinition = "VARCHAR(255)")
 	private String description;
 
-	@Enumerated(EnumType.STRING)
-	private OwnerType ownerType; // attribute converter 로 변경하여야 할까요?
-
-	@Column(name = "blog_lastBuiltDate", nullable = false)
-	private Timestamp lastBuildDate; // lastModified 가 어떨까요?
-
-	@Builder
-	public Blog(String rss, String url, String description) {
-		this.rss = rss;
-		this.url = url;
-		this.description = description;
-	}
-
-	public void updateBlog(String rss, String url, String description) {
-		this.rss = rss;
-		this.url = url;
-		this.description = description;
-	}
+	@Column(name = "blog_last_build_date", nullable = false)
+	private Timestamp lastBuildDate;
 }
