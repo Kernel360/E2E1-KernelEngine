@@ -13,12 +13,14 @@ public class BlogRequest {
 	private String rss;
 	private String url;
 	private String description;
+	private String ownerType;
 
 	public Blog toEntity() {
 		return Blog.builder()
 				.rss(rss)
 				.url(url)
 				.description(description)
+				.ownerType(ownerType)
 				.build();
 	}
 }

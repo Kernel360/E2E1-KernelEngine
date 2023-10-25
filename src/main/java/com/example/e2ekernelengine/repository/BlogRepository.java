@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 import com.example.e2ekernelengine.entity.Blog;
+import com.example.e2ekernelengine.entity.OwnerType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +33,7 @@ public class BlogRepository {
 				.getResultList();
 	}
 
-	public List<Blog> findByOwnerTypeIsIndividual(String ownerType) {
+	public List<Blog> findByOwnerTypeIsIndividual(OwnerType ownerType) {
 		return em.createQuery("select b from Blog b where b.ownerType = :ownerType", Blog.class)
 				.setParameter("ownerType", ownerType)
 				.getResultList();

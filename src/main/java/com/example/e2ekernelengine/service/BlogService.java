@@ -25,8 +25,8 @@ public class BlogService {
 		blogRepository.save(blog);
 	}
 
-	public List<Blog> findBlogsByOwnerType(String ownerType) {
-		if (!ownerType.equals(OwnerType.INDIVIDUAL.toString()) && !ownerType.equals(OwnerType.COMPANY.toString())) {
+	public List<Blog> findBlogsByOwnerType(OwnerType ownerType) {
+		if (!ownerType.equals(OwnerType.INDIVIDUAL) && !ownerType.equals(OwnerType.COMPANY)) {
 			throw new IllegalArgumentException("[ERROR] : 잘못된 ownerType 입력");
 		}
 		return blogRepository.findByOwnerTypeIsIndividual(ownerType);
