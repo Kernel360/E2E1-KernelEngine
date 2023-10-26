@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.exception;
+package com.example.e2ekernelengine.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +30,12 @@ public class KernelEngineControllerAdvice {
 	public ResponseEntity exception(Exception e) {
 		e.printStackTrace();
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+	}
+
+	@ExceptionHandler(value = IllegalAccessToSameUrlException.class)
+	public ResponseEntity IllegalAccessException(IllegalAccessToSameUrlException e) {
+		e.printStackTrace();
+		return ResponseEntity.status(HttpStatus.CONFLICT)
+				.body(e.getMessage());
 	}
 }

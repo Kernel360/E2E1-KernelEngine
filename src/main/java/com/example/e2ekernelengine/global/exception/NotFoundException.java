@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.exception;
+package com.example.e2ekernelengine.global.exception;
 
 public class NotFoundException extends RuntimeException {
 
