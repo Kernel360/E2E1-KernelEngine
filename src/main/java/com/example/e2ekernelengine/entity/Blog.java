@@ -40,9 +40,9 @@ public class Blog {
 	@Enumerated(EnumType.STRING)
 	private OwnerType ownerType; // attribute converter 로 변경하여야 할까요?
 
-	@Column(name = "blog_lastModified", nullable = false)
+	@Column(name = "blog_lastBuiltDate", nullable = false)
 	@CreationTimestamp
-	private Timestamp lastModified;
+	private Timestamp lastBuildDate;
 
 	@Builder
 	public Blog(String rss, String url, String description, String ownerType) {
