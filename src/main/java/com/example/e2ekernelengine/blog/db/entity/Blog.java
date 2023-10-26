@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.entity;
+package com.example.e2ekernelengine.blog.db.entity;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.example.e2ekernelengine.blog.util.BlogOwnerType;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -27,6 +29,9 @@ public class Blog {
 	@Column(name = "blog_id", nullable = false, updatable = false)
 	private Long id;
 
+	@Column(name = "blog_writer_name")
+	private String blogWriterName;
+
 	@Column(name = "blog_rss", nullable = false)
 	private String rss;
 
@@ -37,7 +42,7 @@ public class Blog {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	private OwnerType ownerType;
+	private BlogOwnerType ownerType;
 
 	@Column(name = "blog_lastBuiltDate", nullable = false)
 	private Timestamp lastBuildDate;
@@ -48,7 +53,7 @@ public class Blog {
 		this.rss = rss;
 		this.url = url;
 		this.description = description;
-		this.ownerType = OwnerType.valueOf(ownerType);
+		this.ownerType = BlogOwnerType.valueOf(ownerType);
 		Date now = new Date();
 		this.lastBuildDate = new Timestamp(now.getTime());
 	}

@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.controller;
+package com.example.e2ekernelengine.blog.controller;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.e2ekernelengine.dto.BlogRequestDto;
-import com.example.e2ekernelengine.dto.BlogResponseDto;
-import com.example.e2ekernelengine.entity.OwnerType;
-import com.example.e2ekernelengine.service.BlogService;
+import com.example.e2ekernelengine.blog.dto.BlogRequestDto;
+import com.example.e2ekernelengine.blog.dto.BlogResponseDto;
+import com.example.e2ekernelengine.blog.service.BlogService;
+import com.example.e2ekernelengine.blog.util.BlogOwnerType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,8 +47,9 @@ public class BlogController {
 	}
 
 	@GetMapping(value = "/owner/{ownerType}")
-	public ResponseEntity<List<BlogResponseDto>> findBlogListByOwnerType(@PathVariable("ownerType") OwnerType ownerType) {
-		if (!ownerType.equals(OwnerType.INDIVIDUAL) && !ownerType.equals(OwnerType.COMPANY)) {
+	public ResponseEntity<List<BlogResponseDto>> findBlogListByOwnerType(
+			@PathVariable("ownerType") BlogOwnerType ownerType) {
+		if (!ownerType.equals(BlogOwnerType.INDIVIDUAL) && !ownerType.equals(BlogOwnerType.COMPANY)) {
 			throw new IllegalArgumentException("[ERROR] : 잘못된 ownerType 입력입니다.");
 		}
 

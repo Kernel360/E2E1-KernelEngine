@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.service;
+package com.example.e2ekernelengine.blog.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,11 +7,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.e2ekernelengine.dto.BlogRequestDto;
-import com.example.e2ekernelengine.dto.BlogResponseDto;
-import com.example.e2ekernelengine.entity.Blog;
-import com.example.e2ekernelengine.entity.OwnerType;
-import com.example.e2ekernelengine.repository.BlogRepository;
+import com.example.e2ekernelengine.blog.db.entity.Blog;
+import com.example.e2ekernelengine.blog.db.repository.BlogRepository;
+import com.example.e2ekernelengine.blog.dto.BlogRequestDto;
+import com.example.e2ekernelengine.blog.dto.BlogResponseDto;
+import com.example.e2ekernelengine.blog.util.BlogOwnerType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +25,7 @@ public class BlogService {
 		return BlogResponseDto.fromEntity(blogRepository.save(blog));
 	}
 
-	public List<BlogResponseDto> findBlogsByOwnerType(OwnerType ownerType) {
+	public List<BlogResponseDto> findBlogsByOwnerType(BlogOwnerType ownerType) {
 		return blogRepository.findByOwnerTypeIsIndividual(ownerType).stream()
 				.map(BlogResponseDto::fromEntity)
 				.collect(Collectors.toList());

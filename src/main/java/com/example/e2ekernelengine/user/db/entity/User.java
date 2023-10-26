@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.entity;
+package com.example.e2ekernelengine.user.db.entity;
 
 import java.sql.Timestamp;
 
@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.example.e2ekernelengine.user.util.UserPermissionType;
+import com.example.e2ekernelengine.user.util.UserStatusType;
 
 @Entity
 @Table(name = "user")

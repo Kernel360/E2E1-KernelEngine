@@ -1,6 +1,6 @@
-package com.example.e2ekernelengine.dto;
+package com.example.e2ekernelengine.blog.dto;
 
-import com.example.e2ekernelengine.entity.Blog;
+import com.example.e2ekernelengine.blog.db.entity.Blog;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

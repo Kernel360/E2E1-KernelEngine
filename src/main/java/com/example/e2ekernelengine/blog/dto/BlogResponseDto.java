@@ -1,9 +1,9 @@
-package com.example.e2ekernelengine.dto;
+package com.example.e2ekernelengine.blog.dto;
 
 import java.sql.Timestamp;
 
-import com.example.e2ekernelengine.entity.Blog;
-import com.example.e2ekernelengine.entity.OwnerType;
+import com.example.e2ekernelengine.blog.db.entity.Blog;
+import com.example.e2ekernelengine.blog.util.BlogOwnerType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class BlogResponseDto {
 
 	private String description;
 
-	private OwnerType ownerType;
+	private BlogOwnerType ownerType;
 
 	private Timestamp lastBuildDate;
 

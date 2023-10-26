@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.entity;
+package com.example.e2ekernelengine.feed.db.entity;
 
 import java.sql.Timestamp;
 
@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.example.e2ekernelengine.blog.db.entity.Blog;
 
 @Entity
 @Table(name = "feed")
