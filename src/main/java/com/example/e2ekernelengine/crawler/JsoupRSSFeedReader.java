@@ -52,7 +52,6 @@ public class JsoupRSSFeedReader {
 	}
 
 	private BlogData getBlogData(Document doc, String rssFeedUrl) {
-		System.out.println("getBlogData in");
 		Element element = doc.selectFirst("channel");
 		String title = element.selectFirst("title").text();
 		String urlLink = element.selectFirst("link").text();
@@ -71,10 +70,8 @@ public class JsoupRSSFeedReader {
 	}
 
 	private String deleteHtmlTag(String content) {
-		// 정규식 패턴
 		String tagPattern = "<[^>]*>";
 		Pattern htmlPattern = Pattern.compile(tagPattern);
-		// 정규식을 사용하여 HTML 태그 삭제
 		Matcher matcher = htmlPattern.matcher(content);
 		String textWithoutHtml = matcher.replaceAll("");
 
@@ -82,7 +79,7 @@ public class JsoupRSSFeedReader {
 		Pattern cssDetailPattern = Pattern.compile(cssPattern);
 		matcher = cssDetailPattern.matcher(textWithoutHtml);
 		textWithoutHtml = matcher.replaceAll("");
-		// 결과 출력
+
 		return textWithoutHtml;
 	}
 
@@ -106,14 +103,17 @@ public class JsoupRSSFeedReader {
 		return feedDataList;
 	}
 
-	/**
-	 *  블로그의 최근 포스트 5개를 배열로 반환
-	 * @return
-	 */
-	public List<FeedData> crawlFeedFromBlog(String rssFeedUrl, Timestamp lastCrawlDate) {
+	public List<FeedData> crawlFeedFromBlog(String rssUrl, Timestamp lastCrawlDate) {
 
-		Document document = connectRSSUrlAndGetXML(rssFeedUrl);
-		Long blogId = blogService.updateBlogInfo(getBlogData(document, rssFeedUrl));
+		Document document = connectRSSUrlAndGetXML(rssUrl);
+		Long blogId = null;
+		if (blogService.checkBlogExist(rssUrl)) {
+			System.out.println("no");
+			blogId = blogService.updateCompanyBlogInfo(getBlogData(document, rssUrl));
+		} else {
+			System.out.println("here");
+			blogId = blogService.saveCompanyBlogInfo(getBlogData(document, rssUrl));
+		}
 
 		List<FeedData> feedDataList = getNewFeeds(document, lastCrawlDate);
 		feedService.saveNewFeedsByCrawler(feedDataList, blogId);

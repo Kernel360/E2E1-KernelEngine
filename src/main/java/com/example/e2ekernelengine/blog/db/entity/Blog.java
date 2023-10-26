@@ -40,10 +40,10 @@ public class Blog {
 	@Column(name = "blog_writer_name", columnDefinition = "VARCHAR(50)")
 	private String blogWriterName;
 
-	@Column(name = "blog_rss_url", columnDefinition = "VARCHAR(255)")
+	@Column(name = "blog_rss_url", columnDefinition = "TEXT")
 	private String blogRssUrl;
 
-	@Column(name = "blog_url", columnDefinition = "VARCHAR(255)", nullable = false, unique = true)
+	@Column(name = "blog_url", columnDefinition = "TEXT", nullable = false, unique = true)
 	private String blogUrl;
 
 	@Column(name = "blog_description", columnDefinition = "TEXT")

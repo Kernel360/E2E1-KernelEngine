@@ -57,11 +57,9 @@ public class BlogService {
 	}
 
 	@Transactional
-	public Long updateBlogInfo(BlogData blogData) {
-		System.out.println("updatebloginfo" + blogData.getRssLink());
+	public Long updateCompanyBlogInfo(BlogData blogData) {
 		Blog blog = blogJpaRepository.findByBlogRssUrl(blogData.getRssLink())
 				.orElseThrow(() -> new NotFoundException("해당 블로그가 존재하지 않습니다."));
-		System.out.println("skjfhsdkjfhskfhskjfh");
 
 		Blog updateBlog = Blog.builder().blogId(blog.getBlogId())
 				.user(blog.getUser())
@@ -77,4 +75,27 @@ public class BlogService {
 		return blog.getBlogId();
 	}
 
+	public boolean checkBlogExist(String rssUrl) {
+		Blog blog = blogJpaRepository.findByBlogRssUrl(rssUrl).orElse(null);
+		if (blog != null)
+			return true;
+		System.out.println("나ㅓ올나ㅓㅗㅇㄹ");
+		return false;
+	}
+
+	public Long saveCompanyBlogInfo(BlogData blogData) {
+		Blog newBlog = Blog.builder()
+				.user(null)
+				.blogWriterName(blogData.getTitle())
+				.blogRssUrl(blogData.getRssLink())
+				.blogUrl(blogData.getUrlLink())
+				.blogDescription(blogData.getDescription())
+				.blogOwnerType(BlogOwnerType.COMPANY.toString())
+				.blogLastBuildAt(blogData.getLastBuildDate())
+				.blogLastCrawlAt(blogData.getLastCrawlDate())
+				.build();
+		blogJpaRepository.save(newBlog);
+		return newBlog.getBlogId();
+
+	}
 }

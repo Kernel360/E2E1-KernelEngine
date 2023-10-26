@@ -1,11 +1,12 @@
 package com.example.e2ekernelengine.crawler.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.e2ekernelengine.crawler.JsoupRSSFeedReader;
+import com.example.e2ekernelengine.crawler.dto.testRssBlogCrawlerDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,8 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class CrawlerController {
 	private final JsoupRSSFeedReader crawler;
 
-	@GetMapping("/test/{blogRssUrl}")
-	public void test(@PathVariable(name = "blogRssUrl") String blogRssUrl) {
-		crawler.crawlFeedFromBlog(blogRssUrl, null);
+	@PostMapping("/test")
+	public void test(@RequestBody testRssBlogCrawlerDto request) {
+		System.out.println(request.getBlogRssUrl());
+		crawler.crawlFeedFromBlog(request.getBlogRssUrl(), null);
 	}
 }

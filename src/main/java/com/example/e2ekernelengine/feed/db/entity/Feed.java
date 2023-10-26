@@ -13,10 +13,9 @@ import javax.persistence.Table;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 
-import lombok.Getter;
-
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,7 +33,7 @@ public class Feed {
 	@JoinColumn(name = "blog_id", columnDefinition = "BIGINT")
 	private Blog blog;
 
-	@Column(name = "feed_url", columnDefinition = "VARCHAR(255)", nullable = false)
+	@Column(name = "feed_url", columnDefinition = "TEXT", nullable = false)
 	private String feedUrl;
 
 	@Column(name = "feed_title", columnDefinition = "VARCHAR(100)", nullable = false)
