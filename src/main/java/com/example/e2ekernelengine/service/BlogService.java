@@ -1,12 +1,14 @@
 package com.example.e2ekernelengine.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.e2ekernelengine.dto.BlogRequest;
+import com.example.e2ekernelengine.dto.BlogRequestDto;
+import com.example.e2ekernelengine.dto.BlogResponseDto;
 import com.example.e2ekernelengine.entity.Blog;
 import com.example.e2ekernelengine.entity.OwnerType;
 import com.example.e2ekernelengine.repository.BlogRepository;
@@ -18,36 +20,36 @@ import lombok.RequiredArgsConstructor;
 public class BlogService {
 	private final BlogRepository blogRepository;
 
-	//-- 비즈니스 로직 --//
-	//-- xml을 파싱해서 블로그와 포스팅 정보를 저장하는 로직이 필요 --//
 	@Transactional
-	public void saveBlog(Blog blog) {
-		blogRepository.save(blog);
+	public BlogResponseDto saveBlog(Blog blog) {
+		return BlogResponseDto.fromEntity(blogRepository.save(blog));
 	}
 
-	public List<Blog> findBlogsByOwnerType(OwnerType ownerType) {
-		if (!ownerType.equals(OwnerType.INDIVIDUAL) && !ownerType.equals(OwnerType.COMPANY)) {
-			throw new IllegalArgumentException("[ERROR] : 잘못된 ownerType 입력");
-		}
-		return blogRepository.findByOwnerTypeIsIndividual(ownerType);
+	public List<BlogResponseDto> findBlogsByOwnerType(OwnerType ownerType) {
+		return blogRepository.findByOwnerTypeIsIndividual(ownerType).stream()
+				.map(BlogResponseDto::fromEntity)
+				.collect(Collectors.toList());
 	}
 
-	public Blog findOneById(Long blogId) {
-		return blogRepository.findOne(blogId);
+	public BlogResponseDto findBlogById(Long blogId) {
+		return BlogResponseDto.fromEntity(blogRepository.findBlogById(blogId));
 	}
 
-	public List<Blog> findAll() {
-		return blogRepository.findAll();
-	}
-
-	@Transactional
-	public void updateBlogById(Long blogId, BlogRequest blogRequest) {
-		blogRepository.findOne(blogId)
-				.updateBlog(blogRequest.getRss(), blogRequest.getUrl(), blogRequest.getDescription());
+	public List<BlogResponseDto> findAllBlog() {
+		return blogRepository.findAll().stream()
+				.map(BlogResponseDto::fromEntity)
+				.collect(Collectors.toList());
 	}
 
 	@Transactional
-	public Blog deleteById(Long blogId) {
-		return blogRepository.deleteById(blogId);
+	public BlogResponseDto updateBlogById(BlogRequestDto request) {
+		Blog updateBlog = request.toEntity();
+		blogRepository.save(updateBlog);
+		return BlogResponseDto.fromEntity(updateBlog);
+	}
+
+	@Transactional
+	public BlogResponseDto deleteById(Long blogId) {
+		return BlogResponseDto.fromEntity(blogRepository.deleteById(blogId));
 	}
 }

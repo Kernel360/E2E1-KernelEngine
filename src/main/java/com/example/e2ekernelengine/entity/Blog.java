@@ -1,6 +1,7 @@
 package com.example.e2ekernelengine.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -31,30 +30,26 @@ public class Blog {
 	@Column(name = "blog_rss", nullable = false)
 	private String rss;
 
-	@Column(name = "blog_url", unique = true) // unique로 둬야 한다...
+	@Column(name = "blog_url", unique = true)
 	private String url;
 
 	@Column(name = "blog_description")
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	private OwnerType ownerType; // attribute converter 로 변경하여야 할까요?
+	private OwnerType ownerType;
 
 	@Column(name = "blog_lastBuiltDate", nullable = false)
-	@CreationTimestamp
-	private Timestamp lastBuildDate; // lastModified 가 어떨까요?
+	private Timestamp lastBuildDate;
 
 	@Builder
-	public Blog(String rss, String url, String description, String ownerType) {
+	public Blog(Long id, String rss, String url, String description, String ownerType) {
+		this.id = id;
 		this.rss = rss;
 		this.url = url;
 		this.description = description;
 		this.ownerType = OwnerType.valueOf(ownerType);
-	}
-
-	public void updateBlog(String rss, String url, String description) {
-		this.rss = rss;
-		this.url = url;
-		this.description = description;
+		Date now = new Date();
+		this.lastBuildDate = new Timestamp(now.getTime());
 	}
 }
