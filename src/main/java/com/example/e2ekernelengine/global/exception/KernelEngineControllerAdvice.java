@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.exception;
+package com.example.e2ekernelengine.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

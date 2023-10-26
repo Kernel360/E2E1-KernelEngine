@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.repository;
+package com.example.e2ekernelengine.blog.db.repository;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
-import com.example.e2ekernelengine.exception.IllegalAccessToSameUrlException;
-import com.example.e2ekernelengine.exception.NotFoundException;
+import com.example.e2ekernelengine.global.exception.IllegalAccessToSameUrlException;
+import com.example.e2ekernelengine.global.exception.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

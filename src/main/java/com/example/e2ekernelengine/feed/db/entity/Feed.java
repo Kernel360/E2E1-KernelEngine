@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.entity;
+package com.example.e2ekernelengine.feed.db.entity;
 
 import java.sql.Timestamp;
 

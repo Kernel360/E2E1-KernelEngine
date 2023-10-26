@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.service;
+package com.example.e2ekernelengine.blog.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,10 +8,10 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
+import com.example.e2ekernelengine.blog.db.repository.BlogRepository;
 import com.example.e2ekernelengine.blog.dto.BlogRequestDto;
 import com.example.e2ekernelengine.blog.dto.BlogResponseDto;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
-import com.example.e2ekernelengine.repository.BlogRepository;
 
 import lombok.RequiredArgsConstructor;
 
