@@ -1,4 +1,3 @@
-
 spring:
   jpa:
     show-sql: true
@@ -7,7 +6,7 @@ spring:
       database: mysql
       dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
   datasource:
     url: ${MYSQL_DATABASE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver

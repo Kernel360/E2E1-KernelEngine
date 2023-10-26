@@ -13,11 +13,15 @@ import javax.persistence.Table;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Entity
 @Table(name = "feed")
-@Getter
 public class Feed {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +33,7 @@ public class Feed {
 	@JoinColumn(name = "blog_id", columnDefinition = "BIGINT")
 	private Blog blog;
 
-	@Column(name = "feed_url", columnDefinition = "VARCHAR(255)", nullable = false)
+	@Column(name = "feed_url", columnDefinition = "TEXT", nullable = false)
 	private String feedUrl;
 
 	@Column(name = "feed_title", columnDefinition = "VARCHAR(100)", nullable = false)
@@ -43,4 +47,16 @@ public class Feed {
 
 	@Column(name = "feed_description", columnDefinition = "TEXT")
 	private String feedDescription;
+
+	@Builder
+	public Feed(Long feedId, Blog blog, String feedUrl, String feedTitle, String feedDescription, String feedContent,
+			Timestamp feedCreatedAt) {
+		this.feedId = feedId;
+		this.blog = blog;
+		this.feedUrl = feedUrl;
+		this.feedTitle = feedTitle;
+		this.feedDescription = feedDescription;
+		this.feedContent = feedContent;
+		this.feedCreatedAt = feedCreatedAt;
+	}
 }

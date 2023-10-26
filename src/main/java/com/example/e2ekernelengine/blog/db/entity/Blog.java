@@ -40,10 +40,10 @@ public class Blog {
 	@Column(name = "blog_writer_name", columnDefinition = "VARCHAR(50)")
 	private String blogWriterName;
 
-	@Column(name = "blog_rss_url", columnDefinition = "VARCHAR(255)")
+	@Column(name = "blog_rss_url", columnDefinition = "TEXT")
 	private String blogRssUrl;
 
-	@Column(name = "blog_url", columnDefinition = "VARCHAR(255)", nullable = false, unique = true)
+	@Column(name = "blog_url", columnDefinition = "TEXT", nullable = false, unique = true)
 	private String blogUrl;
 
 	@Column(name = "blog_description", columnDefinition = "TEXT")
@@ -60,13 +60,26 @@ public class Blog {
 	private Timestamp blogLastCrawlAt;
 
 	@Builder
-	public Blog(Long blogId, String blogRssUrl, String blogUrl, String blogDescription, String blogOwnerType) {
+	public Blog(Long blogId, User user, String blogWriterName, String blogRssUrl, String blogUrl, String blogDescription,
+			String blogOwnerType, Timestamp blogLastBuildAt, Timestamp blogLastCrawlAt) {
 		this.blogId = blogId;
+		this.user = user;
+		this.blogWriterName = blogWriterName;
 		this.blogRssUrl = blogRssUrl;
 		this.blogUrl = blogUrl;
 		this.blogDescription = blogDescription;
 		this.blogOwnerType = BlogOwnerType.valueOf(blogOwnerType);
 		Date now = new Date();
 		this.blogLastBuildAt = new Timestamp(now.getTime());
+		if (blogLastBuildAt == null) {
+			this.blogLastBuildAt = new Timestamp(now.getTime());
+		} else {
+			this.blogLastBuildAt = blogLastBuildAt;
+		}
+		if (blogLastCrawlAt == null) {
+			this.blogLastCrawlAt = new Timestamp(now.getTime());
+		} else {
+			this.blogLastCrawlAt = blogLastCrawlAt;
+		}
 	}
 }

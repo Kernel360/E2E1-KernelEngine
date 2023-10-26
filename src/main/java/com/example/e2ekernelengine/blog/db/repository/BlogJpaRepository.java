@@ -1,6 +1,7 @@
 package com.example.e2ekernelengine.blog.db.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,5 @@ public interface BlogJpaRepository extends JpaRepository<Blog, Long> {
 	@Query("SELECT b.blogId FROM Blog b WHERE b.blogWriterName = :blogWriterName")
 	List<Long> findBlogIdsByBlogWriterName(@Param("blogWriterName") String blogWriterName);
 
+	Optional<Blog> findByBlogRssUrl(String rssLink);
 }

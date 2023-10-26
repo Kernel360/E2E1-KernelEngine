@@ -5,12 +5,16 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.e2ekernelengine.blog.db.entity.Blog;
 import com.example.e2ekernelengine.blog.db.repository.BlogJpaRepository;
+import com.example.e2ekernelengine.crawler.FeedData;
 import com.example.e2ekernelengine.feed.db.entity.Feed;
 import com.example.e2ekernelengine.feed.db.repository.FeedRepository;
 import com.example.e2ekernelengine.feed.dto.request.FeedSearchRequest;
 import com.example.e2ekernelengine.feed.dto.response.FeedSearchResponse;
+import com.example.e2ekernelengine.global.exception.NotFoundException;
 
 @Service
 public class FeedService {
@@ -57,5 +61,21 @@ public class FeedService {
 		return feedResponseList;
 	}
 
+	@Transactional
+	public void saveNewFeedsByCrawler(List<FeedData> feedDataList, Long blogId) {
+
+		Blog blog = blogJpaRepository.findById(blogId).orElseThrow(() -> new NotFoundException("해당 블로그가 존재하지 않습니다."));
+		for (FeedData feedData : feedDataList) {
+			Feed feed = Feed.builder()
+					.blog(blog)
+					.feedUrl(feedData.getLink())
+					.feedTitle(feedData.getTitle())
+					.feedDescription(feedData.getDescription())
+					.feedCreatedAt(feedData.getPubDate())
+					.feedContent(feedData.getContent())
+					.build();
+			feedRepository.save(feed);
+		}
+	}
 }
 
