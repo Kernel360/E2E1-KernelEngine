@@ -31,4 +31,11 @@ public class KernelEngineControllerAdvice {
 		e.printStackTrace();
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 	}
+
+	@ExceptionHandler(value = IllegalAccessToSameUrlException.class)
+	public ResponseEntity IllegalAccessException(IllegalAccessToSameUrlException e) {
+		e.printStackTrace();
+		return ResponseEntity.status(HttpStatus.CONFLICT)
+				.body(e.getMessage());
+	}
 }
