@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 import com.example.e2ekernelengine.blog.db.repository.BlogRepository;
-import com.example.e2ekernelengine.blog.dto.BlogRequestDto;
-import com.example.e2ekernelengine.blog.dto.BlogResponseDto;
+import com.example.e2ekernelengine.blog.dto.request.BlogRequestDto;
+import com.example.e2ekernelengine.blog.dto.response.BlogResponseDto;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
 
 import lombok.RequiredArgsConstructor;

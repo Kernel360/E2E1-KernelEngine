@@ -22,7 +22,7 @@ public class BlogRepository {
 		if (!findBlogByUrl(blog).isEmpty()) {
 			throw new IllegalAccessToSameUrlException("[ERROR] : 동일한 블로그가 존재합니다.");
 		}
-		if (blog.getId() == null) {
+		if (blog.getBlogId() == null) {
 			em.persist(blog);
 		} else {
 			em.merge(blog);
@@ -32,7 +32,7 @@ public class BlogRepository {
 
 	private List<Blog> findBlogByUrl(Blog blog) {
 		return em.createQuery("select b from Blog b where b.url = :url", Blog.class)
-				.setParameter("url", blog.getUrl())
+				.setParameter("url", blog.getBlogUrl())
 				.getResultList();
 	}
 
