@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,7 +14,7 @@ import org.jsoup.select.Elements;
 
 public class JsoupRSSFeedReader {
 	private static final JsoupRSSFeedReader instance = new JsoupRSSFeedReader();
-	
+
 	private JsoupRSSFeedReader() {
 	}
 
@@ -33,7 +35,8 @@ public class JsoupRSSFeedReader {
 	 * 데이터 콘솔에 출력
 	 */
 	public void print() {
-		List<FeedData> arr = crawlFeedFromBlog("https://toss.tech/rss.xml", null);
+		// List<FeedData> arr = crawlFeedFromBlog("https://toss.tech/rss.xml", null);
+		List<FeedData> arr = crawlFeedFromBlog("https://techblog.woowahan.com/feed/", null);
 		for (int i = 0; i < arr.size(); i++) {
 			System.out.println(arr.get(i).title);
 			System.out.println(arr.get(i).link);
@@ -71,6 +74,22 @@ public class JsoupRSSFeedReader {
 		return blogData;
 	}
 
+	private String deleteHtmlTag(String content) {
+		// 정규식 패턴
+		String tagPattern = "<[^>]*>";
+		Pattern htmlPattern = Pattern.compile(tagPattern);
+		// 정규식을 사용하여 HTML 태그 삭제
+		Matcher matcher = htmlPattern.matcher(content);
+		String textWithoutHtml = matcher.replaceAll("");
+
+		String cssPattern = "\\{[^}]*\\}";
+		Pattern cssDetailPattern = Pattern.compile(cssPattern);
+		matcher = cssDetailPattern.matcher(textWithoutHtml);
+		textWithoutHtml = matcher.replaceAll("");
+		// 결과 출력
+		return textWithoutHtml;
+	}
+
 	private List<FeedData> getNewFeeds(Document document, Timestamp lastCrawlDate) {
 		Elements elements = document.select("item");
 		List<FeedData> feedDataList = new ArrayList<>();
@@ -83,7 +102,7 @@ public class JsoupRSSFeedReader {
 			String link = element.select("link").text();
 			String title = element.select("title").text();
 			String description = element.select("description").text();
-			String content = element.select("content\\:encoded").text();
+			String content = deleteHtmlTag(element.select("content\\:encoded").text());
 
 			feedDataList.add(FeedData.builder().title(title).link(link).pubDate(pubDate).description(description)
 					.content(content).build());
