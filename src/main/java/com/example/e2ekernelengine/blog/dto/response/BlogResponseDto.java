@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.blog.dto;
+package com.example.e2ekernelengine.blog.dto.response;
 
 import java.sql.Timestamp;
 
@@ -24,12 +24,12 @@ public class BlogResponseDto {
 
 	public static BlogResponseDto fromEntity(Blog blog) {
 		BlogResponseDto response = new BlogResponseDto();
-		response.setId(blog.getId());
-		response.setRss(blog.getRss());
-		response.setUrl(blog.getUrl());
-		response.setDescription(blog.getDescription());
-		response.setOwnerType(blog.getOwnerType());
-		response.setLastBuildDate(blog.getLastBuildDate());
+		response.setId(blog.getBlogId());
+		response.setRss(blog.getBlogRssUrl());
+		response.setUrl(blog.getBlogUrl());
+		response.setDescription(blog.getBlogDescription());
+		response.setOwnerType(blog.getBlogOwnerType());
+		response.setLastBuildDate(blog.getBlogLastBuildAt());
 		return response;
 	}
 

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.e2ekernelengine.blog.dto.BlogRequestDto;
-import com.example.e2ekernelengine.blog.dto.BlogResponseDto;
+import com.example.e2ekernelengine.blog.dto.request.BlogRequestDto;
+import com.example.e2ekernelengine.blog.dto.response.BlogResponseDto;
 import com.example.e2ekernelengine.blog.service.BlogService;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
 

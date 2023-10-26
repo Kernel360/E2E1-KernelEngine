@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
@@ -29,54 +29,57 @@ import lombok.NoArgsConstructor;
 public class Blog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "blog_id", nullable = false, updatable = false)
-	private Long id;
+	@Column(name = "blog_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
+	private Long blogId;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
+	// Blog Entity와 연관관계 섧정
+	@OneToOne
+	@JoinColumn(name = "user_id", columnDefinition = "BIGINT")
 	private User user;
 
-	@Column(name = "blog_writer_name")
+	@Column(name = "blog_writer_name", columnDefinition = "VARCHAR(50)")
 	private String blogWriterName;
 
-	@Column(name = "blog_rss", nullable = false)
-	private String rss;
+	@Column(name = "blog_rss_url", columnDefinition = "VARCHAR(255)")
+	private String blogRssUrl;
 
-	@Column(name = "blog_url", unique = true)
-	private String url;
+	@Column(name = "blog_url", columnDefinition = "VARCHAR(255)", nullable = false, unique = true)
+	private String blogUrl;
 
-	@Column(name = "blog_description")
-	private String description;
+	@Column(name = "blog_description", columnDefinition = "TEXT")
+	private String blogDescription;
 
+	@Column(name = "blog_owner_type", columnDefinition = "VARCHAR(255)", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private BlogOwnerType ownerType;
+	private BlogOwnerType blogOwnerType;
 
-	@Column(name = "blog_last_build_date", nullable = false)
-	private Timestamp lastBuildDate;
+	@Column(name = "blog_last_build_at", columnDefinition = "TIMESTAMP", nullable = false)
+	private Timestamp blogLastBuildAt;
 
-	@Column(name = "blog_last_crawl_date", nullable = false)
-	private Timestamp lastCrawlDate;
+	@Column(name = "blog_last_crawl_at", columnDefinition = "TIMESTAMP")
+	private Timestamp blogLastCrawlAt;
 
 	@Builder
-	public Blog(Long id, User user, String blogWriterName, String rss, String url, String description, String ownerType,
-			Timestamp lastBuildDate, Timestamp lastCrawlDate) {
-		this.id = id;
+	public Blog(Long blogId, User user, String blogWriterName, String blogRssUrl, String blogUrl, String blogDescription,
+			String blogOwnerType, Timestamp blogLastBuildAt, Timestamp blogLastCrawlAt) {
+		this.blogId = blogId;
 		this.user = user;
 		this.blogWriterName = blogWriterName;
-		this.rss = rss;
-		this.url = url;
-		this.description = description;
-		this.ownerType = BlogOwnerType.valueOf(ownerType);
+		this.blogRssUrl = blogRssUrl;
+		this.blogUrl = blogUrl;
+		this.blogDescription = blogDescription;
+		this.blogOwnerType = BlogOwnerType.valueOf(blogOwnerType);
 		Date now = new Date();
-		if (lastBuildDate == null) {
-			this.lastBuildDate = new Timestamp(now.getTime());
+		this.blogLastBuildAt = new Timestamp(now.getTime());
+		if (blogLastBuildAt == null) {
+			this.blogLastBuildAt = new Timestamp(now.getTime());
 		} else {
-			this.lastBuildDate = lastBuildDate;
+			this.blogLastBuildAt = blogLastBuildAt;
 		}
-		if (lastCrawlDate == null) {
-			this.lastCrawlDate = new Timestamp(now.getTime());
+		if (blogLastCrawlAt == null) {
+			this.blogLastCrawlAt = new Timestamp(now.getTime());
 		} else {
-			this.lastCrawlDate = lastCrawlDate;
+			this.blogLastCrawlAt = blogLastCrawlAt;
 		}
 	}
 }

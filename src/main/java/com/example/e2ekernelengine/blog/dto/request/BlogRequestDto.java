@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.blog.dto;
+package com.example.e2ekernelengine.blog.dto.request;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 
@@ -20,10 +20,11 @@ public class BlogRequestDto {
 
 	public Blog toEntity() {
 		return Blog.builder()
-				.rss(rss)
-				.url(url)
-				.description(description)
-				.ownerType(ownerType)
+				.blogId(id)
+				.blogRssUrl(rss)
+				.blogUrl(url)
+				.blogDescription(description)
+				.blogOwnerType(ownerType)
 				.build();
 	}
 }
