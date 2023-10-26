@@ -34,7 +34,7 @@ public class User {
 	private String userPassword;
 
 	@CreationTimestamp
-	@Column(name = "user_registered_at")
+	@Column(name = "user_registered_at", columnDefinition = "TIMESTAMP")
 	private Timestamp userRegisteredAt;
 
 	@Column(name = "user_status_type", columnDefinition = "VARCHAR(20)", nullable = false)

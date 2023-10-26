@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.blog.dto;
+package com.example.e2ekernelengine.blog.dto.request;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 
