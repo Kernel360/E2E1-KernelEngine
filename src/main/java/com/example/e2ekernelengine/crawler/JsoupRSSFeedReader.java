@@ -22,37 +22,24 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JsoupRSSFeedReader {
 	// TODO: 빈 등록 or singleton으로 변경
-	// private static final JsoupRSSFeedReader instance = new JsoupRSSFeedReader();
-
-	// private final BlogService blogService;
-
-	// private JsoupRSSFeedReader() {
-	// }
-
-	// public static JsoupRSSFeedReader getInstance() {
-	// 	return instance;
-	// }
 	private final BlogService blogService;
 	private final FeedService feedService;
-	/**
-	 *  테스트를 위한 메인메소드
-	 */
 
-	/**
-	 * 데이터 콘솔에 출력
-	 */
-	public void print() {
-		List<FeedData> arr = crawlFeedFromBlog("https://toss.tech/rss.xml", null);
-		// List<FeedData> arr = crawlFeedFromBlog("https://techblog.woowahan.com/feed/", null);
-		for (int i = 0; i < arr.size(); i++) {
-			System.out.println(arr.get(i).getTitle());
-			System.out.println(arr.get(i).getLink());
-			System.out.println("pubData: " + arr.get(i).getPubDate());
-			System.out.println("description: " + arr.get(i).getDescription());
-			System.out.println("content: " + arr.get(i).getContent());
-			System.out.println();
-		}
-	}
+	// /**
+	//  * 데이터 콘솔에 출력
+	//  * @param blogRssUrl
+	//  */
+	// public void print(String blogRssUrl) {
+	// 	List<FeedData> arr = crawlFeedFromBlog(blogRssUrl, null);
+	// 	for (int i = 0; i < arr.size(); i++) {
+	// 		System.out.println(arr.get(i).getTitle());
+	// 		System.out.println(arr.get(i).getLink());
+	// 		System.out.println("pubData: " + arr.get(i).getPubDate());
+	// 		System.out.println("description: " + arr.get(i).getDescription());
+	// 		System.out.println("content: " + arr.get(i).getContent());
+	// 		System.out.println();
+	// 	}
+	// }
 
 	private Document connectRSSUrlAndGetXML(String rssFeedUrl) {
 		Document doc = null;
@@ -126,7 +113,6 @@ public class JsoupRSSFeedReader {
 	public List<FeedData> crawlFeedFromBlog(String rssFeedUrl, Timestamp lastCrawlDate) {
 
 		Document document = connectRSSUrlAndGetXML(rssFeedUrl);
-		System.out.println("connect here");
 		Long blogId = blogService.updateBlogInfo(getBlogData(document, rssFeedUrl));
 
 		List<FeedData> feedDataList = getNewFeeds(document, lastCrawlDate);
