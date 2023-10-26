@@ -15,6 +15,11 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "feed")
 public class Feed {
@@ -34,10 +39,25 @@ public class Feed {
 	@Column(name = "feed_title", columnDefinition = "VARCHAR(100)")
 	private String feedTitle;
 
-	@Column(name = "feed_detail", nullable = false)
-	private String feedDetail;
+	@Column(name = "feed_description", columnDefinition = "TEXT")
+	private String feedDescription;
+
+	@Column(name = "feed_content", nullable = false)
+	private String feedContent;
 
 	@CreationTimestamp
 	@Column(name = "feed_created_at", nullable = false)
 	private Timestamp feedCreatedAt;
+
+	@Builder
+	public Feed(Long feedId, Blog blog, String feedUrl, String feedTitle, String feedDescription, String feedContent,
+			Timestamp feedCreatedAt) {
+		this.feedId = feedId;
+		this.blog = blog;
+		this.feedUrl = feedUrl;
+		this.feedTitle = feedTitle;
+		this.feedDescription = feedDescription;
+		this.feedContent = feedContent;
+		this.feedCreatedAt = feedCreatedAt;
+	}
 }

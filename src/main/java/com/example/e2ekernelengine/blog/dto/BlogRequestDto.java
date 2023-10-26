@@ -20,7 +20,6 @@ public class BlogRequestDto {
 
 	public Blog toEntity() {
 		return Blog.builder()
-				.id(id)
 				.rss(rss)
 				.url(url)
 				.description(description)

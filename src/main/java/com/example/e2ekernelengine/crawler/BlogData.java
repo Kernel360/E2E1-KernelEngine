@@ -3,21 +3,25 @@ package com.example.e2ekernelengine.crawler;
 import java.sql.Timestamp;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.ToString;
 
+@Getter
 @ToString
 public class BlogData {
 	private final String title;
-	private final String link;
+	private final String urlLink;
+	private final String rssLink;
 	private final String description;
-	private final String lastBuildDate;
+	private final Timestamp lastBuildDate;
 	private final Timestamp lastCrawlDate;
 
 	@Builder
-	public BlogData(String title, String link, String description, String lastBuildDate, String content,
+	public BlogData(String title, String urlLink, String rssLink, String description, Timestamp lastBuildDate,
 			Timestamp lastCrawlDate) {
 		this.title = title;
-		this.link = link;
+		this.urlLink = urlLink;
+		this.rssLink = rssLink;
 		this.lastBuildDate = lastBuildDate;
 		this.description = description;
 		this.lastCrawlDate = lastCrawlDate;

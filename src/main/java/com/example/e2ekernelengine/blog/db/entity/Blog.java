@@ -10,9 +10,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
+import com.example.e2ekernelengine.user.db.entity.User;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,6 +32,10 @@ public class Blog {
 	@Column(name = "blog_id", nullable = false, updatable = false)
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
 	@Column(name = "blog_writer_name")
 	private String blogWriterName;
 
@@ -44,17 +51,32 @@ public class Blog {
 	@Enumerated(EnumType.STRING)
 	private BlogOwnerType ownerType;
 
-	@Column(name = "blog_lastBuiltDate", nullable = false)
+	@Column(name = "blog_last_build_date", nullable = false)
 	private Timestamp lastBuildDate;
 
+	@Column(name = "blog_last_crawl_date", nullable = false)
+	private Timestamp lastCrawlDate;
+
 	@Builder
-	public Blog(Long id, String rss, String url, String description, String ownerType) {
+	public Blog(Long id, User user, String blogWriterName, String rss, String url, String description, String ownerType,
+			Timestamp lastBuildDate, Timestamp lastCrawlDate) {
 		this.id = id;
+		this.user = user;
+		this.blogWriterName = blogWriterName;
 		this.rss = rss;
 		this.url = url;
 		this.description = description;
 		this.ownerType = BlogOwnerType.valueOf(ownerType);
 		Date now = new Date();
-		this.lastBuildDate = new Timestamp(now.getTime());
+		if (lastBuildDate == null) {
+			this.lastBuildDate = new Timestamp(now.getTime());
+		} else {
+			this.lastBuildDate = lastBuildDate;
+		}
+		if (lastCrawlDate == null) {
+			this.lastCrawlDate = new Timestamp(now.getTime());
+		} else {
+			this.lastCrawlDate = lastCrawlDate;
+		}
 	}
 }
