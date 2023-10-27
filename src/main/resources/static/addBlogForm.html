@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>블로그 등록 폼</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">블로그 정보 입력</h1>
+    <form action="/api/v1/blogs" id="blogForm" method="post">
+        <div class="form-floating mb-3">
+            <input class="form-control" id="URL" placeholder="https://www.d2.naver.com" required type="text"
+                   value="https://www.d2.naver.com">
+            <label for="URL">URL address</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input class="form-control" id="RSS" placeholder="https://www.d2.naver.rss/atom" required type="text"
+                   value="https://www.d2.naver.rss/atom">
+            <label for="RSS">RSS address</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="description" placeholder="Enter a description" rows="4"></textarea>
+            <label for="description">Description</label>
+        </div>
+
+        <select aria-label="Default select example" class="form-select" name="blogType" required>
+            <option disabled selected value="">블로그 유형 선택</option>
+            <option value="INDIVIDUAL">INDIVIDUAL</option>
+            <option value="COMPANY">COMPANY</option>
+        </select>
+        <br><br>
+        <button class="btn btn-primary" type="submit">등록</button>
+    </form>
+</div>
+<script src="static/js/bootstrap.min.js"></script>
+<script>
+    const blogForm = document.getElementById("blogForm");
+    blogForm.addEventListener("submit", function (event) {
+        if (!blogForm.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        blogForm.classList.add("was-validated");
+    });
+</script>
+<script crossorigin="anonymous"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
