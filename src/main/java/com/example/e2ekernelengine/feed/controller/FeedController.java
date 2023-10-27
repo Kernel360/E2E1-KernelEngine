@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.e2ekernelengine.feed.dto.response.FeedSearchResponseDto;
@@ -23,9 +23,10 @@ public class FeedController {
 
 	//-- Read(Search)--//
 	@ResponseBody
-	@GetMapping("/search/{keyword}")
+	@GetMapping("/search")
+	// 하나의 키워드가 아닌 문장을 입력받을 수 있게 바꿀 예정
 	public ResponseEntity<List<FeedSearchResponseDto>> searchFeedByKeyword(
-			@PathVariable String keyword) {
+			@RequestParam String keyword) {
 
 		List<FeedSearchResponseDto> feedResponses = feedService.searchFeedsByKeyword(keyword);
 
