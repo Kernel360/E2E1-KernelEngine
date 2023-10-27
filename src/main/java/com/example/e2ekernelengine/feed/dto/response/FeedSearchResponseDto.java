@@ -7,14 +7,14 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = PRIVATE)
-public class FeedSearchResponse {
+public class FeedSearchResponseDto {
 	private final Long feedId;
 	private final String feedUrl;
 	private final String feedTitle;
 	private final String feedContent;
-	
-	public static FeedSearchResponse create(Long feedId, String feedUrl, String feedTitle, String feedContent) {
-		return new FeedSearchResponse(feedId, feedUrl, feedTitle, feedContent);
+
+	public static FeedSearchResponseDto create(Long feedId, String feedUrl, String feedTitle, String feedContent) {
+		return new FeedSearchResponseDto(feedId, feedUrl, feedTitle, feedContent);
 	}
 
 }
