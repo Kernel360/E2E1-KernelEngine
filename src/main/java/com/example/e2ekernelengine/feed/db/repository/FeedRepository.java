@@ -11,8 +11,7 @@ import com.example.e2ekernelengine.feed.db.entity.Feed;
 
 @Repository
 public interface FeedRepository extends JpaRepository<Feed, Long> {
-
-	// 특정 키워드를 포함하는 Feed 검색
+	
 	@Query("SELECT f FROM Feed f WHERE LOWER(f.feedTitle) LIKE %:keyword% OR LOWER(f.feedContent) LIKE %:keyword%")
 	List<Feed> searchFeedsByKeyword(@Param("keyword") String keyword);
 
