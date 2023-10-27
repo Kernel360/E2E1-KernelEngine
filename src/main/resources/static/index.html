@@ -24,7 +24,7 @@
 
         #search-input {
             position: absolute;
-            top: 450px; /* Adjust this value to move it closer to the center */
+            top: 450px;
             left: 650px;
             width: 500px;
             height: 47px;
@@ -38,11 +38,11 @@
 </head>
 <body>
 <div class="container mt-5">
-    <form action="/api/v1/blogs" method="get">
+    <form action="/api/v1/feeds/search" method="get">
         <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="assets/mainLogo.png" style="max-width: 200px;">
         <div class="input-group mb-3">
             <input aria-describedby="search-button" aria-label="검색어 입력" class="form-control" id="search-input"
-                   placeholder=" 검색어를 입력하세요" type="text">
+                   name="query" placeholder=" 검색어를 입력하세요" type="text">
         </div>
     </form>
 
