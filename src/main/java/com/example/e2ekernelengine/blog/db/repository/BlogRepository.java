@@ -31,7 +31,7 @@ public class BlogRepository {
 	}
 
 	private List<Blog> findBlogByUrl(Blog blog) {
-		return em.createQuery("select b from Blog b where b.url = :url", Blog.class)
+		return em.createQuery("select b from Blog b where b.blogUrl = :url", Blog.class)
 				.setParameter("url", blog.getBlogUrl())
 				.getResultList();
 	}
@@ -54,7 +54,7 @@ public class BlogRepository {
 	}
 
 	public List<Blog> findByOwnerTypeIsIndividual(BlogOwnerType ownerType) {
-		List<Blog> blogList = em.createQuery("select b from Blog b where b.ownerType = :ownerType", Blog.class)
+		List<Blog> blogList = em.createQuery("select b from Blog b where b.blogOwnerType = :ownerType", Blog.class)
 				.setParameter("ownerType", ownerType)
 				.getResultList();
 		if (blogList.isEmpty()) {

@@ -18,7 +18,7 @@ public class BlogResponseDto {
 
 	private String description;
 
-	private BlogOwnerType ownerType;
+	private BlogOwnerType blogOwnerType;
 
 	private Timestamp lastBuildDate;
 
@@ -28,7 +28,7 @@ public class BlogResponseDto {
 		response.setRss(blog.getBlogRssUrl());
 		response.setUrl(blog.getBlogUrl());
 		response.setDescription(blog.getBlogDescription());
-		response.setOwnerType(blog.getBlogOwnerType());
+		response.setBlogOwnerType(blog.getBlogOwnerType());
 		response.setLastBuildDate(blog.getBlogLastBuildAt());
 		return response;
 	}

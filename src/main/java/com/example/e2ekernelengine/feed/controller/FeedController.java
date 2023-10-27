@@ -26,7 +26,7 @@ public class FeedController {
 	@GetMapping("/search")
 	// 하나의 키워드가 아닌 문장을 입력받을 수 있게 바꿀 예정
 	public ResponseEntity<List<FeedSearchResponseDto>> searchFeedByKeyword(
-			@RequestParam String keyword) {
+			@RequestParam("query") String keyword) {
 
 		List<FeedSearchResponseDto> feedResponses = feedService.searchFeedsByKeyword(keyword);
 

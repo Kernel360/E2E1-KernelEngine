@@ -16,7 +16,7 @@ public class BlogRequestDto {
 	private String rss;
 	private String url;
 	private String description;
-	private String ownerType;
+	private String blogOwnerType;
 
 	public Blog toEntity() {
 		return Blog.builder()
@@ -24,7 +24,7 @@ public class BlogRequestDto {
 				.blogRssUrl(rss)
 				.blogUrl(url)
 				.blogDescription(description)
-				.blogOwnerType(ownerType)
+				.blogOwnerType(blogOwnerType)
 				.build();
 	}
 }
