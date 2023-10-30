@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.e2ekernelengine.crawler.ChannelRssCrawler;
+import com.example.e2ekernelengine.crawler.service.ChannelRssCrawler;
 
 @Component
 public class DataLoader {

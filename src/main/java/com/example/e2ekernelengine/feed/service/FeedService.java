@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 import com.example.e2ekernelengine.blog.db.repository.BlogJpaRepository;
-import com.example.e2ekernelengine.crawler.FeedDataDto;
+import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
 import com.example.e2ekernelengine.feed.db.entity.Feed;
 import com.example.e2ekernelengine.feed.db.repository.FeedRepository;
 import com.example.e2ekernelengine.feed.dto.response.FeedSearchResponseDto;

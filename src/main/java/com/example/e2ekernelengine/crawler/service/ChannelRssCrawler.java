@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.crawler;
+package com.example.e2ekernelengine.crawler.service;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -15,6 +15,8 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import com.example.e2ekernelengine.blog.service.BlogService;
+import com.example.e2ekernelengine.crawler.dto.BlogDataDto;
+import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
 import com.example.e2ekernelengine.feed.service.FeedService;
 
 import lombok.RequiredArgsConstructor;

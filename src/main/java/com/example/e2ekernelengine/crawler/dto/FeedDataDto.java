@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.crawler;
+package com.example.e2ekernelengine.crawler.dto;
 
 import java.sql.Timestamp;
 

@@ -12,7 +12,7 @@ import com.example.e2ekernelengine.blog.db.repository.BlogRepository;
 import com.example.e2ekernelengine.blog.dto.request.BlogRequestDto;
 import com.example.e2ekernelengine.blog.dto.response.BlogResponseDto;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
-import com.example.e2ekernelengine.crawler.BlogDataDto;
+import com.example.e2ekernelengine.crawler.dto.BlogDataDto;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
