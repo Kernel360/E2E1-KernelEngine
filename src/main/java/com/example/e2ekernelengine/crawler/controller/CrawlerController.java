@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.e2ekernelengine.crawler.JsoupRSSFeedReader;
+import com.example.e2ekernelengine.crawler.ChannelRssCrawler;
 import com.example.e2ekernelengine.crawler.dto.testRssBlogCrawlerDto;
 
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/crawler")
 public class CrawlerController {
-	private final JsoupRSSFeedReader crawler;
+	private final ChannelRssCrawler crawler;
 
 	@PostMapping("/test")
 	public void test(@RequestBody testRssBlogCrawlerDto request) {

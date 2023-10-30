@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.e2ekernelengine.blog.db.entity.Blog;
 import com.example.e2ekernelengine.blog.db.repository.BlogJpaRepository;
-import com.example.e2ekernelengine.crawler.FeedData;
+import com.example.e2ekernelengine.crawler.FeedDataDto;
 import com.example.e2ekernelengine.feed.db.entity.Feed;
 import com.example.e2ekernelengine.feed.db.repository.FeedRepository;
 import com.example.e2ekernelengine.feed.dto.response.FeedSearchResponseDto;
@@ -56,10 +56,10 @@ public class FeedService {
 	}
 
 	@Transactional
-	public void saveNewFeedsByCrawler(List<FeedData> feedDataList, Long blogId) {
+	public void saveNewFeedsByCrawler(List<FeedDataDto> feedDataList, Long blogId) {
 
 		Blog blog = blogJpaRepository.findById(blogId).orElseThrow(() -> new NotFoundException("해당 블로그가 존재하지 않습니다."));
-		for (FeedData feedData : feedDataList) {
+		for (FeedDataDto feedData : feedDataList) {
 			Feed feed = Feed.builder()
 					.blog(blog)
 					.feedUrl(feedData.getLink())

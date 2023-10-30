@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class BlogData {
+public class BlogDataDto {
 	private final String title;
 	private final String urlLink;
 	private final String rssLink;
@@ -17,7 +17,7 @@ public class BlogData {
 	private final Timestamp lastCrawlDate;
 
 	@Builder
-	public BlogData(String title, String urlLink, String rssLink, String description, Timestamp lastBuildDate,
+	public BlogDataDto(String title, String urlLink, String rssLink, String description, Timestamp lastBuildDate,
 			Timestamp lastCrawlDate) {
 		this.title = title;
 		this.urlLink = urlLink;

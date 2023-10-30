@@ -6,16 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.e2ekernelengine.crawler.JsoupRSSFeedReader;
+import com.example.e2ekernelengine.crawler.ChannelRssCrawler;
 
 @Component
 public class DataLoader {
 
-	private final JsoupRSSFeedReader jsoupRSSFeedReader;
+	private final ChannelRssCrawler jsoupRSSFeedReader;
 	private final List<String> blogRssUrlList = new ArrayList<>();
 
 	@Autowired
-	DataLoader(JsoupRSSFeedReader jsoupRSSFeedReader) {
+	DataLoader(ChannelRssCrawler jsoupRSSFeedReader) {
 		this.jsoupRSSFeedReader = jsoupRSSFeedReader;
 		blogRssUrlList.add("https://medium.com/feed/@dev29cm");
 		// blogRssUrlList.add("https://engineering-skcc.github.io/feed.xml");

@@ -12,7 +12,7 @@ import com.example.e2ekernelengine.blog.db.repository.BlogRepository;
 import com.example.e2ekernelengine.blog.dto.request.BlogRequestDto;
 import com.example.e2ekernelengine.blog.dto.response.BlogResponseDto;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
-import com.example.e2ekernelengine.crawler.BlogData;
+import com.example.e2ekernelengine.crawler.BlogDataDto;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -57,7 +57,7 @@ public class BlogService {
 	}
 
 	@Transactional
-	public Long updateCompanyBlogInfo(BlogData blogData) {
+	public Long updateCompanyBlogInfo(BlogDataDto blogData) {
 		Blog blog = blogJpaRepository.findByBlogRssUrl(blogData.getRssLink())
 				.orElseThrow(() -> new NotFoundException("해당 블로그가 존재하지 않습니다."));
 
@@ -83,7 +83,7 @@ public class BlogService {
 		return false;
 	}
 
-	public Long saveCompanyBlogInfo(BlogData blogData) {
+	public Long saveCompanyBlogInfo(BlogDataDto blogData) {
 		Blog newBlog = Blog.builder()
 				.user(null)
 				.blogWriterName(blogData.getTitle())
