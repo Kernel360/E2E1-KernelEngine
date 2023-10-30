@@ -46,5 +46,4 @@ public abstract class AbstractRssCrawler {
 	protected Boolean isDescriptionOverLimit(String content, int limit) {
 		return content.length() > limit;
 	}
-
 }

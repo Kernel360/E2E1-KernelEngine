@@ -18,10 +18,10 @@ public class DataLoader {
 	DataLoader(ChannelRssCrawler jsoupRSSFeedReader) {
 		this.jsoupRSSFeedReader = jsoupRSSFeedReader;
 		blogRssUrlList.add("https://medium.com/feed/@dev29cm");
-		// blogRssUrlList.add("https://engineering-skcc.github.io/feed.xml");
+		blogRssUrlList.add("https://engineering-skcc.github.io/feed.xml");
 		blogRssUrlList.add("https://ridicorp.com/feed/");
-		// blogRssUrlList.add("https://hyperconnect.github.io/feed.xml");
-		// blogRssUrlList.add("https://blog.est.ai/feed.xml");
+		blogRssUrlList.add("https://hyperconnect.github.io/feed.xml");
+		blogRssUrlList.add("https://blog.est.ai/feed.xml");
 		blogRssUrlList.add("https://blog.dramancompany.com/feed/");
 		blogRssUrlList.add("https://techblog.yogiyo.co.kr/feed");
 		blogRssUrlList.add("https://blog.hwahae.co.kr/rss.xml");
@@ -33,7 +33,7 @@ public class DataLoader {
 		blogRssUrlList.add("https://medium.com/feed/naver-place-dev");
 		blogRssUrlList.add("https://medium.com/feed/watcha");
 		blogRssUrlList.add("https://netflixtechblog.com/feed");
-		// blogRssUrlList.add("https://yanolja.github.io/feed");
+		blogRssUrlList.add("https://yanolja.github.io/feed");
 		blogRssUrlList.add("https://toss.tech/rss.xml");
 		blogRssUrlList.add("https://medium.com/feed/daangn");
 		blogRssUrlList.add("https://tech.kakao.com/feed/");

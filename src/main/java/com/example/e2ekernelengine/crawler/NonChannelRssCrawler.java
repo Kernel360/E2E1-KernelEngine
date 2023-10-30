@@ -21,13 +21,35 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler {
+public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler {
 	private final BlogService blogService;
 	private final FeedService feedService;
 
+	// public static void main(String[] args) {
+	// 	NonChannelRssCrawler r = new NonChannelRssCrawler();
+	// 	r.print();
+	// }
+	//
+	// /**
+	//  * 데이터 콘솔에 출력
+	//  */
+	// public void print() {
+	// 	// List<FeedDataDto> arr = crawlFeedFromBlog("https://hyperconnect.github.io/feed.xml", null);
+	// 	List<FeedDataDto> arr = test();
+	// 	for (int i = 0; i < arr.size(); i++) {
+	// 		System.out.println(arr.get(i).getTitle());
+	// 		System.out.println(arr.get(i).getLink());
+	// 		System.out.println("pubData: " + arr.get(i).getPubDate());
+	// 		System.out.println("description: " + arr.get(i).getDescription());
+	// 		System.out.println("content: " + arr.get(i).getContent());
+	// 		System.out.println();
+	// 	}
+	// }
+
 	private Timestamp convertStringToTimestamp(String dateString) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.ENGLISH);
 		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
 		try {
 			Date parsedDate = dateFormat.parse(dateString);
 			return new Timestamp(parsedDate.getTime());
@@ -37,12 +59,21 @@ public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler
 		}
 	}
 
+	public List<FeedDataDto> test() {
+		Document doc = connectRSSUrlAndGetXML("https://engineering-skcc.github.io/feed.xml");
+		BlogDataDto blogDataDto = getBlogData(doc, "https://engineering-skcc.github.io/feed.xml");
+		System.out.println(blogDataDto.toString());
+
+		return getNewFeeds(doc, null);
+
+	}
+
 	private BlogDataDto getBlogData(Document doc, String rssFeedUrl) {
-		Element element = doc.selectFirst("channel");
+		Element element = doc.selectFirst("feed");
 		String title = element.selectFirst("title").text();
 		String urlLink = element.selectFirst("link").text();
-		String description = element.selectFirst("description").text();
-		String lastBuildDate = element.selectFirst("lastBuildDate").text();
+		String description = element.selectFirst("subtitle").text();
+		String lastBuildDate = element.selectFirst("updated").text();
 		return BlogDataDto.builder()
 				.title(title)
 				.rssLink(rssFeedUrl)
@@ -54,23 +85,23 @@ public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler
 	}
 
 	private List<FeedDataDto> getNewFeeds(Document document, Timestamp lastCrawlDate) {
-		Elements elements = document.select("item");
+		Elements elements = document.select("entry");
 		List<FeedDataDto> feedDataList = new ArrayList<>();
 
 		for (Element element : elements) {
-			Timestamp pubDate = convertStringToTimestamp(element.select("pubDate").text());
+			Timestamp pubDate = convertStringToTimestamp(element.select("published").text());
 			if (lastCrawlDate != null && pubDate.after(lastCrawlDate)) {
 				break;
 			}
 			String link = element.select("link").text();
 			String title = element.select("title").text();
-			String description = element.select("description").text();
+			String description = element.select("summary").text();
 			String content = "";
-			if (isDescriptionOverLimit(description, 50)) {
+			if (isDescriptionOverLimit(description, 200)) {
 				content = deleteCssPattern(deleteHtmlTag(description));
 				description = "";
 			} else {
-				String str = element.select("content\\:encoded").text();
+				String str = element.select("content").text();
 				if (str != null) {
 					content = deleteCssPattern(deleteHtmlTag(str));
 				}
@@ -84,7 +115,6 @@ public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler
 
 	@Override
 	public List<FeedDataDto> crawlFeedFromBlog(String rssUrl, Timestamp lastCrawlDate) {
-
 		Document document = connectRSSUrlAndGetXML(rssUrl);
 		Long blogId = null;
 		if (blogService.checkBlogExist(rssUrl)) {
