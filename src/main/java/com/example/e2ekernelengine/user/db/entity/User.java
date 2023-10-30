@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.entity;
+package com.example.e2ekernelengine.user.db.entity;
 
 import java.sql.Timestamp;
 
@@ -9,10 +9,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.example.e2ekernelengine.user.util.UserPermissionType;
+import com.example.e2ekernelengine.user.util.UserStatusType;
 
 @Entity
 @Table(name = "user")
@@ -32,7 +34,7 @@ public class User {
 	private String userPassword;
 
 	@CreationTimestamp
-	@Column(name = "user_registered_at")
+	@Column(name = "user_registered_at", columnDefinition = "TIMESTAMP")
 	private Timestamp userRegisteredAt;
 
 	@Column(name = "user_status_type", columnDefinition = "VARCHAR(20)", nullable = false)

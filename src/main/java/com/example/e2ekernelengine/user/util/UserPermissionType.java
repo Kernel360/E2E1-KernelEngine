@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.entity;
+package com.example.e2ekernelengine.user.util;
 
 public enum UserPermissionType {
 	MEMBER("member"),
