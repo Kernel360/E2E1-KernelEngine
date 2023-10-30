@@ -85,16 +85,19 @@ public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler
 	}
 
 	@Override
-	public List<FeedDataDto> crawlFeedFromBlog(String rssUrl, Timestamp lastCrawlDate) {
+	public List<FeedDataDto> crawlFeedFromBlog(Document document, String rssUrl, Timestamp lastCrawlDate) {
 
-		Document document = connectRSSUrlAndGetXML(rssUrl);
+		// Document document = connectRSSUrlAndGetXML(rssUrl);
 		Long blogId = null;
+		System.out.println("in Channel");
 		if (blogService.checkBlogExist(rssUrl)) {
 			blogId = blogService.updateCompanyBlogInfo(getBlogData(document, rssUrl));
 		} else {
+			System.out.println("herehrehrehrherh");
 			blogId = blogService.saveCompanyBlogInfo(getBlogData(document, rssUrl));
 		}
 
+		System.out.println("kjdhfwkjhdf");
 		List<FeedDataDto> feedDataList = getNewFeeds(document, lastCrawlDate);
 		feedService.saveNewFeedsByCrawler(feedDataList, blogId);
 

@@ -19,6 +19,6 @@ public class CrawlerController {
 	@PostMapping("/test")
 	public void test(@RequestBody testRssBlogCrawlerDto request) {
 		System.out.println(request.getBlogRssUrl());
-		crawler.crawlFeedFromBlog(request.getBlogRssUrl(), null);
+		// crawler.crawlFeedFromBlog(request.getBlogRssUrl(), null);
 	}
 }

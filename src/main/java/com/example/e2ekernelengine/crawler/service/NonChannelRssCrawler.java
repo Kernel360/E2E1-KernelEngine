@@ -47,6 +47,16 @@ public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCraw
 	// 		System.out.println();
 	// 	}
 	// }
+	//
+	// private Document connectRSSUrlAndGetXML(String rssFeedUrl) {
+	// 	Document doc = null;
+	// 	try {
+	// 		doc = Jsoup.connect(rssFeedUrl).get();
+	// 	} catch (IOException e) {
+	// 		e.printStackTrace();
+	// 	}
+	// 	return doc;
+	// }
 
 	private Timestamp convertStringToTimestamp(String dateString) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.ENGLISH);
@@ -61,14 +71,16 @@ public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCraw
 		}
 	}
 
-	public List<FeedDataDto> test() {
-		Document doc = connectRSSUrlAndGetXML("https://engineering-skcc.github.io/feed.xml");
-		BlogDataDto blogDataDto = getBlogData(doc, "https://engineering-skcc.github.io/feed.xml");
-		System.out.println(blogDataDto.toString());
-
-		return getNewFeeds(doc, null);
-
-	}
+	// public List<FeedDataDto> test() {
+	// 	// Document doc = connectRSSUrlAndGetXML("https://engineering-skcc.github.io/feed.xml");
+	// 	// BlogDataDto blogDataDto = getBlogData(doc, "https://engineering-skcc.github.io/feed.xml");
+	// 	Document doc = connectRSSUrlAndGetXML("https://hyperconnect.github.io/feed.xml");
+	// 	BlogDataDto blogDataDto = getBlogData(doc, "https://hyperconnect.github.io/feed.xml");
+	// 	System.out.println(blogDataDto.toString());
+	//
+	// 	return getNewFeeds(doc, null);
+	//
+	// }
 
 	private BlogDataDto getBlogData(Document doc, String rssFeedUrl) {
 		Element element = doc.selectFirst("feed");
@@ -116,8 +128,8 @@ public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCraw
 	}
 
 	@Override
-	public List<FeedDataDto> crawlFeedFromBlog(String rssUrl, Timestamp lastCrawlDate) {
-		Document document = connectRSSUrlAndGetXML(rssUrl);
+	public List<FeedDataDto> crawlFeedFromBlog(Document document, String rssUrl, Timestamp lastCrawlDate) {
+		// Document document = connectRSSUrlAndGetXML(rssUrl);
 		Long blogId = null;
 		if (blogService.checkBlogExist(rssUrl)) {
 			blogId = blogService.updateCompanyBlogInfo(getBlogData(document, rssUrl));
