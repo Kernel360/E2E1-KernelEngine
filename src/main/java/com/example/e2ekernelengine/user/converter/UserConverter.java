@@ -38,6 +38,6 @@ public class UserConverter {
 							.userPermissionType(user.getUserPermissionType())
 							.build();
 				})
-				.orElseThrow(() -> new NotFoundException("User Null."));
+				.orElseThrow(() -> new NotFoundException("User Entity is Null."));
 	}
 }
