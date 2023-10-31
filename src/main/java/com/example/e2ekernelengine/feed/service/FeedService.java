@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,6 +73,16 @@ public class FeedService {
 			feedRepository.save(feed);
 		}
 	}
+
+	public Page<FeedSearchResponseDto> findRecentFeedList(Pageable pageable) {
+		return feedRepository.findAll(pageable).map(FeedSearchResponseDto::fromEntity);
+	}
+
+	// 이렇게 쓸 수도 있음
+	// public Page<Feed> findAll() {
+	// 	Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "feedCreatedAt");
+	// 	return feedRepository.findAll(pageable);
+	// }
 
 }
 
