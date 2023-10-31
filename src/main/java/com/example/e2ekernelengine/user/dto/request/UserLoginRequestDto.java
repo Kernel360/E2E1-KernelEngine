@@ -13,9 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserLoginRequestDto {
-	@NotBlank
-	@Email
+	@NotBlank(message = "이메일 값이 입력되지 않았습니다.")
+	@Email(message = "이메일 형식이 맞지 않습니다.")
 	private String userEmail;
-	@NotBlank
+	@NotBlank(message = "비밀번호가 입력되지 않았습니다.")
 	private String userPassword;
 }
