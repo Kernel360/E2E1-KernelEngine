@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import com.example.e2ekernelengine.common.annotation.Converter;
+import com.example.e2ekernelengine.global.annotation.Converter;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
 import com.example.e2ekernelengine.user.db.entity.User;
 import com.example.e2ekernelengine.user.dto.request.UserRegisterRequestDto;

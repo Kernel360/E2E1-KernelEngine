@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.common.annotation;
+package com.example.e2ekernelengine.global.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
