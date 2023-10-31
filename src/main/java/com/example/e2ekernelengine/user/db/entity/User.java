@@ -16,8 +16,17 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.example.e2ekernelengine.user.util.UserPermissionType;
 import com.example.e2ekernelengine.user.util.UserStatusType;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name = "user")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +48,12 @@ public class User {
 
 	@Column(name = "user_status_type", columnDefinition = "VARCHAR(20)", nullable = false)
 	@Enumerated(EnumType.STRING)
+	@Builder.Default
 	private UserStatusType userStatusType = UserStatusType.ACTIVE;
 
 	@Column(name = "user_permission_type", columnDefinition = "VARCHAR(20)", nullable = false)
 	@Enumerated(EnumType.STRING)
+	@Builder.Default
 	private UserPermissionType userPermissionType = UserPermissionType.MEMBER;
+
 }
