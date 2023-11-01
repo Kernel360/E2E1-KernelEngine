@@ -2,6 +2,10 @@ package com.example.e2ekernelengine.feed.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,4 +40,12 @@ public class FeedController {
 			return ResponseEntity.ok(feedResponses);
 		}
 	}
+
+	@GetMapping("")
+	public ResponseEntity<Page<FeedSearchResponseDto>> findRecentFeedList(
+			@PageableDefault(size = 5, sort = "feedCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
+		Page<FeedSearchResponseDto> feedList = feedService.findRecentFeedList(pageable);
+		return ResponseEntity.ok(feedList);
+	}
+
 }
