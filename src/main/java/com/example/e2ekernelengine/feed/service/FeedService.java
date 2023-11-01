@@ -14,6 +14,7 @@ import com.example.e2ekernelengine.blog.db.repository.BlogJpaRepository;
 import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
 import com.example.e2ekernelengine.feed.db.entity.Feed;
 import com.example.e2ekernelengine.feed.db.repository.FeedRepository;
+import com.example.e2ekernelengine.feed.dto.response.FeedPageableResponse;
 import com.example.e2ekernelengine.feed.dto.response.FeedSearchResponseDto;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
 
@@ -74,8 +75,8 @@ public class FeedService {
 		}
 	}
 
-	public Page<FeedSearchResponseDto> findRecentFeedList(Pageable pageable) {
-		return feedRepository.findAll(pageable).map(FeedSearchResponseDto::fromEntity);
+	public Page<FeedPageableResponse> findRecentFeedList(Pageable pageable) {
+		return feedRepository.findAll(pageable).map(FeedPageableResponse::fromEntity);
 	}
 
 	// 이렇게 쓸 수도 있음

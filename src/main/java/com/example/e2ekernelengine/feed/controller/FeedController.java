@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.e2ekernelengine.feed.dto.response.FeedPageableResponse;
 import com.example.e2ekernelengine.feed.dto.response.FeedSearchResponseDto;
 import com.example.e2ekernelengine.feed.service.FeedService;
 
@@ -42,9 +43,9 @@ public class FeedController {
 	}
 
 	@GetMapping("")
-	public ResponseEntity<Page<FeedSearchResponseDto>> findRecentFeedList(
+	public ResponseEntity<Page<FeedPageableResponse>> findRecentFeedList(
 			@PageableDefault(size = 5, sort = "feedCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
-		Page<FeedSearchResponseDto> feedList = feedService.findRecentFeedList(pageable);
+		Page<FeedPageableResponse> feedList = feedService.findRecentFeedList(pageable);
 		return ResponseEntity.ok(feedList);
 	}
 
