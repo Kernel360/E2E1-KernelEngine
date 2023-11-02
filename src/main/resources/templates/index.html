@@ -68,7 +68,7 @@
             <div th:each="feed : ${feedPageableResponse}">
                 <div>
                     <form id="feed-box">
-                        <div class="row justify-content-md-center">
+                        <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">
                             <div class="col-md-auto">
                                 <p id="feedId" style="display:none;">${feed.feedId}</p>
                                 <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>
@@ -147,7 +147,7 @@
                     feedDiv.innerHTML = `
             <div>
                 <form id="feed-box">
-                    <div class="row justify-content-md-center">
+                    <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">
                         <div class="col-md-auto">
                                 <p id="feedId" style="display:none;">${feed.feedId}</p>
                                 <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>
@@ -168,6 +168,11 @@
             // 페이지 로드될 때 댓글 목록을 초기에 한번 불러옴
             fetchFeedList();
         });
+
+        function redirectToFeedUrl(feedUrl) {
+            window.location.href = feedUrl;
+        }
+
 
     </script>
 
