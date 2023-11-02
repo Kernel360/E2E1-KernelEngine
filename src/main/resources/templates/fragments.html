@@ -6,7 +6,7 @@
 >
 <!-- fragment header를 정의합니다. -->
 <head th:fragment="header">
-    <title>네비게이션 바 모음</title>
+    <title>메인 검색 화면</title>
     <meta charset="UTF-8"/>
     <link href="/assets/mainLogo.png" rel="shortcut icon" type="image/x-icon">
     <link
@@ -18,6 +18,7 @@
             rel="stylesheet"
     >
 </head>
+
 <body>
 <!-- fragment navigation bar를 정의합니다. -->
 <div th:fragment="nav">
@@ -33,7 +34,7 @@
                         </p>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/}">홈</a>
+                        <a class="nav-link active" th:href="@{/main}">Home</a>
                     </li>
                     <li class="nav-item">
                         <!-- 관리자만 -->
@@ -42,7 +43,7 @@
                                 sec:authorize="hasAnyRole('ROLE_ADMIN')"
                                 th:href="@{/admin}"
                         >
-                            관리자페이지
+                            Admin
                         </a>
                     </li>
                     <li class="nav-item">
@@ -52,7 +53,7 @@
                                 sec:authorize="isAuthenticated()"
                                 th:href="@{/notice}"
                         >
-                            공지사항
+                            Notice
                         </a>
                     </li>
                     <li class="nav-item">
@@ -62,7 +63,7 @@
                                 sec:authorize="hasAnyRole('ROLE_USER')"
                                 th:href="@{/mypage}"
                         >
-                            개인페이지
+                            mypage
                         </a>
                     </li>
                     <li class="nav-item">
@@ -72,7 +73,7 @@
                                 sec:authorize="!isAuthenticated()"
                                 th:href="@{/login}"
                         >
-                            로그인
+                            Login
                         </a>
                     </li>
                     <li class="nav-item">
@@ -82,7 +83,7 @@
                                 sec:authorize="!isAuthenticated()"
                                 th:href="@{/signup}"
                         >
-                            회원가입
+                            SignIn
                         </a>
                     </li>
                     <li class="nav-item">
@@ -92,7 +93,7 @@
                                 sec:authorize="isAuthenticated()"
                                 th:href="@{/logout}"
                         >
-                            로그아웃
+                            Logout
                         </a>
                     </li>
                 </ul>
