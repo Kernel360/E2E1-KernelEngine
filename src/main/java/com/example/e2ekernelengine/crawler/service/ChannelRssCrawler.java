@@ -66,11 +66,11 @@ public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler
 			}
 			String link = element.select("link").text();
 			String title = element.select("title").text();
-			String description = element.select("description").text();
+			String description = deleteCssPattern(deleteHtmlTag(element.select("description").text()));
 			String content = "";
-			if (isDescriptionOverLimit(description, 50)) {
-				content = deleteCssPattern(deleteHtmlTag(description));
-				description = "";
+			if (isDescriptionOverLimit(description, 200)) {
+				content = description;
+				description = content.substring(0, 200); // 길이 114인 녀셕을 200까지 하려고 해서 에러 난 듯?
 			} else {
 				String str = element.select("content\\:encoded").text();
 				if (str != null) {
