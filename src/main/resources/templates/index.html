@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head th:insert="fragments.html::header">
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>검색 메인 화면</title>
@@ -37,9 +37,11 @@
 
 </head>
 <body>
+<header th:insert="fragments.html::nav"></header>
 <div class="container mt-5">
     <form id="search-form" method="get">
-        <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="assets/mainLogo.png" style="max-width: 200px;">
+        <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="../static/assets/mainLogo.png"
+             style="max-width: 200px;">
         <div class="input-group mb-3">
             <input aria-describedby="search-button" aria-label="검색어 입력" class="form-control" id="search-input"
                    name="query" placeholder="검색어를 입력하세요" type="text">

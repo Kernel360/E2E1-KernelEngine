@@ -54,6 +54,5 @@ public class User {
 	@Column(name = "user_permission_type", columnDefinition = "VARCHAR(20)", nullable = false)
 	@Enumerated(EnumType.STRING)
 	@Builder.Default
-	private UserPermissionType userPermissionType = UserPermissionType.MEMBER;
-
+	private UserPermissionType userPermissionType = UserPermissionType.USER;
 }
