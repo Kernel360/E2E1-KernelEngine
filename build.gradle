@@ -43,7 +43,15 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 
+    // thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // thymeleaf에서의 security integration
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    // security test
+    testImplementation 'org.springframework.security:spring-security-test'
+
 }
 
 tasks.named('test') {

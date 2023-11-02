@@ -4,11 +4,9 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.example.e2ekernelengine.user.dto.request.UserRegisterRequestDto;
 import com.example.e2ekernelengine.user.dto.response.UserResponseDto;
@@ -17,20 +15,29 @@ import com.example.e2ekernelengine.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/api/v1/open-api/user")
+@Controller
 public class UserOpenApiController {
 
 	private final UserService userService;
 
-	// 사용자 가입 요청
-	@PostMapping("/register")
-	public ResponseEntity<UserResponseDto> register(
+	@PostMapping("/signup")
+	public String register(
 			@Valid
-			@RequestBody Optional<UserRegisterRequestDto> userRegisterRequestDto
+			Optional<UserRegisterRequestDto> userRegisterRequestDto
 	) {
 		UserResponseDto userResponseDto = userService.register(userRegisterRequestDto);
-		return ResponseEntity.ok(userResponseDto);
+		System.out.println(userResponseDto);
+		return "redirect:login";
+	}
+
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+
+	@GetMapping("/signup")
+	public String signup() {
+		return "signup";
 	}
 
 }
