@@ -19,6 +19,9 @@ spring:
     mode: HTML
     cache: false
 
+  thymeleaf3:
+    decoupled-logic: true
+
 logging:
   level:
     com.example: debug
