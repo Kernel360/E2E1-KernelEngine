@@ -33,6 +33,19 @@
             border-radius: 10px;
             font-size: 17px;
         }
+
+        #feed-list {
+            margin-top: 5px;
+            /*top: 550px;*/
+        }
+
+        #feed-box {
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid #000;
+            background: rgba(217, 217, 217, 0.12);
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
     </style>
 </head>
 <body>
@@ -48,11 +61,52 @@
 </div>
 <div id="search-results">
     <h1>검색 결과</h1>
-    <br>
+    <div class="container" id="feed-list-block">
+        <form id="feed-list">
+            <div th:each="feed : ${feedPageableResponse}">
+                <div>
+                    <form id="feed-box">
+                        <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">
+                            <div class="col-md-auto">
+                                <p id="feedId" style="display:none;">${feed.feedId}</p>
+                                <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>
+
+                                <p id="feedTitle">제목: ${feed.feedTitle}</p>
+                                <p id="blogWriterName">작성자: ${feed.blogWriterName}</p>
+                                <p id="feedDescription">내용: ${feed.feedDescription}</p>
+                                <p id="feedCreatedAt">생성일: ${feed.feedCreatedAt}</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--    <br>-->
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        var list = [[${feedList}]];
+        console.log(list);
+        // feedId;
+        // private final String feedUrl;
+        // private final String feedTitle;
+        // private final String feedDescription;
+        // private final String feedCreatedAt;
+        // private final String blogWriterName;
+
+
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const query = urlParams.get("q");
+        // const searchInput = document.getElementById("search-input");
+        // const searchResultsDiv = document.getElementById("search-results");
+
+
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+
         const urlParams = new URLSearchParams(window.location.search);
         const query = urlParams.get("q");
         const searchInput = document.getElementById("search-input");
@@ -60,7 +114,7 @@
 
         if (query) {
             const apiUrl = `/api/v1/feeds/search?q=${query}`;
-
+            console.log("here");
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {

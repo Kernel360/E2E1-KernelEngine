@@ -15,7 +15,6 @@ import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
 import com.example.e2ekernelengine.feed.db.entity.Feed;
 import com.example.e2ekernelengine.feed.db.repository.FeedRepository;
 import com.example.e2ekernelengine.feed.dto.response.FeedPageableResponse;
-import com.example.e2ekernelengine.feed.dto.response.FeedSearchResponseDto;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
 
 @Service
@@ -30,32 +29,26 @@ public class FeedService {
 	}
 
 	@Transactional
-	public List<FeedSearchResponseDto> searchFeedsByKeyword(String keyword) {
+	public List<FeedPageableResponse> searchFeedsByKeyword(String keyword) {
 
 		List<Feed> searchFeedsByKeyword = feedRepository.searchFeedsByKeyword(keyword);
-		List<Long> searchBlogsByBlogWriterName = blogJpaRepository.findBlogIdsByBlogWriterName(keyword);
+		// List<Long> searchBlogsByBlogWriterName = blogJpaRepository.findBlogIdsByBlogWriterName(keyword);
 
-		List<FeedSearchResponseDto> feedResponseList = searchFeedsByKeyword.stream()
-				.map(feed -> FeedSearchResponseDto
-						.create(feed.getFeedId(),
-								feed.getFeedUrl(),
-								feed.getFeedTitle(),
-								feed.getFeedContent()))
+		return searchFeedsByKeyword.stream()
+				.map(FeedPageableResponse::fromEntity)
 				.collect(Collectors.toList());
 
-		for (Long blogId : searchBlogsByBlogWriterName) {
-			List<Feed> blogFeeds = feedRepository.searchFeedsByBlog_BlogId(blogId);
-			List<FeedSearchResponseDto> blogFeedResponses = blogFeeds.stream()
-					.map(feed -> FeedSearchResponseDto
-							.create(feed.getFeedId(),
-									feed.getFeedUrl(),
-									feed.getFeedTitle(),
-									feed.getFeedContent()))
-					.collect(Collectors.toList());
-			feedResponseList.addAll(blogFeedResponses);
-		}
-
-		return feedResponseList;
+		// for (Long blogId : searchBlogsByBlogWriterName) {
+		// 	List<Feed> blogFeeds = feedRepository.searchFeedsByBlog_BlogId(blogId);
+		// 	List<FeedSearchResponseDto> blogFeedResponses = blogFeeds.stream()
+		// 			.map(feed -> FeedSearchResponseDto
+		// 					.create(feed.getFeedId(),
+		// 							feed.getFeedUrl(),
+		// 							feed.getFeedTitle(),
+		// 							feed.getFeedContent()))
+		// 			.collect(Collectors.toList());
+		// 	feedResponseList.addAll(blogFeedResponses);
+		// }
 	}
 
 	@Transactional
