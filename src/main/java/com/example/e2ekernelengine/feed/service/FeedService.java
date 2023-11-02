@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,7 @@ import com.example.e2ekernelengine.blog.db.repository.BlogJpaRepository;
 import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
 import com.example.e2ekernelengine.feed.db.entity.Feed;
 import com.example.e2ekernelengine.feed.db.repository.FeedRepository;
+import com.example.e2ekernelengine.feed.dto.response.FeedPageableResponse;
 import com.example.e2ekernelengine.feed.dto.response.FeedSearchResponseDto;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
 
@@ -71,6 +74,16 @@ public class FeedService {
 			feedRepository.save(feed);
 		}
 	}
+
+	public Page<FeedPageableResponse> findRecentFeedList(Pageable pageable) {
+		return feedRepository.findAll(pageable).map(FeedPageableResponse::fromEntity);
+	}
+
+	// 이렇게 쓸 수도 있음
+	// public Page<Feed> findAll() {
+	// 	Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "feedCreatedAt");
+	// 	return feedRepository.findAll(pageable);
+	// }
 
 }
 
