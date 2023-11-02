@@ -34,7 +34,7 @@
                         </p>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/static}">홈</a>
+                        <a class="nav-link active" th:href="@{/main}">Home</a>
                     </li>
                     <li class="nav-item">
                         <!-- 관리자만 -->
@@ -43,7 +43,7 @@
                                 sec:authorize="hasAnyRole('ROLE_ADMIN')"
                                 th:href="@{/admin}"
                         >
-                            관리자페이지
+                            Admin
                         </a>
                     </li>
                     <li class="nav-item">
@@ -53,7 +53,7 @@
                                 sec:authorize="isAuthenticated()"
                                 th:href="@{/notice}"
                         >
-                            공지사항
+                            Notice
                         </a>
                     </li>
                     <li class="nav-item">
@@ -63,7 +63,7 @@
                                 sec:authorize="hasAnyRole('ROLE_USER')"
                                 th:href="@{/mypage}"
                         >
-                            개인페이지
+                            mypage
                         </a>
                     </li>
                     <li class="nav-item">
@@ -73,7 +73,7 @@
                                 sec:authorize="!isAuthenticated()"
                                 th:href="@{/login}"
                         >
-                            로그인
+                            Login
                         </a>
                     </li>
                     <li class="nav-item">
@@ -83,7 +83,7 @@
                                 sec:authorize="!isAuthenticated()"
                                 th:href="@{/signup}"
                         >
-                            회원가입
+                            SignIn
                         </a>
                     </li>
                     <li class="nav-item">
@@ -93,7 +93,7 @@
                                 sec:authorize="isAuthenticated()"
                                 th:href="@{/logout}"
                         >
-                            로그아웃
+                            Logout
                         </a>
                     </li>
                 </ul>
