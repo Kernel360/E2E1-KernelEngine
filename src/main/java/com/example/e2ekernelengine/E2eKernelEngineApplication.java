@@ -25,6 +25,6 @@ public class E2eKernelEngineApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// spring.jpa.hibernate.ddl-auto=validate일 때 아래줄 주석처리
-		dataLoader.loadInitialData(); // 애플리케이션 시작 시점에 DataLoader의 loadInitialData() 메서드 호출
+		// dataLoader.loadInitialData(); // 애플리케이션 시작 시점에 DataLoader의 loadInitialData() 메서드 호출
 	}
 }

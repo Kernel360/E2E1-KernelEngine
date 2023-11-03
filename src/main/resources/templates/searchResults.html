@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head>
+<head th:insert="fragments.html::header">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -36,6 +36,7 @@
     </style>
 </head>
 <body>
+<header th:insert="fragments.html::nav"></header>
 <div class="container mt-5">
     <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="../templates/assets/mainLogo.png"
          style="max-width: 200px;">

@@ -6,7 +6,7 @@ spring:
       database: mysql
       dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
   datasource:
     url: ${MYSQL_DATABASE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,6 +16,7 @@ spring:
 logging:
   level:
     com.example: debug
+    org.springframework.security: debug
 #    org:
 #      springframework:
 #        data:
@@ -26,3 +27,11 @@ logging:
 
 server:
   port: 8080
+
+token:
+  secret:
+    key: { JWT_SECRET_KEY }
+  access-token:
+    plus-hour: 1
+  refresh-token:
+    plus-hour: 12
