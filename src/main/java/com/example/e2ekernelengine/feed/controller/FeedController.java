@@ -17,7 +17,9 @@ import com.example.e2ekernelengine.feed.dto.response.FeedPageableResponse;
 import com.example.e2ekernelengine.feed.service.FeedService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/feeds")
@@ -58,6 +60,7 @@ public class FeedController {
 			@RequestParam(value = "q") String keyword) {
 		ModelAndView model = new ModelAndView("searchResults");
 		List<FeedPageableResponse> feedList = feedService.searchFeedsByKeyword(keyword);
+		log.debug("after service logic {}", feedList);
 		model.addObject("feedList", feedList);
 		return model;
 	}
