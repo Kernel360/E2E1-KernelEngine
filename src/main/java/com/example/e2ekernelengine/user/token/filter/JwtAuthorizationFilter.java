@@ -28,6 +28,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	private final UserRepository userRepository;
 	private final TokenService tokenService;
 	private final String cookieName;
+	private final String cookieRefreshName;
+	private final String accessTokenPlusMinute;
 
 	@Override
 	protected void doFilterInternal(
@@ -36,12 +38,44 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			FilterChain chain
 	) throws IOException, ServletException {
 
-		Optional<String> token = extractTokenFromCookie(request);
-		token.ifPresent(presentToken -> validateAndAuthenticateToken(response, presentToken));
+		Optional<String> accessToken = extractTokenFromCookie(request, cookieName);
+		Optional<String> refreshToken = extractTokenFromCookie(request, cookieRefreshName);
+
+		if (accessToken.isPresent()) {
+			processAccessToken(accessToken.get(), response);
+		} else {
+			refreshToken.ifPresentOrElse(
+					presentRefreshToken -> processRefreshToken(presentRefreshToken, response),
+					() -> clearAuthenticationAndCookie(response)
+			);
+		}
+
 		chain.doFilter(request, response);
 	}
 
-	private Optional<String> extractTokenFromCookie(HttpServletRequest request) {
+	private void processAccessToken(String accessToken, HttpServletResponse response) {
+		if (tokenService.isTokenExpired(accessToken)) {
+			clearAuthenticationAndCookie(response);
+		} else {
+			validateAndAuthenticateToken(response, accessToken);
+		}
+	}
+
+	private void processRefreshToken(String refreshToken, HttpServletResponse response) {
+		if (!tokenService.isTokenExpired(refreshToken)) {
+			try {
+				String newAccessToken = tokenService.createAccessTokenByRefreshToken(refreshToken);
+				addAuthenticationCookie(response, newAccessToken);
+				validateAndAuthenticateToken(response, newAccessToken);
+			} catch (Exception e) {
+				clearAuthenticationAndCookie(response);
+			}
+		} else {
+			clearAuthenticationAndCookie(response);
+		}
+	}
+
+	private Optional<String> extractTokenFromCookie(HttpServletRequest request, String cookieName) {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
@@ -53,15 +87,23 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 		return Optional.empty();
 	}
 
+	private void addAuthenticationCookie(HttpServletResponse response, String token) {
+		Cookie accessTokenCookie = new Cookie(cookieName, token);
+		accessTokenCookie.setHttpOnly(true);
+		accessTokenCookie.setPath("/");
+		accessTokenCookie.setMaxAge(Integer.parseInt(accessTokenPlusMinute) * 60);
+		response.addCookie(accessTokenCookie);
+	}
+
 	private void validateAndAuthenticateToken(HttpServletResponse response, String token) {
 		try {
 			String userEmail = tokenService.getUserEmail(token);
-			userRepository.findByUserEmail(userEmail).ifPresent(user -> {
+			userRepository.findUserByUserEmail(userEmail).ifPresent(user -> {
 				Authentication auth = getAuthentication(user);
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			});
 		} catch (Exception e) {
-			clearCookie(response);
+			clearAuthenticationAndCookie(response);
 		}
 	}
 
@@ -74,7 +116,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 		);
 	}
 
-	private void clearCookie(HttpServletResponse response) {
+	private void clearAuthenticationAndCookie(HttpServletResponse response) {
+		SecurityContextHolder.clearContext();
 		Cookie cookie = new Cookie(cookieName, null);
 		cookie.setPath("/");
 		cookie.setHttpOnly(true);
