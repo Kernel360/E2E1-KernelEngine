@@ -42,8 +42,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.httpBasic().disable();
 		http.csrf().disable();
 		http.rememberMe();
+
 		http.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 		http.addFilterBefore(
 				new JwtAuthenticationFilter(authenticationManager(), tokenService, cookieName, accessTokenPlusMinute),
 				UsernamePasswordAuthenticationFilter.class
@@ -86,11 +88,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.build();
 	}
 
-	@Bean
+/*	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
-	}
+	}*/
 
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {

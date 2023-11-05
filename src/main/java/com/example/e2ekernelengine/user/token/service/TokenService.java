@@ -40,12 +40,12 @@ public class TokenService {
 				.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
 				.claim("userEmail", user.getUserEmail())
 				.setIssuedAt(now)
-				.setExpiration(getExpiredAt())
+				.setExpiration(getExpirationTime())
 				.signWith(getByteSecretKey(secretKey), SignatureAlgorithm.HS256)
 				.compact();
 	}
 
-	public Date getExpiredAt() {
+	public Date getExpirationTime() {
 		Date now = new Date();
 		long expirationTimeInMilliseconds = accessTokenPlusMinute * 60 * 1000;
 		Date expiredAt = new Date(now.getTime() + expirationTimeInMilliseconds);

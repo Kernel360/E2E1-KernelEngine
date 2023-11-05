@@ -52,11 +52,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		CustomUserDetail userDetail = (CustomUserDetail)authResult.getPrincipal();
 		User user = userDetail.getUser();
 		String token = tokenService.createToken(user);
-		Cookie cookie = new Cookie(cookieName, token);
-		cookie.setMaxAge(Integer.parseInt(accessTokenPlusMinute));
-		cookie.setPath("/");
-		response.addCookie(cookie);
+		addAuthenticationCookie(request, response, token);
 		response.sendRedirect("/");
+	}
+
+	private void addAuthenticationCookie(HttpServletRequest request, HttpServletResponse response, String token) {
+		Cookie authCookie = new Cookie(cookieName, token);
+		authCookie.setMaxAge(Integer.parseInt(accessTokenPlusMinute));
+		authCookie.setPath("/");
+		authCookie.setHttpOnly(true);
+		authCookie.setSecure(request.isSecure());
+		response.addCookie(authCookie);
 	}
 
 	@Override

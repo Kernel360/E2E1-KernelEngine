@@ -1,7 +1,6 @@
 package com.example.e2ekernelengine.user.token.filter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -36,40 +35,50 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			HttpServletResponse response,
 			FilterChain chain
 	) throws IOException, ServletException {
-		String token = null;
-		try {
-			token = Arrays.stream(request.getCookies())
-					.filter(cookie -> cookie.getName().equals(cookieName)).findFirst()
-					.map(Cookie::getValue)
-					.orElse(null);
-		} catch (Exception ignored) {
-		}
-		if (token != null) {
-			try {
-				Authentication authentication = getUserEmailPasswordAuthenticationToken(token);
-				SecurityContextHolder.getContext().setAuthentication(authentication);
-			} catch (Exception e) {
-				Cookie cookie = new Cookie(cookieName, null);
-				cookie.setMaxAge(0);
-				response.addCookie(cookie);
-			}
-		}
+
+		Optional<String> token = extractTokenFromCookie(request);
+		token.ifPresent(presentToken -> validateAndAuthenticateToken(response, presentToken));
 		chain.doFilter(request, response);
 	}
 
-	private Authentication getUserEmailPasswordAuthenticationToken(String token) {
-		String userEmail = tokenService.getUserEmail(token);
-		if (userEmail != null) {
-			Optional<User> OptionalUser = userRepository.findByUserEmail(userEmail);
-			User user = OptionalUser.get();
-			return new UsernamePasswordAuthenticationToken(
-					user.getUserName(),
-					null,
-					Collections.singletonList(
-							new SimpleGrantedAuthority("ROLE_" + user.getUserPermissionType().getValue().toUpperCase())
-					)
-			);
+	private Optional<String> extractTokenFromCookie(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookieName.equals(cookie.getName())) {
+					return Optional.of(cookie.getValue());
+				}
+			}
 		}
-		return null;
+		return Optional.empty();
+	}
+
+	private void validateAndAuthenticateToken(HttpServletResponse response, String token) {
+		try {
+			String userEmail = tokenService.getUserEmail(token);
+			userRepository.findByUserEmail(userEmail).ifPresent(user -> {
+				Authentication auth = getAuthentication(user);
+				SecurityContextHolder.getContext().setAuthentication(auth);
+			});
+		} catch (Exception e) {
+			clearCookie(response);
+		}
+	}
+
+	private Authentication getAuthentication(User user) {
+		return new UsernamePasswordAuthenticationToken(
+				user.getUserName(),
+				null,
+				Collections.singletonList(
+						new SimpleGrantedAuthority("ROLE_" + user.getUserPermissionType().getValue().toUpperCase()))
+		);
+	}
+
+	private void clearCookie(HttpServletResponse response) {
+		Cookie cookie = new Cookie(cookieName, null);
+		cookie.setPath("/");
+		cookie.setHttpOnly(true);
+		cookie.setMaxAge(0);
+		response.addCookie(cookie);
 	}
 }
