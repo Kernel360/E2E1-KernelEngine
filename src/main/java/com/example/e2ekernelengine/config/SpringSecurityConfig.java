@@ -87,13 +87,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.build();
 	}
-
-/*	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}*/
-
+	
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
