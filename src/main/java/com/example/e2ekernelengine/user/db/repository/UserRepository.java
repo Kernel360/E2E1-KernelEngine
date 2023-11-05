@@ -11,10 +11,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Optional<User> findUserByUserEmail(String userEmail);
 
-	// select * from user where user_id = ? and user_status_type = ? order by user_id desc limit 1
 	Optional<User> findFirstByUserIdAndUserStatusTypeOrderByUserIdDesc(Long userId, UserStatusType userStatusType);
+	
+	Optional<User> findByUserEmail(String userEmail);
 
-	// select * from user where user_email = ? and user_password = ? and user_status_type = ? order by user_id desc limit 1
-	Optional<User> findFirstByUserEmailAndUserPasswordAndUserStatusTypeOrderByUserIdDesc(String userEmail,
-			String userPassword, UserStatusType userStatusType);
 }
