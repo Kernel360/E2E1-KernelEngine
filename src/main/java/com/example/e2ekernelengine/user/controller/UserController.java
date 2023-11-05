@@ -40,17 +40,4 @@ public class UserController {
 		return "signup";
 	}
 
-	/*@GetMapping("/me")
-	@ResponseBody
-	public ResponseEntity<UserResponseDto> me() {
-		RequestAttributes requestContext = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
-		Long userId = Optional.ofNullable(requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST))
-				.map(Object::toString)
-				.map(Long::parseLong)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "UserId missing in request."));
-
-		UserResponseDto userResponseDto = userService.getUser(userId);
-		return ResponseEntity.ok(userResponseDto);
-	}*/
-
 }

@@ -72,11 +72,5 @@ public class FeedService {
 		return feedRepository.findAll(pageable).map(FeedPageableResponse::fromEntity);
 	}
 
-	// 이렇게 쓸 수도 있음
-	// public Page<Feed> findAll() {
-	// 	Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "feedCreatedAt");
-	// 	return feedRepository.findAll(pageable);
-	// }
-
 }
 
