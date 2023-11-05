@@ -1,19 +1,12 @@
 package com.example.e2ekernelengine.user.controller;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.e2ekernelengine.user.dto.request.UserRegisterRequestDto;
 import com.example.e2ekernelengine.user.dto.response.UserResponseDto;
@@ -47,7 +40,7 @@ public class UserController {
 		return "signup";
 	}
 
-	@GetMapping("/me")
+	/*@GetMapping("/me")
 	@ResponseBody
 	public ResponseEntity<UserResponseDto> me() {
 		RequestAttributes requestContext = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());
@@ -58,6 +51,6 @@ public class UserController {
 
 		UserResponseDto userResponseDto = userService.getUser(userId);
 		return ResponseEntity.ok(userResponseDto);
-	}
+	}*/
 
 }

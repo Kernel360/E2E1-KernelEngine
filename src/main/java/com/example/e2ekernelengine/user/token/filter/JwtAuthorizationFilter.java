@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.token.filter;
+package com.example.e2ekernelengine.user.token.filter;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,9 +17,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.example.e2ekernelengine.token.service.TokenService;
 import com.example.e2ekernelengine.user.db.entity.User;
 import com.example.e2ekernelengine.user.db.repository.UserRepository;
+import com.example.e2ekernelengine.user.token.service.TokenService;
 
 import lombok.RequiredArgsConstructor;
 

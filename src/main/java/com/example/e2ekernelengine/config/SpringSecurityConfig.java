@@ -16,11 +16,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.example.e2ekernelengine.token.filter.JwtAuthenticationFilter;
-import com.example.e2ekernelengine.token.filter.JwtAuthorizationFilter;
-import com.example.e2ekernelengine.token.service.TokenService;
 import com.example.e2ekernelengine.user.db.repository.UserRepository;
 import com.example.e2ekernelengine.user.security.CustomUserDetailService;
+import com.example.e2ekernelengine.user.token.filter.JwtAuthenticationFilter;
+import com.example.e2ekernelengine.user.token.filter.JwtAuthorizationFilter;
+import com.example.e2ekernelengine.user.token.service.TokenService;
 
 import lombok.RequiredArgsConstructor;
 

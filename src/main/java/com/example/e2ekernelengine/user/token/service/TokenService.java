@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.token.service;
+package com.example.e2ekernelengine.user.token.service;
 
 import java.util.Base64;
 import java.util.Date;
