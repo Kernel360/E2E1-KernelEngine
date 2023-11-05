@@ -41,15 +41,5 @@ public class UserService {
 			throw new RegisterException("This email already exists.");
 		});
 	}
-
-	/*public UserResponseDto getUser(Long userId) {
-		User user = userRepository.findFirstByUserIdAndUserStatusTypeOrderByUserIdDesc(
-				userId,
-				UserStatusType.ACTIVE
-		).orElseThrow(() -> new NotFoundException("User not found."));
-
-		UserResponseDto userResponseDto = UserResponseDto.fromEntity(user);
-		return userResponseDto;
-	}*/
 }
 
