@@ -7,13 +7,11 @@ import javax.validation.Valid;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.e2ekernelengine.global.exception.NotFoundException;
 import com.example.e2ekernelengine.user.db.entity.User;
 import com.example.e2ekernelengine.user.db.repository.UserRepository;
 import com.example.e2ekernelengine.user.dto.request.UserRegisterRequestDto;
 import com.example.e2ekernelengine.user.dto.response.UserResponseDto;
 import com.example.e2ekernelengine.user.exception.RegisterException;
-import com.example.e2ekernelengine.user.util.UserStatusType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,8 +30,8 @@ public class UserService {
 
 		String encryptedPassword = bCryptPasswordEncoder.encode(requestDto.getUserPassword());
 		User newUser = requestDto.toEntity(encryptedPassword);
-
 		userRepository.save(newUser);
+
 		UserResponseDto userResponseDto = UserResponseDto.fromEntity(newUser);
 		return userResponseDto;
 	}
@@ -44,7 +42,7 @@ public class UserService {
 		});
 	}
 
-	public UserResponseDto getUser(Long userId) {
+	/*public UserResponseDto getUser(Long userId) {
 		User user = userRepository.findFirstByUserIdAndUserStatusTypeOrderByUserIdDesc(
 				userId,
 				UserStatusType.ACTIVE
@@ -52,6 +50,6 @@ public class UserService {
 
 		UserResponseDto userResponseDto = UserResponseDto.fromEntity(user);
 		return userResponseDto;
-	}
+	}*/
 }
 

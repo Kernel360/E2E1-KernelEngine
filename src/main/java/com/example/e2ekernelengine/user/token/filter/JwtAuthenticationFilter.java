@@ -1,4 +1,4 @@
-package com.example.e2ekernelengine.token.filter;
+package com.example.e2ekernelengine.user.token.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,9 +14,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.e2ekernelengine.token.service.TokenService;
 import com.example.e2ekernelengine.user.db.entity.User;
 import com.example.e2ekernelengine.user.security.CustomUserDetail;
+import com.example.e2ekernelengine.user.token.service.TokenService;
 
 import lombok.RequiredArgsConstructor;
 

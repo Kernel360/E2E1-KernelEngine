@@ -13,7 +13,6 @@ import com.example.e2ekernelengine.blog.db.entity.Blog;
 @Repository
 public interface BlogJpaRepository extends JpaRepository<Blog, Long> {
 
-	// 블로그 작성자 이름으로 블로그 id 검색
 	@Query("SELECT b.blogId FROM Blog b WHERE b.blogWriterName = :blogWriterName")
 	List<Long> findBlogIdsByBlogWriterName(@Param("blogWriterName") String blogWriterName);
 

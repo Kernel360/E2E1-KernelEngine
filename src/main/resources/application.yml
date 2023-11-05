@@ -42,6 +42,6 @@ token:
   secret:
     key: ${JWT_SECRET_KEY}
   access-token:
-    plus-minute: 5
+    plus-minute: 30
   cookie:
     name: ${COOKIE_NAME}
