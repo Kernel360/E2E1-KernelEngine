@@ -3,6 +3,8 @@ package com.example.e2ekernelengine.user.dto.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.example.e2ekernelengine.user.db.entity.User;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +18,13 @@ public class UserRegisterRequestDto {
 	private String userEmail;
 	@NotBlank(message = "비밀번호가 입력되지 않았습니다.")
 	private String userPassword;
+
+	public User toEntity(String encryptedPassword) {
+		return User.builder()
+				.userName(this.userName)
+				.userEmail(this.userEmail)
+				.userPassword(encryptedPassword)
+				.build();
+	}
 
 }

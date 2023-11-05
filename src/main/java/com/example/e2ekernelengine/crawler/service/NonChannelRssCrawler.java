@@ -109,11 +109,11 @@ public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCraw
 			}
 			String link = element.select("link").text();
 			String title = element.select("title").text();
-			String description = element.select("summary").text();
+			String description = deleteCssPattern(deleteHtmlTag(element.select("summary").text()));
 			String content = "";
 			if (isDescriptionOverLimit(description, 200)) {
-				content = deleteCssPattern(deleteHtmlTag(description));
-				description = "";
+				content = description;
+				description = content.substring(0, 200);
 			} else {
 				String str = element.select("content").text();
 				if (str != null) {
@@ -129,7 +129,6 @@ public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCraw
 
 	@Override
 	public List<FeedDataDto> crawlFeedFromBlog(Document document, String rssUrl, Timestamp lastCrawlDate) {
-		// Document document = connectRSSUrlAndGetXML(rssUrl);
 		Long blogId = null;
 		if (blogService.checkBlogExist(rssUrl)) {
 			blogId = blogService.updateCompanyBlogInfo(getBlogData(document, rssUrl));
@@ -143,3 +142,4 @@ public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCraw
 		return feedDataList;
 	}
 }
+

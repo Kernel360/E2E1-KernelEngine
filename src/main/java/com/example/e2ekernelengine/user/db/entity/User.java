@@ -36,7 +36,7 @@ public class User {
 	@Column(name = "user_name", columnDefinition = "VARCHAR(50)", nullable = false)
 	private String userName;
 
-	@Column(name = "user_email", columnDefinition = "VARCHAR(100)", nullable = false)
+	@Column(name = "user_email", columnDefinition = "VARCHAR(100)", nullable = false, unique = true)
 	private String userEmail;
 
 	@Column(name = "user_password", columnDefinition = "VARCHAR(100)", nullable = false)
@@ -54,6 +54,5 @@ public class User {
 	@Column(name = "user_permission_type", columnDefinition = "VARCHAR(20)", nullable = false)
 	@Enumerated(EnumType.STRING)
 	@Builder.Default
-	private UserPermissionType userPermissionType = UserPermissionType.MEMBER;
-
+	private UserPermissionType userPermissionType = UserPermissionType.USER;
 }
