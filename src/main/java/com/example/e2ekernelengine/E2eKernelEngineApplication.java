@@ -3,8 +3,10 @@ package com.example.e2ekernelengine;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
+@ConfigurationPropertiesScan
 public class E2eKernelEngineApplication implements CommandLineRunner {
 
 	// dataLoader를 사용한 이유:
