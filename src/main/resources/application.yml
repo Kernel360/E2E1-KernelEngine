@@ -28,10 +28,11 @@ logging:
 server:
   port: 8080
 
+
 token:
   secret:
-    key: { JWT_SECRET_KEY }
+    key: ${JWT_SECRET_KEY}
   access-token:
-    plus-hour: 1
-  refresh-token:
-    plus-hour: 12
+    plus-minute: 5
+  cookie:
+    name: ${COOKIE_NAME}

@@ -7,11 +7,13 @@ import javax.validation.Valid;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.e2ekernelengine.global.exception.NotFoundException;
 import com.example.e2ekernelengine.user.db.entity.User;
 import com.example.e2ekernelengine.user.db.repository.UserRepository;
 import com.example.e2ekernelengine.user.dto.request.UserRegisterRequestDto;
 import com.example.e2ekernelengine.user.dto.response.UserResponseDto;
 import com.example.e2ekernelengine.user.exception.RegisterException;
+import com.example.e2ekernelengine.user.util.UserStatusType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,5 +44,14 @@ public class UserService {
 		});
 	}
 
+	public UserResponseDto getUser(Long userId) {
+		User user = userRepository.findFirstByUserIdAndUserStatusTypeOrderByUserIdDesc(
+				userId,
+				UserStatusType.ACTIVE
+		).orElseThrow(() -> new NotFoundException("User not found."));
+
+		UserResponseDto userResponseDto = UserResponseDto.fromEntity(user);
+		return userResponseDto;
+	}
 }
 
