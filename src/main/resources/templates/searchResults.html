@@ -33,25 +33,13 @@
             border-radius: 10px;
             font-size: 17px;
         }
-
-        #feed-list {
-            margin-top: 5px;
-            /*top: 550px;*/
-        }
-
-        #feed-box {
-            margin-top: 10px;
-            border-radius: 10px;
-            border: 1px solid #000;
-            background: rgba(217, 217, 217, 0.12);
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        }
     </style>
 </head>
 <body>
 <header th:insert="fragments.html::nav"></header>
 <div class="container mt-5">
-    <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="/assets/mainLogo.png">
+    <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="../templates/assets/mainLogo.png"
+         style="max-width: 200px;">
 
     <div class="input-group mb-3">
         <input aria-describedby="search-button" aria-label="검색어 입력" class="form-control" id="search-input"
@@ -60,61 +48,69 @@
 </div>
 <div id="search-results">
     <h1>검색 결과</h1>
-    <div class="container" id="feed-list-block">
-        <form id="feed-list">
-            <div th:each="feed : ${feedList}">
-                <!--                <div>-->
-                <!--                    <form id="feed-box">-->
-                <!--                        <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">-->
-                <!--                            <div class="col-md-auto">-->
-                <!--                                <p id="feedId" style="display:none;">${feed.feedId}</p>-->
-                <!--                                <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>-->
-
-                <!--                                <p id="feedTitle">제목: ${feed.feedTitle}</p>-->
-                <!--                                <p id="blogWriterName">작성자: ${feed.blogWriterName}</p>-->
-                <!--                                <p id="feedDescription">내용: ${feed.feedDescription}</p>-->
-                <!--                                <p id="feedCreatedAt">생성일: ${feed.feedCreatedAt}</p>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </form>-->
-                <!--                </div>-->
-                <!--                <form id="feed-box" th:action="@{/redirectToFeedUrl}" th:object="${feed}">-->
-                <script th:inline="javascript">
-                    /* feed 객체 정보를 콘솔에 출력 */
-                    console.log([[${feed.feedUrl}]]);
-                </script>
-                <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">
-                    <div class="col-md-auto">
-                        <p id="feedId" style="display:none;" th:text="${feed.feedId}"></p>
-                        <p id="feedUrl" style="display:none;" th:text="${feed.feedUrl}"></p>
-
-                        <p id="feedTitle" th:text="'제목: ' + ${feed.feedTitle}"></p>
-                        <p id="blogWriterName" th:text="'작성자: ' + ${feed.blogWriterName}"></p>
-                        <p id="feedDescription" th:text="'내용: ' + ${feed.feedDescription}"></p>
-                        <p id="feedCreatedAt" th:text="'생성일: ' + ${feed.feedCreatedAt}"></p>
-                    </div>
-                </div>
-                <!--                </form>-->
-            </div>
-        </form>
-    </div>
-    <!--    <br>-->
+    <br>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get("q");
+        const searchInput = document.getElementById("search-input");
+        const searchResultsDiv = document.getElementById("search-results");
 
-    $(document).ready(function () {
-        $(".row.justify-content-md-center").on("click", function () {
-            var feedUrl = $(this).find("#feedUrl").text();
-            redirectToFeedUrl(feedUrl);
+        if (query) {
+            const apiUrl = `/api/v1/feeds/search?q=${query}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const searchResultsDiv = document.getElementById("search-results");
+                    data.forEach(function (result) {
+                        const resultElement = document.createElement("div");
+                        resultElement.innerHTML = `
+                            <h2>${result.feedTitle}</h2>
+                            <p>URL: <a href="${result.feedUrl}">${result.feedUrl}</a></p>
+                            <hr>
+                        `;
+                        searchResultsDiv.appendChild(resultElement);
+                    });
+                })
+                .catch(error => {
+                    console.error("검색 결과를 가져오는 중 오류 발생: " + error);
+                });
+        }
+
+        searchInput.addEventListener("input", function () {
+            const query = searchInput.value;
+            updateSearchResults(query);
         });
 
-        function redirectToFeedUrl(feedUrl) {
-            window.location.href = feedUrl;
+        function updateSearchResults(query) {
+            if (query) {
+                const apiUrl = `/api/v1/feeds/search?q=${query}`;
+
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        searchResultsDiv.innerHTML = "";
+                        data.forEach(function (result) {
+                            const resultElement = document.createElement("div");
+                            resultElement.innerHTML = `
+                                <h2>${result.feedTitle}</h2>
+                                <p>URL: <a href="${result.feedUrl}">${result.feedUrl}</a></p>
+                                <hr>
+                            `;
+                            searchResultsDiv.appendChild(resultElement);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("검색 결과를 가져오는 중 오류 발생: " + error);
+                    });
+            } else {
+                searchResultsDiv.innerHTML = "";
+            }
         }
     });
-    
 </script>
 
 

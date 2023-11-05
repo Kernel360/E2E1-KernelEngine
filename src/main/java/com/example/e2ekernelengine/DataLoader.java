@@ -17,7 +17,7 @@ public class DataLoader {
 	@Autowired
 	DataLoader(RssCrawler rssCrawler) {
 		this.rssCrawler = rssCrawler;
-		// blogRssUrlList.add("https://hyperconnect.github.io/feed.xml");  // 링크 못 받아옴 -> entry
+		blogRssUrlList.add("https://hyperconnect.github.io/feed.xml");
 		blogRssUrlList.add("https://engineering-skcc.github.io/feed.xml");
 		// blogRssUrlList.add("https://ebay-korea.tistory.com/rss");
 		// blogRssUrlList.add("https://team.postype.com/rss");
