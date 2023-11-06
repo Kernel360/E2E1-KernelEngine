@@ -9,23 +9,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.e2ekernelengine.user.db.entity.User;
 
+import lombok.Getter;
+
 public class CustomUserDetail implements UserDetails {
 
-	private final String email;
-	private final String password;
 	private final Collection<? extends GrantedAuthority> authorities;
+	
+	@Getter
+	private final User user;
 
-	public CustomUserDetail(String email, String password, Collection<? extends GrantedAuthority> authorities) {
-		this.email = email;
-		this.password = password;
-		this.authorities = authorities;
+	public CustomUserDetail(User user) {
+		this.user = user;
+		String userRole = "ROLE_" + user.getUserPermissionType().getValue().toUpperCase();
+		this.authorities = Collections.singleton(new SimpleGrantedAuthority(userRole));
 	}
 
 	public static CustomUserDetail build(User user) {
-		String userRole = "ROLE_" + user.getUserPermissionType().getValue().toUpperCase();
-		Collection<? extends GrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority(userRole));
-
-		return new CustomUserDetail(user.getUserEmail(), user.getUserPassword(), authorities);
+		return new CustomUserDetail(user);
 	}
 
 	@Override
@@ -35,12 +35,12 @@ public class CustomUserDetail implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return password;
+		return this.user.getUserPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return email;
+		return this.user.getUserEmail();
 	}
 
 	@Override

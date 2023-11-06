@@ -30,8 +30,8 @@ public class UserService {
 
 		String encryptedPassword = bCryptPasswordEncoder.encode(requestDto.getUserPassword());
 		User newUser = requestDto.toEntity(encryptedPassword);
-
 		userRepository.save(newUser);
+
 		UserResponseDto userResponseDto = UserResponseDto.fromEntity(newUser);
 		return userResponseDto;
 	}
@@ -41,6 +41,5 @@ public class UserService {
 			throw new RegisterException("This email already exists.");
 		});
 	}
-
 }
 

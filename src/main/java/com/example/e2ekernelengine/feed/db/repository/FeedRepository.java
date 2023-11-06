@@ -17,8 +17,6 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
 	@Query("SELECT f FROM Feed f WHERE LOWER(f.feedTitle) LIKE %:keyword% OR LOWER(f.feedContent) LIKE %:keyword%")
 	List<Feed> searchFeedsByKeyword(@Param("keyword") String keyword);
 
-	List<Feed> searchFeedsByBlog_BlogId(Long blogId);
-
 	Page<Feed> findAll(Pageable request);
 
 }

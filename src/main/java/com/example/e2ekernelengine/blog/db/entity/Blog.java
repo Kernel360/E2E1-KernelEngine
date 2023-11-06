@@ -32,7 +32,6 @@ public class Blog {
 	@Column(name = "blog_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
 	private Long blogId;
 
-	// Blog Entity와 연관관계 섧정
 	@OneToOne
 	@JoinColumn(name = "user_id", columnDefinition = "BIGINT")
 	private User user;
