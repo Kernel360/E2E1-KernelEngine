@@ -13,4 +13,10 @@ public class HomeController {
 	public String getMainPage() {
 		return "index";
 	}
+
+	@GetMapping("/api/v1/manage")
+	public String getManagePage() {
+		return "/manage/adminPage";
+	}
+
 }
