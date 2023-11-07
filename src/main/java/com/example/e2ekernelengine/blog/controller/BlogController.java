@@ -2,6 +2,8 @@ package com.example.e2ekernelengine.blog.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.e2ekernelengine.blog.dto.request.BlogRequestDto;
+import com.example.e2ekernelengine.blog.dto.request.SaveBlogRequest;
 import com.example.e2ekernelengine.blog.dto.response.BlogResponseDto;
 import com.example.e2ekernelengine.blog.service.BlogService;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
@@ -27,7 +30,7 @@ public class BlogController {
 	private final BlogService blogService;
 
 	@PostMapping
-	public ResponseEntity<BlogResponseDto> saveBlog(@RequestBody BlogRequestDto request) {
+	public ResponseEntity<BlogResponseDto> saveBlog(@RequestBody @Valid SaveBlogRequest request) {
 		BlogResponseDto savedBlogDto = blogService.saveBlog(request.toEntity());
 		return ResponseEntity.status(201).body(savedBlogDto);
 	}
