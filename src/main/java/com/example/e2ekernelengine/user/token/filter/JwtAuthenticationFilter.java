@@ -26,7 +26,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	private final AuthenticationManager authenticationManager;
 	private final TokenService tokenService;
 	private final String cookieName;
+	private final String cookieRefreshName;
 	private final String accessTokenPlusMinute;
+	private final String refreshTokenPlusHour;
 
 	@Override
 	public Authentication attemptAuthentication(
@@ -51,12 +53,33 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	) throws IOException {
 		CustomUserDetail userDetail = (CustomUserDetail)authResult.getPrincipal();
 		User user = userDetail.getUser();
-		String token = tokenService.createToken(user);
-		Cookie cookie = new Cookie(cookieName, token);
-		cookie.setMaxAge(Integer.parseInt(accessTokenPlusMinute));
-		cookie.setPath("/");
-		response.addCookie(cookie);
+
+		String accessToken = tokenService.createAccessToken(user);
+		addAuthenticationCookie(request, response, accessToken, true);
+
+		String refreshToken = tokenService.createAndStoreRefreshToken(user);
+		addAuthenticationCookie(request, response, refreshToken, false);
+
 		response.sendRedirect("/");
+	}
+
+	private void addAuthenticationCookie(HttpServletRequest request, HttpServletResponse response, String token,
+			boolean isAccessToken) {
+		Cookie authCookie;
+		int maxAge;
+
+		if (isAccessToken) {
+			authCookie = new Cookie(cookieName, token);
+			maxAge = Integer.parseInt(accessTokenPlusMinute) * 60;
+		} else {
+			authCookie = new Cookie(cookieRefreshName, token);
+			maxAge = Integer.parseInt(refreshTokenPlusHour) * 60 * 60;
+		}
+		authCookie.setMaxAge(maxAge);
+		authCookie.setPath("/");
+		authCookie.setHttpOnly(true);
+		authCookie.setSecure(request.isSecure());
+		response.addCookie(authCookie);
 	}
 
 	@Override

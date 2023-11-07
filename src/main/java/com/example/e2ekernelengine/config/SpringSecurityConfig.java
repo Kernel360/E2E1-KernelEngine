@@ -34,21 +34,39 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	private final UserRepository userRepository;
 	@Value("${token.cookie.name}")
 	private String cookieName;
+	@Value("${token.cookie.refresh-name}")
+	private String cookieRefreshName;
 	@Value("${token.access-token.plus-minute}")
 	private String accessTokenPlusMinute;
+	@Value("${token.refresh-token.plus-hour}")
+	private String refreshTokenPlusHour;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic().disable();
 		http.csrf().disable();
 		http.rememberMe();
+
 		http.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 		http.addFilterBefore(
-				new JwtAuthenticationFilter(authenticationManager(), tokenService, cookieName, accessTokenPlusMinute),
+				new JwtAuthenticationFilter(
+						authenticationManager(),
+						tokenService,
+						cookieName,
+						cookieRefreshName,
+						accessTokenPlusMinute,
+						refreshTokenPlusHour
+				),
 				UsernamePasswordAuthenticationFilter.class
 		).addFilterBefore(
-				new JwtAuthorizationFilter(userRepository, tokenService, cookieName),
+				new JwtAuthorizationFilter(
+						userRepository,
+						tokenService,
+						cookieName,
+						cookieRefreshName,
+						accessTokenPlusMinute),
 				BasicAuthenticationFilter.class
 		);
 
@@ -66,7 +84,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/")
 				.invalidateHttpSession(true)
-				.deleteCookies(cookieName);
+				.deleteCookies(cookieName, cookieRefreshName);
 	}
 
 	@Override
@@ -84,12 +102,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.passwordEncoder(bCryptPasswordEncoder)
 				.and()
 				.build();
-	}
-
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
 	}
 
 	@Bean

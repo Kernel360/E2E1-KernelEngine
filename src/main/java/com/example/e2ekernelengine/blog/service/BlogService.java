@@ -13,6 +13,7 @@ import com.example.e2ekernelengine.blog.dto.request.BlogRequestDto;
 import com.example.e2ekernelengine.blog.dto.response.BlogResponseDto;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
 import com.example.e2ekernelengine.crawler.dto.BlogDataDto;
+import com.example.e2ekernelengine.global.exception.ConflictException;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,14 @@ public class BlogService {
 	private final BlogRepository blogRepository;
 	private final BlogJpaRepository blogJpaRepository;
 
+	// ComPany or Individual에 대한 로직 추가
+	// TODO: 등록하려는 블로그가 유효한 블로그인지 확인하는 로직 추가
+	// TODO: 블로그 등록시 블로그 데이터도 같이 저장하도록 로직 추가
 	@Transactional
 	public BlogResponseDto saveBlog(Blog blog) {
+		if (!blogJpaRepository.findByBlogRssUrl(blog.getBlogRssUrl()).isEmpty()) {
+			throw new ConflictException("이미 등록된 블로그입니다.");
+		}
 		return BlogResponseDto.fromEntity(blogRepository.save(blog));
 	}
 

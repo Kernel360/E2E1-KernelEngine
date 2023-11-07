@@ -43,5 +43,8 @@ token:
     key: ${JWT_SECRET_KEY}
   access-token:
     plus-minute: 30
+  refresh-token:
+    plus-hour: 24
   cookie:
     name: ${COOKIE_NAME}
+    refresh-name: ${COOKIE_REFRESH_NAME}
