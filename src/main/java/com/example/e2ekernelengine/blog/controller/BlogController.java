@@ -17,21 +17,21 @@ import com.example.e2ekernelengine.blog.service.BlogService;
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/blogs")
 public class BlogController {
 	private final BlogService blogService;
 
-	//-- CREATE --//
 	@PostMapping
 	public ResponseEntity<BlogResponseDto> saveBlog(@RequestBody BlogRequestDto request) {
 		BlogResponseDto savedBlogDto = blogService.saveBlog(request.toEntity());
 		return ResponseEntity.status(201).body(savedBlogDto);
 	}
 
-	//-- Read --//
 	@GetMapping(value = "/{blogId}")
 	public ResponseEntity<BlogResponseDto> findBlogById(@PathVariable Long blogId) {
 		BlogResponseDto dto = blogService.findBlogById(blogId);
@@ -58,7 +58,6 @@ public class BlogController {
 				.body(blogList);
 	}
 
-	//-- UPDATE --//
 	@PostMapping(value = "/{blogId}")
 	public ResponseEntity<BlogResponseDto> updateBlogById(@PathVariable Long blogId,
 			@RequestBody BlogRequestDto request) {
@@ -69,10 +68,10 @@ public class BlogController {
 				.status(200).body(updatedBlogDto);
 	}
 
-	//-- DELETE --//
-	@DeleteMapping(value = "/{blog_id}")
-	public ResponseEntity<BlogResponseDto> deleteBlog(@PathVariable Long blog_id) {
-		BlogResponseDto deletedBlogDto = blogService.deleteById(blog_id);
+	@DeleteMapping(value = "/{blogId}")
+	public ResponseEntity<BlogResponseDto> deleteBlog(@PathVariable Long blogId) {
+		log.debug("deleteBlog() : blog_id = {}", blogId);
+		BlogResponseDto deletedBlogDto = blogService.deleteById(blogId);
 		return ResponseEntity
 				.accepted().body(deletedBlogDto);
 	}
