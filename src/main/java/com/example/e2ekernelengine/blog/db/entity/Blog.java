@@ -1,8 +1,11 @@
 package com.example.e2ekernelengine.blog.db.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,10 +14,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.e2ekernelengine.blog.util.BlogOwnerType;
+import com.example.e2ekernelengine.feed.db.entity.Feed;
 import com.example.e2ekernelengine.user.db.entity.User;
 
 import lombok.AccessLevel;
@@ -27,6 +32,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Blog {
+	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
+	private final List<Feed> feedList = new ArrayList<>();
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "blog_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
@@ -39,10 +47,10 @@ public class Blog {
 	@Column(name = "blog_writer_name", columnDefinition = "VARCHAR(50)")
 	private String blogWriterName;
 
-	@Column(name = "blog_rss_url", columnDefinition = "TEXT")
+	@Column(name = "blog_rss_url", columnDefinition = "TEXT", nullable = false, unique = true)
 	private String blogRssUrl;
 
-	@Column(name = "blog_url", columnDefinition = "TEXT", nullable = false, unique = true)
+	@Column(name = "blog_url", columnDefinition = "TEXT", unique = true)
 	private String blogUrl;
 
 	@Column(name = "blog_description", columnDefinition = "TEXT")
@@ -69,7 +77,6 @@ public class Blog {
 		this.blogDescription = blogDescription;
 		this.blogOwnerType = BlogOwnerType.valueOf(blogOwnerType);
 		Date now = new Date();
-		this.blogLastBuildAt = new Timestamp(now.getTime());
 		if (blogLastBuildAt == null) {
 			this.blogLastBuildAt = new Timestamp(now.getTime());
 		} else {

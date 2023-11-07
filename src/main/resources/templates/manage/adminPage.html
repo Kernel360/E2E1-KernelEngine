@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+
+    <title>AdminLTE 3 | Dashboard 3</title>
+
+    <!-- Font Awesome Icons -->
+    <link href="/plugins/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <!-- IonIcons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link href="/dist/css/adminlte.min.css" rel="stylesheet">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to to the body tag
+to get the desired effect
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<!-- <body class="hold-transition sidebar-mini"> -->
+<body>
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a class="nav-link" href="adminPage.html">Home</a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+        </ul>
+
+        <!-- SEARCH FORM -->
+        <form class="form-inline ml-3">
+            <div class="input-group input-group-sm">
+                <input aria-label="Search" class="form-control form-control-navbar" placeholder="Search" type="search">
+                <div class="input-group-append">
+                    <button class="btn btn-navbar" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <!-- Messages Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-comments"></i>
+                    <span class="badge badge-danger navbar-badge">3</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <a class="dropdown-item" href="#">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img alt="User Avatar" class="img-size-50 mr-3 img-circle"
+                                 src="/dist/img/user1-128x128.jpg">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Brad Diesel
+                                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">Call me whenever you can...</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img alt="User Avatar" class="img-size-50 img-circle mr-3"
+                                 src="/dist/img/user8-128x128.jpg">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    John Pierce
+                                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">I got your message bro</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <img alt="User Avatar" class="img-size-50 img-circle mr-3"
+                                 src="/dist/img/user3-128x128.jpg">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Nora Silvester
+                                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">The subject goes here</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item dropdown-footer" href="#">See All Messages</a>
+                </div>
+            </li>
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">15</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">15 Notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-envelope mr-2"></i> 4 new messages
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-users mr-2"></i> 8 friend requests
+                        <span class="float-right text-muted text-sm">12 hours</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-file mr-2"></i> 3 new reports
+                        <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item dropdown-footer" href="#">See All Notifications</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-slide="true" data-widget="control-sidebar" href="#"><i
+                        class="fas fa-th-large"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <!-- <div class="content-wrapper"> -->
+    <div class="wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">KernelEngine Dashboard v1</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <!--    TODO: 홈에 서비스 메인 페이지로 이동시키는 api 달기 -->
+
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="card-title">방문자 추이</h3>
+                                    <a href="javascript:void(0);">View Report</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <p class="d-flex flex-column">
+                                        <span class="text-bold text-lg">820</span>
+                                        <span>Visitors Over Time</span>
+                                    </p>
+                                    <p class="ml-auto d-flex flex-column text-right">
+                    <span class="text-success">
+                      <i class="fas fa-arrow-up"></i> 12.5%
+                    </span>
+                                        <span class="text-muted">Since last week</span>
+                                    </p>
+                                </div>
+                                <!-- /.d-flex -->
+
+                                <div class="position-relative mb-4">
+                                    <canvas height="200" id="visitors-chart"></canvas>
+                                </div>
+
+                                <div class="d-flex flex-row justify-content-end">
+                  <span class="mr-2">
+                    <i class="fas fa-square text-primary"></i> This Week
+                  </span>
+
+                                    <span>
+                    <i class="fas fa-square text-gray"></i> Last Week
+                  </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h3 class="card-title">hot한 블로그</h3>
+                                <div class="card-tools">
+                                    <a class="btn btn-tool btn-sm" href="#">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    <a class="btn btn-tool btn-sm" href="#">
+                                        <i class="fas fa-bars"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped table-valign-middle">
+                                    <thead>
+                                    <tr>
+                                        <th>writer</th>
+                                        <th>blog title</th>
+                                        <th>total view count</th>
+                                        <th>More</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            <!--                                            TODO: 여기에 블로그 관련 정보 넣으면 될듯-->
+                                            Some Product
+                                        </td>
+                                        <td>$13 USD</td>
+                                        <td>
+                                            <small class="text-success mr-1">
+                                                <i class="fas fa-arrow-up"></i>
+                                                12%
+                                            </small>
+                                            12,000 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Another Product
+                                        </td>
+                                        <td>$29 USD</td>
+                                        <td>
+                                            <small class="text-warning mr-1">
+                                                <i class="fas fa-arrow-down"></i>
+                                                0.5%
+                                            </small>
+                                            123,234 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Amazing Product
+                                        </td>
+                                        <td>$1,230 USD</td>
+                                        <td>
+                                            <small class="text-danger mr-1">
+                                                <i class="fas fa-arrow-down"></i>
+                                                3%
+                                            </small>
+                                            198 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Perfect Item
+                                            <span class="badge bg-danger">NEW</span>
+                                        </td>
+                                        <td>$199 USD</td>
+                                        <td>
+                                            <small class="text-success mr-1">
+                                                <i class="fas fa-arrow-up"></i>
+                                                63%
+                                            </small>
+                                            87 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col-md-6 -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="card-title">최신 게시물</h3>
+                                    <a href="javascript:void(0);">View Report</a>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped table-valign-middle">
+                                    <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Sales</th>
+                                        <th>More</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Some Product
+                                        </td>
+                                        <td>$13 USD</td>
+                                        <td>
+                                            <small class="text-success mr-1">
+                                                <i class="fas fa-arrow-up"></i>
+                                                12%
+                                            </small>
+                                            12,000 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Another Product
+                                        </td>
+                                        <td>$29 USD</td>
+                                        <td>
+                                            <small class="text-warning mr-1">
+                                                <i class="fas fa-arrow-down"></i>
+                                                0.5%
+                                            </small>
+                                            123,234 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Amazing Product
+                                        </td>
+                                        <td>$1,230 USD</td>
+                                        <td>
+                                            <small class="text-danger mr-1">
+                                                <i class="fas fa-arrow-down"></i>
+                                                3%
+                                            </small>
+                                            198 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Perfect Item
+                                            <span class="badge bg-danger">NEW</span>
+                                        </td>
+                                        <td>$199 USD</td>
+                                        <td>
+                                            <small class="text-success mr-1">
+                                                <i class="fas fa-arrow-up"></i>
+                                                63%
+                                            </small>
+                                            87 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <h3 class="card-title">hot한 게시물</h3>
+                                <div class="card-tools">
+                                    <a class="btn btn-tool btn-sm" href="#">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                    <a class="btn btn-tool btn-sm" href="#">
+                                        <i class="fas fa-bars"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped table-valign-middle">
+                                    <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Sales</th>
+                                        <th>More</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Some Product
+                                        </td>
+                                        <td>$13 USD</td>
+                                        <td>
+                                            <small class="text-success mr-1">
+                                                <i class="fas fa-arrow-up"></i>
+                                                12%
+                                            </small>
+                                            12,000 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Another Product
+                                        </td>
+                                        <td>$29 USD</td>
+                                        <td>
+                                            <small class="text-warning mr-1">
+                                                <i class="fas fa-arrow-down"></i>
+                                                0.5%
+                                            </small>
+                                            123,234 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Amazing Product
+                                        </td>
+                                        <td>$1,230 USD</td>
+                                        <td>
+                                            <small class="text-danger mr-1">
+                                                <i class="fas fa-arrow-down"></i>
+                                                3%
+                                            </small>
+                                            198 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img alt="Product 1" class="img-circle img-size-32 mr-2"
+                                                 src="/dist/img/default-150x150.png">
+                                            Perfect Item
+                                            <span class="badge bg-danger">NEW</span>
+                                        </td>
+                                        <td>$199 USD</td>
+                                        <td>
+                                            <small class="text-success mr-1">
+                                                <i class="fas fa-arrow-up"></i>
+                                                63%
+                                            </small>
+                                            87 Sold
+                                        </td>
+                                        <td>
+                                            <a class="text-muted" href="#">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col-md-6 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>블로그 관리</h1>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">관리자용 블로그 management board</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-bordered table-hover" id="example2">
+                                <thead>
+                                <tr>
+                                    <th>writer</th>
+                                    <th>blog url</th>
+                                    <th>link</th>
+                                    <th>last update</th>
+                                    <th>delete</th>
+                                </tr>
+                                </thead>
+                                <tbody id="blog-list">
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>
+                                        <div class="form-floating mb-3">
+                                            <label for="blogTitle">blog title</label>
+                                            <input class="form-control" id="blogTitle"
+                                                   placeholder="네이버 기술 블로그"
+                                                   required type="text">
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <label for="blogType">블로그 유형</label>
+                                        <select aria-label="Default select example" class="form-select" id="blogType"
+                                                name="blogType" required>
+                                            <option disabled selected value="">블로그 유형 선택</option>
+                                            <option value="INDIVIDUAL">INDIVIDUAL</option>
+                                            <option value="COMPANY">COMPANY</option>
+                                        </select>
+                                    </th>
+
+                                    <th>
+                                        <div class="form-floating mb-3">
+                                            <label for="blogRSS">RSS 주소</label>
+                                            <input class="form-control" id="blogRSS"
+                                                   placeholder="https://www.d2.naver.rss/atom"
+                                                   required type="text">
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <div class="form-floating mb-3">
+                                            <label for="blogWriterName">블로그 관리자</label>
+                                            <input class="form-control" id="blogWriterName"
+                                                   placeholder="네이버" required type="text">
+                                        </div>
+                                    </th>
+
+                                    <td>
+                                        <button class="btn btn-block btn-primary" id="add-blog" type="button">등록
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 3.0.1-pre
+        </div>
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="/dist/js/adminlte.js"></script>
+
+<script>
+
+    function initializeTable() {
+        $.ajax({
+            url: `http://localhost:8080/api/v1/blogs`,
+            method: "GET",
+            success: function (data) {
+                console.log(data);
+                putDataOnTable(data);
+            },
+            error: function (error) {
+                console.error("데이터를 가져오는데 실패했습니다.", error);
+            }
+        });
+    }
+
+    function putDataOnTable(blogList) {
+
+        var tbody = $("#blog-list");
+
+        $.each(blogList, function (index, blog) {
+            const blogId = blog.id;
+            var newRow = $("<tr>");
+            newRow.append("<td>" + blog.blogWriterName + "</td>");
+            newRow.append("<td>" + blog.blogOwnerType + "</td>");
+            newRow.append("<td>" + blog.url + "</td>");
+            newRow.append("<td>" + blog.lastBuildDate + "</td>");
+            newRow.append('<td><button class="btn btn-block btn-primary delete-blog" data-blog-id="' + blogId + '" type="button">삭제</button></td>');
+
+            tbody.append(newRow);
+        });
+
+        $(".delete-blog").on("click", function () {
+            var blogId = $(this).data("blog-id");
+            console.log("삭제할 블로그의 ID:", blogId);
+            sendDeleteBlogRequest(blogId);
+        });
+
+        return blogList;
+    }
+
+    initializeTable();
+
+    function sendDeleteBlogRequest(blogId) {
+
+        $.ajax({
+            url: `http://localhost:8080/api/v1/blogs/${blogId}`,
+            //TODO: 여기 path parameter blogID로 수정하기
+            method: "DELETE",
+            success: function (response) {
+                console.log("API 요청 성공");
+                location.reload();
+            },
+            error: function (error) {
+                console.error("API 요청 실패", error);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#add-blog').on('click', function () {
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/blogs',
+                method: 'POST',
+                // data: {
+                //     description: $('#blogTitle').val(),
+                //     blogWriterName: $('#blogWriterName').val(),
+                //     rss: $('#blogRSS').val(),
+                //     blogOwnerType: $('select[name="blogType"]').val()
+                // },
+                data: JSON.stringify({
+                    description: $('#blogTitle').val(),
+                    blogWriterName: $('#blogWriterName').val(),
+                    rss: $('#blogRSS').val(),
+                    blogOwnerType: $('select[name="blogType"]').val()
+                }),
+                contentType: 'application/json',
+                
+                success: function (response) {
+                    console.log('API 요청 성공', response);
+                },
+                error: function (error) {
+                    console.error('API 요청 실패', error);
+                }
+            });
+        });
+    });
+</script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="/plugins/chart.js/Chart.min.js"></script>
+<script src="/dist/js/demo.js"></script>
+<script src="/dist/js/pages/dashboard3.js"></script>
+</body>
+</html>

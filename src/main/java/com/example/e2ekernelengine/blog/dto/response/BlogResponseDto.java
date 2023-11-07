@@ -15,7 +15,7 @@ public class BlogResponseDto {
 	private String rss;
 
 	private String url;
-
+	private String blogWriterName;
 	private String description;
 
 	private BlogOwnerType blogOwnerType;
@@ -27,6 +27,7 @@ public class BlogResponseDto {
 		response.setId(blog.getBlogId());
 		response.setRss(blog.getBlogRssUrl());
 		response.setUrl(blog.getBlogUrl());
+		response.setBlogWriterName(blog.getBlogWriterName());
 		response.setDescription(blog.getBlogDescription());
 		response.setBlogOwnerType(blog.getBlogOwnerType());
 		response.setLastBuildDate(blog.getBlogLastBuildAt());
