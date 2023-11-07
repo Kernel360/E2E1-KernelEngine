@@ -39,7 +39,6 @@ public class Blog {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "blog_id", columnDefinition = "BIGINT", nullable = false, updatable = false)
 	private Long blogId;
-	// Blog Entity와 연관관계 섧정
 
 	@OneToOne
 	@JoinColumn(name = "user_id", columnDefinition = "BIGINT")
@@ -48,10 +47,10 @@ public class Blog {
 	@Column(name = "blog_writer_name", columnDefinition = "VARCHAR(50)")
 	private String blogWriterName;
 
-	@Column(name = "blog_rss_url", columnDefinition = "TEXT")
+	@Column(name = "blog_rss_url", columnDefinition = "TEXT", nullable = false, unique = true)
 	private String blogRssUrl;
 
-	@Column(name = "blog_url", columnDefinition = "TEXT", nullable = false, unique = true)
+	@Column(name = "blog_url", columnDefinition = "TEXT", unique = true)
 	private String blogUrl;
 
 	@Column(name = "blog_description", columnDefinition = "TEXT")
@@ -78,7 +77,6 @@ public class Blog {
 		this.blogDescription = blogDescription;
 		this.blogOwnerType = BlogOwnerType.valueOf(blogOwnerType);
 		Date now = new Date();
-		this.blogLastBuildAt = new Timestamp(now.getTime());
 		if (blogLastBuildAt == null) {
 			this.blogLastBuildAt = new Timestamp(now.getTime());
 		} else {
