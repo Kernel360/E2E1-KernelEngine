@@ -592,7 +592,6 @@ to get the desired effect
                                 <tfoot>
                                 <tr>
                                     <th>
-
                                         <div class="form-floating mb-3">
                                             <label for="blogTitle">blog title</label>
                                             <input class="form-control" id="blogTitle"
@@ -677,7 +676,7 @@ to get the desired effect
 
     function initializeTable() {
         $.ajax({
-            url: `http://localhost:8080/api/v1/blogs`, // 실제 서버의 API URL로 수정해 주세요.
+            url: `http://localhost:8080/api/v1/blogs`,
             method: "GET",
             success: function (data) {
                 console.log(data);
@@ -733,26 +732,29 @@ to get the desired effect
     }
 
     $(document).ready(function () {
-        // Add Blog 버튼 클릭 이벤트 리스너 추가
         $('#add-blog').on('click', function () {
-            // Ajax 요청을 통해 API에 데이터 전송
             $.ajax({
-                url: 'http://localhost:8080/api/v1/blogs', // API 엔드포인트 URL
-                method: 'POST', // POST 메서드 사용
-                data: {
-                    // 여기에 전송할 데이터 추가
-                    blogTitle: $('#blogTitle').val(),
+                url: 'http://localhost:8080/api/v1/blogs',
+                method: 'POST',
+                // data: {
+                //     description: $('#blogTitle').val(),
+                //     blogWriterName: $('#blogWriterName').val(),
+                //     rss: $('#blogRSS').val(),
+                //     blogOwnerType: $('select[name="blogType"]').val()
+                // },
+                data: JSON.stringify({
+                    description: $('#blogTitle').val(),
                     blogWriterName: $('#blogWriterName').val(),
                     rss: $('#blogRSS').val(),
                     blogOwnerType: $('select[name="blogType"]').val()
-                },
+                }),
+                contentType: 'application/json',
+                
                 success: function (response) {
                     console.log('API 요청 성공', response);
-                    // 성공 시 동작할 코드 추가
                 },
                 error: function (error) {
                     console.error('API 요청 실패', error);
-                    // 실패 시 동작할 코드 추가
                 }
             });
         });
