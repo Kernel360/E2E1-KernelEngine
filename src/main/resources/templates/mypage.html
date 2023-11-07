@@ -28,32 +28,22 @@
 </head>
 <body>
 <header th:replace="fragments :: nav"></header>
-<td>
-    <button class="btn btn-block btn-primary" id="leave" type="button">회원탈퇴
-    </button>
-</td>
-<!-- jQuery -->
-<!--<script src="/plugins/jquery/jquery.min.js"></script>-->
-<form action="http://localhost:8080/leave" id="leave" method="post">
+
+<form action="http://localhost:8080/leave" method="post">
     <input type="hidden">
-    <button id="leave" type="submit">Leave</button>
+    <button class="btn btn-block btn-primary" id="leave" type="submit">회원 탈퇴</button>
 </form>
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
         const leave = document.getElementById("leave");
-        const searchInput = document.getElementById("search-input");
-        console.log("addEventListener 동작 1")
+
         leave.addEventListener("submit", function (event) {
             event.preventDefault();
-
-            const query = searchInput.value;
-            if (query) {
-                window.location.href = "/index";
-            }
+            window.location.href = "/";
         });
     });
-    
+
 </script>
 
 <script crossorigin="anonymous"

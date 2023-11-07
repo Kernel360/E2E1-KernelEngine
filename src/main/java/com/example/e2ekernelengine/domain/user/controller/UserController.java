@@ -39,11 +39,6 @@ public class UserController {
 		return "redirect:login";
 	}
 
-	@GetMapping("/index")
-	public String mainpage() {
-		return "index";
-	}
-
 	@GetMapping("/login")
 	public String login() {
 		return "login";
@@ -74,6 +69,6 @@ public class UserController {
 			}
 		}
 
-		return "redirect:index";
+		return "redirect:/";
 	}
 }
