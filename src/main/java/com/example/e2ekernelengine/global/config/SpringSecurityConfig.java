@@ -85,6 +85,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/")
 				.invalidateHttpSession(true)
 				.deleteCookies(cookieName, cookieRefreshName);
+		// TODO: DB에 refresh-token 삭제
 	}
 
 	@Override

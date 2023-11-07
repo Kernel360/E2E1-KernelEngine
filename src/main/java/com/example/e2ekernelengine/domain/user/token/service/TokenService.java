@@ -41,7 +41,6 @@ public class TokenService {
 				.parseClaimsJws(token)
 				.getBody()
 				.get("userEmail", String.class);
-
 	}
 
 	public String createAccessToken(User user) {
@@ -57,7 +56,6 @@ public class TokenService {
 
 	public String createAccessTokenByRefreshToken(String refreshToken) throws Exception {
 		try {
-			/*String userEmail = getUserEmail(refreshToken);*/
 			RefreshToken refreshTokenEntity = refreshTokenRepository.findByRefreshToken(refreshToken)
 					.orElseThrow(() -> new TokenException("Refresh token does not exist."));
 

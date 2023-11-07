@@ -55,4 +55,9 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Builder.Default
 	private UserPermissionType userPermissionType = UserPermissionType.USER;
+
+	public void leave() {
+		this.userStatusType = UserStatusType.WITHDRAWAL;
+	}
+
 }
