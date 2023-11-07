@@ -591,12 +591,41 @@ to get the desired effect
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Rendering engine</th>
-                                    <th>Browser</th>
-                                    <th>Platform(s)</th>
                                     <th>
-                                        <input id="engineVersionInput" placeholder="버전 입력" type="text">
-                                        <span>예: 1.0.0</span>
+
+                                        <div class="form-floating mb-3">
+                                            <label for="blogTitle">blog title</label>
+                                            <input class="form-control" id="blogTitle"
+                                                   placeholder="네이버 기술 블로그"
+                                                   required type="text">
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <label for="blogType">블로그 유형</label>
+                                        <select aria-label="Default select example" class="form-select" id="blogType"
+                                                name="blogType" required>
+                                            <option disabled selected value="">블로그 유형 선택</option>
+                                            <option value="INDIVIDUAL">INDIVIDUAL</option>
+                                            <option value="COMPANY">COMPANY</option>
+                                        </select>
+                                    </th>
+
+                                    <th>
+                                        <div class="form-floating mb-3">
+                                            <label for="blogRSS">RSS 주소</label>
+                                            <input class="form-control" id="blogRSS"
+                                                   placeholder="https://www.d2.naver.rss/atom"
+                                                   required type="text">
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <div class="form-floating mb-3">
+                                            <label for="blogWriterName">블로그 관리자</label>
+                                            <input class="form-control" id="blogWriterName"
+                                                   placeholder="네이버" required type="text">
+                                        </div>
                                     </th>
 
                                     <td>
@@ -702,6 +731,32 @@ to get the desired effect
             }
         });
     }
+
+    $(document).ready(function () {
+        // Add Blog 버튼 클릭 이벤트 리스너 추가
+        $('#add-blog').on('click', function () {
+            // Ajax 요청을 통해 API에 데이터 전송
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/blogs', // API 엔드포인트 URL
+                method: 'POST', // POST 메서드 사용
+                data: {
+                    // 여기에 전송할 데이터 추가
+                    blogTitle: $('#blogTitle').val(),
+                    blogWriterName: $('#blogWriterName').val(),
+                    rss: $('#blogRSS').val(),
+                    blogOwnerType: $('select[name="blogType"]').val()
+                },
+                success: function (response) {
+                    console.log('API 요청 성공', response);
+                    // 성공 시 동작할 코드 추가
+                },
+                error: function (error) {
+                    console.error('API 요청 실패', error);
+                    // 실패 시 동작할 코드 추가
+                }
+            });
+        });
+    });
 </script>
 
 <!-- OPTIONAL SCRIPTS -->
