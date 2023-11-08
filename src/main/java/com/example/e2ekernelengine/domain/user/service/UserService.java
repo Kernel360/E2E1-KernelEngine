@@ -70,7 +70,6 @@ public class UserService {
 							() -> new NotFoundException("No user found."));
 
 					user.leave();
-
 					logoutAfterLeave(request, response, authentication, cookies);
 
 				}

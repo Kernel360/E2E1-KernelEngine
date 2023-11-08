@@ -98,7 +98,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 	private void validateAndAuthenticateToken(HttpServletResponse response, String token) {
 		try {
 			String userEmail = tokenService.getUserEmail(token);
-			userRepository.findUserByUserEmail(userEmail).ifPresent(user -> {
+			userRepository.findActiveUserByUserEmail(userEmail).ifPresent(user -> {
 				Authentication auth = getAuthentication(user);
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			});
