@@ -1,8 +1,16 @@
 package com.example.e2ekernelengine.crawler.service;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class AbstractRssCrawler {
 
 	// protected Document connectRSSUrlAndGetXML(String rssFeedUrl) {
@@ -14,6 +22,17 @@ public abstract class AbstractRssCrawler {
 	// 	}
 	// 	return doc;
 	// }
+
+	protected static Timestamp getTimestampFromDateStringWithDateFormat(String dateString, SimpleDateFormat dateFormat) {
+		dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+		try {
+			Date parsedDate = dateFormat.parse(dateString);
+			return new Timestamp(parsedDate.getTime());
+		} catch (ParseException e) {
+			log.error(String.valueOf(e));
+			return null;
+		}
+	}
 
 	protected String deleteHtmlTag(String content) {
 		String tagPattern = "<[^>]*>";

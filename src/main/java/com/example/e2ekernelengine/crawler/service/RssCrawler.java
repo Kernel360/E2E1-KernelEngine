@@ -15,6 +15,24 @@ public class RssCrawler {
 	private final ChannelRssCrawler channelRssCrawler;
 	private final NonChannelRssCrawler nonChannelRssCrawler;
 
+	/**
+	 * @param rssUrl rssURL of the tech blog
+	 */
+	public void assignRssCrawler(String rssUrl) {
+		Document document = connectRSSUrlAndGetXML(rssUrl);
+		if (isChannelTagExist(document)) {
+			// TODO: lastCrawledDate 변경하기
+			channelRssCrawler.crawlFeedFromBlog(document, rssUrl, null);
+		} else {
+			System.out.println("here");
+			nonChannelRssCrawler.crawlFeedFromBlog(document, rssUrl, null);
+		}
+	}
+
+	/**
+	 * @param rssFeedUrl rss에서 발췌한 피드의 URL
+	 * @return Jsoup Document 객체
+	 */
 	private Document connectRSSUrlAndGetXML(String rssFeedUrl) {
 		Document doc = null;
 		try {
@@ -29,14 +47,4 @@ public class RssCrawler {
 		return doc.selectFirst("channel") != null;
 	}
 
-	public void assignRssCrawler(String rssUrl) {
-		Document document = connectRSSUrlAndGetXML(rssUrl);
-		if (isChannelTagExist(document)) {
-			// TODO: lastCrawledDate 변경하기
-			channelRssCrawler.crawlFeedFromBlog(document, rssUrl, null);
-		} else {
-			System.out.println("here");
-			nonChannelRssCrawler.crawlFeedFromBlog(document, rssUrl, null);
-		}
-	}
 }
