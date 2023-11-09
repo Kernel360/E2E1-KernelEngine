@@ -7,11 +7,13 @@ spring:
       dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: validate
+
   datasource:
     url: ${MYSQL_DATABASE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${MYSQL_DATABASE_USERNAME}
     password: ${MYSQL_DATABASE_PASSWORD}
+
   thymeleaf:
     prefix: classpath:templates/
     check-template-location: true

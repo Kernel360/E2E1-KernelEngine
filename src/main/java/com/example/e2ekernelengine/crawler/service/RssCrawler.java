@@ -7,8 +7,10 @@ import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class RssCrawler {
 
@@ -38,7 +40,7 @@ public class RssCrawler {
 		try {
 			doc = Jsoup.connect(rssFeedUrl).get();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(String.valueOf(e));
 		}
 		return doc;
 	}
