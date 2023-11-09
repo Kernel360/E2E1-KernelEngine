@@ -50,14 +50,17 @@
 </head>
 <body>
 <header th:insert="fragments.html::nav"></header>
-<div class="container mt-5">
-    <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="/assets/mainLogo.png">
 
-    <div class="input-group mb-3">
-        <input aria-describedby="search-button" aria-label="검색어 입력" class="form-control" id="search-input"
-               name="query" placeholder="검색어를 입력하세요" type="text">
-    </div>
+<div class="container mt-5">
+    <form id="search-form" method="get">
+        <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="/assets/mainLogo.png">
+        <div class="input-group mb-3">
+            <input aria-describedby="search-button" aria-label="검색어 입력" class="form-control" id="search-input"
+                   name="query" placeholder="검색어를 입력하세요" type="text">
+        </div>
+    </form>
 </div>
+
 <div id="search-results">
     <h1>검색 결과</h1>
     <div class="container" id="feed-list-block">
@@ -114,7 +117,22 @@
             window.location.href = feedUrl;
         }
     });
-    
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchForm = document.getElementById("search-form");
+        const searchInput = document.getElementById("search-input");
+        console.log("addEventListener 동작 1")
+        searchForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const query = searchInput.value;
+            if (query) {
+                window.location.href = "/api/v1/feeds/search?q=" + encodeURIComponent(query);
+            }
+        });
+    });
+
+
 </script>
 
 
