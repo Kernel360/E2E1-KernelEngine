@@ -693,23 +693,40 @@ to get the desired effect
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Year', '지난주', '이번주'],
-            ['2004', 1000, 400],
-            ['2005', 1170, 460],
-            ['2006', 660, 1120],
-            ['2007', 1030, 540]
-        ]);
+        $.ajax({
+            url: `http://localhost:8080/api/v1/admin/user-count/query`,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
 
-        var options = {
-            title: '총 사용자 추이',
-            curveType: 'function',
-            legend: {position: 'bottom'}
-        };
+                const thisWeek = data.thisWeekTotalUserCountList;
+                const lastWeek = data.lastWeekTotalUserCountList;
+                console.log(thisWeek);
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                var tableData = google.visualization.arrayToDataTable([
+                    ['Date', '지난주', '이번주'],
+                    [thisWeek[0].date, lastWeek[0].totalUserCount, thisWeek[0].totalUserCount],
+                    [thisWeek[1].date, lastWeek[1].totalUserCount, thisWeek[1].totalUserCount],
+                    [thisWeek[2].date, lastWeek[2].totalUserCount, thisWeek[2].totalUserCount],
+                    [thisWeek[3].date, lastWeek[3].totalUserCount, thisWeek[3].totalUserCount],
+                    [thisWeek[4].date, lastWeek[4].totalUserCount, thisWeek[4].totalUserCount],
+                    [thisWeek[5].date, lastWeek[5].totalUserCount, thisWeek[5].totalUserCount]
+                ]);
 
-        chart.draw(data, options);
+                var options = {
+                    title: '총 사용자 추이',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                chart.draw(tableData, options);
+            },
+            error: function (error) {
+                console.error('데이터를 가져오는데 실패했습니다.', error);
+            }
+        });
     }
 </script>
 
