@@ -11,10 +11,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-import com.example.e2ekernelengine.blog.service.BlogService;
 import com.example.e2ekernelengine.crawler.dto.BlogDataDto;
 import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
-import com.example.e2ekernelengine.feed.service.FeedService;
+import com.example.e2ekernelengine.domain.blog.service.BlogService;
+import com.example.e2ekernelengine.domain.feed.service.FeedService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
