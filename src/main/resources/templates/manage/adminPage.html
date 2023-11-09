@@ -16,6 +16,19 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+
+<style>
+    .card-body {
+        display: flex;
+        flex-direction: column; /* 세로로 쌓이도록 설정 */
+        align-items: center; /* 가운데 정렬 */
+    }
+
+    #curve_chart {
+        width: 100%; /* 부모 요소(card-body)에 맞게 100%로 설정 */
+        height: 100%; /* 부모 요소(card-body)에 맞게 100%로 설정 */
+    }
+</style>
 <!--
 BODY TAG OPTIONS:
 =================
@@ -186,7 +199,7 @@ to get the desired effect
                         <div class="card">
                             <div class="card-header border-0">
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title">방문자 추이</h3>
+                                    <h3 class="card-title">가입자 추이</h3>
                                     <a href="javascript:void(0);">View Report</a>
                                 </div>
                             </div>
@@ -194,30 +207,32 @@ to get the desired effect
                                 <div class="d-flex">
                                     <p class="d-flex flex-column">
                                         <span class="text-bold text-lg">820</span>
-                                        <span>Visitors Over Time</span>
+                                        <span>총 가입자 추이</span>
                                     </p>
-                                    <p class="ml-auto d-flex flex-column text-right">
-                    <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 12.5%
-                    </span>
-                                        <span class="text-muted">Since last week</span>
-                                    </p>
+                                    <!--                                    TODO: 퍼센트 구현하기 -->
+                                    <!--                                    <p class="ml-auto d-flex flex-column text-right">-->
+                                    <!--                    <span class="text-success">-->
+                                    <!--                      <i class="fas fa-arrow-up"></i> 12.5% -->
+                                    <!--                    </span>-->
+                                    <!--                                        <span class="text-muted">Since last week</span>-->
+                                    <!--                                    </p>-->
                                 </div>
                                 <!-- /.d-flex -->
-
-                                <div class="position-relative mb-4">
-                                    <canvas height="200" id="visitors-chart"></canvas>
+                                    <div id="curve_chart"></div>
                                 </div>
+                                <!--                                <div class="position-relative mb-4">-->
+                                <!--                                    <canvas height="200" id="visitors-chart"></canvas>-->
+                                <!--                                </div>-->
 
-                                <div class="d-flex flex-row justify-content-end">
-                  <span class="mr-2">
-                    <i class="fas fa-square text-primary"></i> This Week
-                  </span>
+                                <!--                                <div class="d-flex flex-row justify-content-end">-->
+                                <!--                  <span class="mr-2">-->
+                                <!--                    <i class="fas fa-square text-primary"></i> This Week-->
+                                <!--                  </span>-->
 
-                                    <span>
-                    <i class="fas fa-square text-gray"></i> Last Week
-                  </span>
-                                </div>
+                                <!--                                    <span>-->
+                                <!--                    <i class="fas fa-square text-gray"></i> Last Week-->
+                                <!--                  </span>-->
+                                <!--                                </div>-->
                             </div>
                         </div>
                         <!-- /.card -->
@@ -672,6 +687,32 @@ to get the desired effect
 <!-- AdminLTE -->
 <script src="/dist/js/adminlte.js"></script>
 
+<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages': ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Year', '지난주', '이번주'],
+            ['2004', 1000, 400],
+            ['2005', 1170, 460],
+            ['2006', 660, 1120],
+            ['2007', 1030, 540]
+        ]);
+
+        var options = {
+            title: '총 사용자 추이',
+            curveType: 'function',
+            legend: {position: 'bottom'}
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+    }
+</script>
+
 <script>
 
     function initializeTable() {
@@ -736,12 +777,6 @@ to get the desired effect
             $.ajax({
                 url: 'http://localhost:8080/api/v1/blogs',
                 method: 'POST',
-                // data: {
-                //     description: $('#blogTitle').val(),
-                //     blogWriterName: $('#blogWriterName').val(),
-                //     rss: $('#blogRSS').val(),
-                //     blogOwnerType: $('select[name="blogType"]').val()
-                // },
                 data: JSON.stringify({
                     description: $('#blogTitle').val(),
                     blogWriterName: $('#blogWriterName').val(),
@@ -749,7 +784,7 @@ to get the desired effect
                     blogOwnerType: $('select[name="blogType"]').val()
                 }),
                 contentType: 'application/json',
-                
+
                 success: function (response) {
                     console.log('API 요청 성공', response);
                 },
