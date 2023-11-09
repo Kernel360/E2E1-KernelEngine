@@ -24,12 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value = "SELECT COUNT(*) AS count, DATE_FORMAT(user_registered_at, '%y-%m-%d') AS date " +
 			"FROM user " +
 			"WHERE DATE_FORMAT(user_registered_at, '%y-%m-%d') BETWEEN DATE_FORMAT(CURDATE() - INTERVAL 14 DAY, '%y-%m-%d') AND DATE_FORMAT(CURDATE(), '%y-%m-%d') "
-			+ "GROUP BY date", nativeQuery = true)
-	List<Object[]> getCountByDateInRange();
-
-	@Query(value = "SELECT COUNT(*) AS count, DATE_FORMAT(user_registered_at, '%y-%m-%d') AS date " +
-			"FROM user " +
-			"WHERE DATE_FORMAT(user_registered_at, '%y-%m-%d') BETWEEN DATE_FORMAT(CURDATE() - INTERVAL 14 DAY, '%y-%m-%d') AND DATE_FORMAT(CURDATE(), '%y-%m-%d') "
 			+ "GROUP BY date " +
 			"ORDER BY date", nativeQuery = true)
 	List<Object[]> getCountAndDateInRangeOrdered();
