@@ -26,13 +26,6 @@ logging:
   level:
     com.example: debug
     org.springframework.security: debug
-#    org:
-#      springframework:
-#        data:
-#          elasticsearch:
-#            client:
-#              WIRE: TRACE
-##                WIRE=TRACE
 
 server:
   port: 8080

@@ -1,1 +1,3 @@
 rootProject.name = 'e2e-kernel-engine'
+
+include 'module-batch'
