@@ -4,6 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.example.e2ekernelengine.domain.user.db.entity.User;
+import com.example.e2ekernelengine.domain.user.util.UserPermissionType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,12 +19,19 @@ public class UserRegisterRequestDto {
 	private String userEmail;
 	@NotBlank(message = "비밀번호가 입력되지 않았습니다.")
 	private String userPassword;
+	private boolean admin;
+
+	/*@Builder.Default
+	private UserPermissionType userPermissionType = UserPermissionType.USER;*/
+	private UserPermissionType userPermissionType;
 
 	public User toEntity(String encryptedPassword) {
+		UserPermissionType userPermissionType = this.admin ? UserPermissionType.ADMIN : UserPermissionType.USER;
 		return User.builder()
 				.userName(this.userName)
 				.userEmail(this.userEmail)
 				.userPassword(encryptedPassword)
+				.userPermissionType(userPermissionType)
 				.build();
 	}
 
