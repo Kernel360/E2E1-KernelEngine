@@ -57,7 +57,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public void leave(HttpServletRequest request, HttpServletResponse response) {
+	public void deleteAccount(HttpServletRequest request, HttpServletResponse response) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		Cookie[] cookies = request.getCookies();
@@ -70,14 +70,14 @@ public class UserService {
 							() -> new NotFoundException("No user found."));
 
 					user.leave();
-					logoutAfterLeave(request, response, authentication, cookies);
+					logoutAfterDeleteAccount(request, response, authentication, cookies);
 
 				}
 			}
 		}
 	}
 
-	public void logoutAfterLeave(
+	public void logoutAfterDeleteAccount(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Authentication authentication,

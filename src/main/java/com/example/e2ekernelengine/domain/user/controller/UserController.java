@@ -47,13 +47,13 @@ public class UserController {
 		return "mypage";
 	}
 
-	@PostMapping("/leave")
-	public String leave(
+	@PostMapping("/deleteAccount")
+	public String deleteAccount(
 			HttpServletRequest request,
 			HttpServletResponse response
 	) {
 
-		userService.leave(request, response);
+		userService.deleteAccount(request, response);
 
 		return "redirect:/";
 	}
