@@ -105,18 +105,6 @@
         });
     });
 
-    // document.addEventListener("submit", function () {
-    //     console.log("addEventListener 동작 2")
-    //     const query = document.getElementById("search-input");
-    //
-    //     function fetchFeedList() {
-    //         fetch("http://localhost:8080/search?q=" + query)
-    //             .then(response => {
-    //                 console.log("fetch feed list check");
-    //                 console.log(response);
-    //             })
-    //     }
-    // })
 
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -185,9 +173,9 @@
     });
 
 
-        function redirectToFeedUrl(feedUrl) {
-            window.location.href = feedUrl;
-        }
+    function redirectToFeedUrl(feedUrl) {
+        window.location.href = feedUrl;
+    }
 
 
 </script>
