@@ -17,9 +17,11 @@ configurations {
     }
 }
 
+
 repositories {
     mavenCentral()
 }
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -53,6 +55,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
 }
+
 
 tasks.named('test') {
     useJUnitPlatform()

@@ -14,25 +14,11 @@ spring:
     username: ${MYSQL_DATABASE_USERNAME}
     password: ${MYSQL_DATABASE_PASSWORD}
 
-
-  thymeleaf:
-    prefix: classpath:templates/
-    check-template-location: true
-    suffix: .html
-    mode: HTML
-    cache: false
-
-  thymeleaf3:
-    decoupled-logic: true
-
-logging:
-  level:
-    com.example: debug
-    org.springframework.security: debug
-
+  batch:
+    jdbc:
+      initialize-schema: always
 server:
-  port: 8080
-
+  port: 8081
 
 token:
   secret:
@@ -44,3 +30,4 @@ token:
   cookie:
     name: ${COOKIE_NAME}
     refresh-name: ${COOKIE_REFRESH_NAME}
+

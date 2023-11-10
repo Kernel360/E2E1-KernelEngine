@@ -15,7 +15,7 @@ public class DataLoader {
 	private final List<String> blogRssUrlList = new ArrayList<>();
 
 	@Autowired
-	DataLoader(RssCrawler rssCrawler) {
+	public DataLoader(RssCrawler rssCrawler) {
 		this.rssCrawler = rssCrawler;
 		// blogRssUrlList.add("https://hyperconnect.github.io/feed.xml");  // 링크 못 받아옴 -> entry
 		blogRssUrlList.add("https://engineering-skcc.github.io/feed.xml");
