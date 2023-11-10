@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.e2ekernelengine.domain.user.dto.request.UserRegisterRequestDto;
@@ -30,21 +29,6 @@ public class UserController {
 		UserResponseDto userResponseDto = userService.register(userRegisterRequestDto);
 		System.out.println(userResponseDto);
 		return "redirect:login";
-	}
-
-	@GetMapping("/login")
-	public String login() {
-		return "login";
-	}
-
-	@GetMapping("/signup")
-	public String signup() {
-		return "signup";
-	}
-
-	@GetMapping("/mypage")
-	public String mypages() {
-		return "mypage";
 	}
 
 	@PostMapping("/deleteAccount")

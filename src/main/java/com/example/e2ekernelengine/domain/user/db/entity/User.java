@@ -53,8 +53,7 @@ public class User {
 
 	@Column(name = "user_permission_type", columnDefinition = "VARCHAR(20)", nullable = false)
 	@Enumerated(EnumType.STRING)
-	@Builder.Default
-	private UserPermissionType userPermissionType = UserPermissionType.USER;
+	private UserPermissionType userPermissionType;
 
 	public void leave() {
 		this.userStatusType = UserStatusType.WITHDRAWAL;
