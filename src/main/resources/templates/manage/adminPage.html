@@ -199,15 +199,14 @@ to get the desired effect
                         <div class="card">
                             <div class="card-header border-0">
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title">가입자 추이</h3>
-                                    <a href="javascript:void(0);">View Report</a>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="d-flex">
                                     <p class="d-flex flex-column">
-                                        <span class="text-bold text-lg">820</span>
+                                        <span class="text-bold text-lg"></span>
                                         <span>총 가입자 추이</span>
+<!--                                        TODO: 총 가입자수 보여주기-->
                                     </p>
                                     <!--                                    TODO: 퍼센트 구현하기 -->
                                     <!--                                    <p class="ml-auto d-flex flex-column text-right">-->
@@ -804,6 +803,7 @@ to get the desired effect
 
                 success: function (response) {
                     console.log('API 요청 성공', response);
+                    location.reload();
                 },
                 error: function (error) {
                     console.error('API 요청 실패', error);
