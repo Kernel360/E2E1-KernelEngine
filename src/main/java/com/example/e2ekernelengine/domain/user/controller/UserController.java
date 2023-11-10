@@ -9,7 +9,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.e2ekernelengine.domain.user.dto.request.UserRegisterRequestDto;
@@ -39,21 +38,6 @@ public class UserController {
 		return "redirect:login";
 	}
 
-	@GetMapping("/login")
-	public String login() {
-		log.info("login request");
-		return "login";
-	}
-
-	@GetMapping("/signup")
-	public String signup() {
-		return "signup";
-	}
-
-	@GetMapping("/mypage")
-	public String mypages() {
-		return "mypage";
-	}
 
 	@PostMapping("/deleteAccount")
 	public String deleteAccount(
