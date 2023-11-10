@@ -14,6 +14,26 @@ public class HomeController {
 		return "index";
 	}
 
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+
+	@GetMapping("/signup")
+	public String signup() {
+		return "signup";
+	}
+
+	@GetMapping("/mypage")
+	public String mypages() {
+		return "mypage";
+	}
+
+	@GetMapping("/admin")
+	public String adminpage() {
+		return "/manage/adminPage";
+	}
+
 	@GetMapping("/api/v1/manage")
 	public String getManagePage() {
 		return "/manage/adminPage";
