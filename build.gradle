@@ -56,25 +56,6 @@ dependencies {
 
 }
 
-//subprojects {
-//    apply plugin: 'java'
-//    apply plugin: 'org.springframework.boot'
-//    apply plugin: 'io.spring.dependency-management'
-//
-//    sourceCompatibility = '11'
-//    targetCompatibility = '11'
-//
-//    repositories {
-//        mavenCentral()
-//    }
-//
-//    dependencies {
-//        implementation 'org.springframework.boot:spring-boot-starter'
-//        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//        compileOnly 'org.projectlombok:lombok'
-//        annotationProcessor 'org.projectlombok:lombok'
-//    }
-//}
 
 tasks.named('test') {
     useJUnitPlatform()
