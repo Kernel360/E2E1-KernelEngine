@@ -63,6 +63,7 @@ public class FeedService {
 					.feedDescription(feedData.getDescription())
 					.feedCreatedAt(feedData.getPubDate())
 					.feedContent(feedData.getContent())
+					.accessCount(0)
 					.build();
 			feedRepository.save(feed);
 		}
@@ -70,6 +71,13 @@ public class FeedService {
 
 	public Page<FeedPageableResponse> findRecentFeedList(Pageable pageable) {
 		return feedRepository.findAll(pageable).map(FeedPageableResponse::fromEntity);
+	}
+
+	public void increaseDailyAccessCount(Long feedId) {
+		Feed feed = feedRepository.findById(feedId)
+				.orElseThrow(() -> new NotFoundException("해당 피드가 존재하지 않습니다"));
+		feed.increaseAccessCount();
+		feedRepository.save(feed);
 	}
 
 }
