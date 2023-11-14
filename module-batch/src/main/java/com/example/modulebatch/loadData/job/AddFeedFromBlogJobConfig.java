@@ -1,4 +1,4 @@
-package com.example.modulebatch.job;
+package com.example.modulebatch.loadData.job;
 
 import javax.persistence.EntityManagerFactory;
 

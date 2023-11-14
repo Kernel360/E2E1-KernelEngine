@@ -1,4 +1,4 @@
-package com.example.modulebatch.scheduler;
+package com.example.modulebatch;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.example.modulebatch.count.job.MakeFeedStatisticsJobConfig;
-import com.example.modulebatch.job.AddFeedFromBlogJobConfig;
+import com.example.modulebatch.loadData.job.AddFeedFromBlogJobConfig;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class BatchScheduler {
+public class BatchJobScheduler {
 	private final JobLauncher jobLauncher;
 	private final AddFeedFromBlogJobConfig addFeedFromBlogJobConfig;
 	private final MakeFeedStatisticsJobConfig makeFeedStatisticsJobConfig;
