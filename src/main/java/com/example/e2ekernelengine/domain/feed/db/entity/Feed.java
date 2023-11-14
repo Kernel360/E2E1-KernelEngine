@@ -48,9 +48,12 @@ public class Feed {
 	@Column(name = "feed_description", columnDefinition = "TEXT")
 	private String feedDescription;
 
+	@Column(name = "feed_visit_count")
+	private Integer visitCount;
+
 	@Builder
 	public Feed(Long feedId, Blog blog, String feedUrl, String feedTitle, String feedDescription, String feedContent,
-			Timestamp feedCreatedAt) {
+			Timestamp feedCreatedAt, Integer visitCount) {
 		this.feedId = feedId;
 		this.blog = blog;
 		this.feedUrl = feedUrl;
@@ -58,5 +61,14 @@ public class Feed {
 		this.feedDescription = feedDescription;
 		this.feedContent = feedContent;
 		this.feedCreatedAt = feedCreatedAt;
+		this.visitCount = visitCount;
+	}
+
+	public void increaseVisitCount() {
+		this.visitCount++;
+	}
+
+	public void resetVisitCount() {
+		this.visitCount = 0;
 	}
 }

@@ -151,7 +151,7 @@
                 feedDiv.innerHTML = `
             <div>
                 <form id="feed-box">
-                    <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">
+                    <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}'); increaseDailyAccessCount('${feed.feedId}');">
                         <div class="col-md-auto">
                                 <p id="feedId" style="display:none;">${feed.feedId}</p>
                                 <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>
@@ -175,6 +175,23 @@
 
     function redirectToFeedUrl(feedUrl) {
         window.location.href = feedUrl;
+    }
+    function increaseDailyAccessCount(feedId) {
+        const xhr = new XMLHttpRequest();
+        xhr.open(`POST`, `/api/v1/feeds/visit/` + feedId, true);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // 성공적으로 요청이 처리되었을 때의 로직
+                    console.log('Daily access count updated successfully.');
+                } else {
+                    // 요청이 실패했을 때의 로직
+                    console.error('Failed to update daily access count.');
+                }
+            }
+        };
+        xhr.send();
     }
 
 

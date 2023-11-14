@@ -86,7 +86,7 @@
                     /* feed 객체 정보를 콘솔에 출력 */
                     console.log([[${feed.feedUrl}]]);
                 </script>
-                <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">
+                <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}'); increaseDailyAccessCount('${feed.feedId}');">
                     <div class="col-md-auto">
                         <p id="feedId" style="display:none;" th:text="${feed.feedId}"></p>
                         <p id="feedUrl" style="display:none;" th:text="${feed.feedUrl}"></p>
@@ -109,12 +109,31 @@
 
     $(document).ready(function () {
         $(".row.justify-content-md-center").on("click", function () {
-            var feedUrl = $(this).find("#feedUrl").text();
+            const feedUrl = $(this).find("#feedUrl").text();
+            const feedId = $(this).find("#feedId").text();
+            increaseDailyAccessCount(feedId);
             redirectToFeedUrl(feedUrl);
         });
 
         function redirectToFeedUrl(feedUrl) {
             window.location.href = feedUrl;
+        }
+        function increaseDailyAccessCount(feedId) {
+            const xhr = new XMLHttpRequest();
+            xhr.open(`POST`, `/api/v1/feeds/visit/` + feedId, true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // 성공적으로 요청이 처리되었을 때의 로직
+                        console.log('Daily access count updated successfully.');
+                    } else {
+                        // 요청이 실패했을 때의 로직
+                        console.error('Failed to update daily access count.');
+                    }
+                }
+            };
+            xhr.send();
         }
     });
 
