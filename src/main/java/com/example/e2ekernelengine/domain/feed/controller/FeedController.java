@@ -47,7 +47,7 @@ public class FeedController {
 		return ResponseEntity.ok(feedList);
 	}
 
-	@PostMapping("/updateDailyAccessCount/{feedId}")
+	@PostMapping("/visit/{feedId}")
 	public void updateDailyAccessCount(@PathVariable Long feedId) {
 		feedService.increaseDailyAccessCount(feedId);
 	}
