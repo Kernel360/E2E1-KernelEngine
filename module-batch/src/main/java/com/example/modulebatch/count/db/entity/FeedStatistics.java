@@ -1,4 +1,4 @@
-package com.example.modulebatch.count.repository;
+package com.example.modulebatch.count.db.entity;
 
 import java.time.LocalDateTime;
 
