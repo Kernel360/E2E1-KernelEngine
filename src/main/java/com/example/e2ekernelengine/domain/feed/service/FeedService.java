@@ -76,7 +76,7 @@ public class FeedService {
 	public void increaseDailyAccessCount(Long feedId) {
 		Feed feed = feedRepository.findById(feedId)
 				.orElseThrow(() -> new NotFoundException("해당 피드가 존재하지 않습니다"));
-		feed.increaseAccessCount();
+		feed.increaseVisitCount();
 		feedRepository.save(feed);
 	}
 

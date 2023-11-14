@@ -105,7 +105,7 @@ public class MakeFeedStatisticsJobConfig {
 	@StepScope
 	public ItemProcessor<Feed, Feed> resetFeedVisitCountItemProcessor() {
 		return item -> {
-			item.resetAccessCount();
+			item.resetVisitCount();
 			return item;
 		};
 	}
