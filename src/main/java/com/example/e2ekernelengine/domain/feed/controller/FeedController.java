@@ -48,8 +48,8 @@ public class FeedController {
 	}
 
 	@PostMapping("/visit/{feedId}")
-	public void updateDailyAccessCount(@PathVariable Long feedId) {
-		feedService.increaseDailyAccessCount(feedId);
+	public void updateDailyVisitCount(@PathVariable Long feedId) {
+		feedService.increaseDailyVisitCount(feedId);
 	}
 
 }

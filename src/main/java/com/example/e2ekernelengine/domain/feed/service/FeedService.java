@@ -73,7 +73,7 @@ public class FeedService {
 		return feedRepository.findAll(pageable).map(FeedPageableResponse::fromEntity);
 	}
 
-	public void increaseDailyAccessCount(Long feedId) {
+	public void increaseDailyVisitCount(Long feedId) {
 		Feed feed = feedRepository.findById(feedId)
 				.orElseThrow(() -> new NotFoundException("해당 피드가 존재하지 않습니다"));
 		feed.increaseVisitCount();

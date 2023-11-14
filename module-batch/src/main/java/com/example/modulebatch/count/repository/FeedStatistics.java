@@ -20,15 +20,15 @@ public class FeedStatistics {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long feedStatId;
 	private Long feedId;
-	private LocalDateTime createdAt;
+	private LocalDateTime statisticsAt;
 
-	private Integer accessCount;
+	private Integer visitCount;
 
 	public static FeedStatistics create(final Feed feed) {
 		FeedStatistics statistics = new FeedStatistics();
-		statistics.accessCount = feed.getVisitCount();
+		statistics.visitCount = feed.getVisitCount();
 		statistics.feedId = feed.getFeedId();
-		statistics.createdAt = LocalDateTime.now().minusDays(1);
+		statistics.statisticsAt = LocalDateTime.now().minusDays(1);
 		return statistics;
 	}
 }

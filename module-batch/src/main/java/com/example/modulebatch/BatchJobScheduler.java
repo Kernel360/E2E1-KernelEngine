@@ -27,7 +27,7 @@ public class BatchJobScheduler {
 	private final AddFeedFromBlogJobConfig addFeedFromBlogJobConfig;
 	private final MakeFeedStatisticsJobConfig makeFeedStatisticsJobConfig;
 
-	@Scheduled(initialDelay = 0, fixedRate = 600000)
+	@Scheduled(initialDelay = 0, fixedRate = 6000000)
 	// @Scheduled(cron = "0 0 4 * * ?")
 	public void runJob() {
 		Map<String, JobParameter> confMap = new HashMap<>();
@@ -41,7 +41,7 @@ public class BatchJobScheduler {
 				log.error(String.valueOf(e));
 		}
 	}
-	@Scheduled(initialDelay = 300000, fixedRate = 600000)
+	@Scheduled(initialDelay = 240000, fixedRate = 6000000)
 	// @Scheduled(cron = "0 0 3 * * ?")
 	public void runMakeDailyStatistics(){
 		Map<String, JobParameter> confMap = new HashMap<>();
