@@ -1,4 +1,3 @@
-
 spring:
   jpa:
     show-sql: true
@@ -7,23 +6,41 @@ spring:
       database: mysql
       dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
+
   datasource:
     url: ${MYSQL_DATABASE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${MYSQL_DATABASE_USERNAME}
     password: ${MYSQL_DATABASE_PASSWORD}
 
+
+  thymeleaf:
+    prefix: classpath:templates/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+    cache: false
+
+  thymeleaf3:
+    decoupled-logic: true
+
 logging:
   level:
     com.example: debug
-#    org:
-#      springframework:
-#        data:
-#          elasticsearch:
-#            client:
-#              WIRE: TRACE
-##                WIRE=TRACE
+    org.springframework.security: debug
 
 server:
   port: 8080
+
+
+token:
+  secret:
+    key: ${JWT_SECRET_KEY}
+  access-token:
+    plus-minute: 30
+  refresh-token:
+    plus-hour: 24
+  cookie:
+    name: ${COOKIE_NAME}
+    refresh-name: ${COOKIE_REFRESH_NAME}

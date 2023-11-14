@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="css/signin.css" rel="stylesheet" type="text/css">
+    <head th:insert="fragments.html::header"></head>
+</head>
+<body>
+<header th:insert="fragments.html::nav"></header>
+<div class="container">
+    <form class="form-signin" method="post" th:action="@{/login}">
+        <h2 class="form-signin-heading">로그인</h2>
+        <p>
+            <label class="sr-only" for="userEmail">UserEmail</label>
+            <input autofocus class="form-control" id="userEmail" name="userEmail" placeholder="userEmail" required
+                   type="text">
+        </p>
+        <p>
+            <label class="sr-only" for="userPassword">Password</label>
+            <input class="form-control" id="userPassword" name="userPassword" placeholder="userPassword" required
+                   type="password">
+        </p>
+        <div>
+            <span>로그인 유지하기</span>
+            <input autocomplete="off" class="form-check-input mt-0" id="remember-me" name="remember-me" type="checkbox">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+    </form>
+</div>
+</body>
+</html>

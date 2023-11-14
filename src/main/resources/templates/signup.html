@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link href="css/signin.css" rel="stylesheet" type="text/css">
+    <head th:insert="fragments.html::header"></head>
+</head>
+<body>
+<header th:insert="fragments.html::nav"></header>
+<div class="container">
+    <form class="form-signin" method="post" th:action="@{/signup}">
+        <h2 class="form-signin-heading">회원가입</h2>
+        <!--회원가입에 필요한 요소들 추가-->
+        <p>
+            <label class="sr-only" for="userEmail">Name</label>
+            <input autofocus class="form-control" id="userName" name="userName" placeholder="userName" required
+                   type="text">
+        </p>
+        <p>
+            <label class="sr-only" for="userEmail">Email</label>
+            <input autofocus class="form-control" id="userEmail" name="userEmail" placeholder="userEmail" required
+                   type="text">
+        </p>
+        <p>
+            <label class="sr-only" for="userPassword">Password</label>
+            <input class="form-control" id="userPassword" name="userPassword" placeholder="userPassword" required
+                   type="password">
+        </p>
+        <p>
+            <input id="admin" name="admin" type="checkbox" value="true">Admin<br>
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">회원가입</button>
+    </form>
+</div>
+</body>
+</html>
