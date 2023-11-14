@@ -1,4 +1,4 @@
-package com.example.modulebatch.count.job;
+package com.example.modulebatch.feed.job;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.e2ekernelengine.domain.feed.db.entity.Feed;
-import com.example.modulebatch.count.db.entity.FeedStatistics;
+import com.example.modulebatch.feed.db.entity.FeedStatistics;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
