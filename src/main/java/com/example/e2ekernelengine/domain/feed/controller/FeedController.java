@@ -47,6 +47,14 @@ public class FeedController {
 		return ResponseEntity.ok(feedList);
 	}
 
+	@GetMapping("/most-clicked")
+	public ResponseEntity<Page<FeedPageableResponse>> findMostClickedFeedList(
+			@PageableDefault(size = 5, sort = "visitCount", direction = Sort.Direction.DESC) Pageable pageable) {
+
+		Page<FeedPageableResponse> feedList = feedService.findMostClickedFeedList(pageable);
+		return ResponseEntity.ok(feedList);
+	}
+
 	@PostMapping("/visit/{feedId}")
 	public void updateDailyVisitCount(@PathVariable Long feedId) {
 		feedService.increaseDailyVisitCount(feedId);

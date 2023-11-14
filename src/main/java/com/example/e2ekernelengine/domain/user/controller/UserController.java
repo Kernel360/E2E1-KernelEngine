@@ -27,17 +27,15 @@ public class UserController {
 	@PostMapping("/signup")
 	public String register(
 			@Valid
-					Optional<UserRegisterRequestDto> userRegisterRequestDto
+			Optional<UserRegisterRequestDto> userRegisterRequestDto
 	) {
 		log.info("register request | {}",
 				userRegisterRequestDto.get().getUserName() + " " + userRegisterRequestDto.get().getUserEmail() + " "
 						+ userRegisterRequestDto.get().getUserPassword());
 		UserResponseDto userResponseDto = userService.register(userRegisterRequestDto);
-		// System.out.println(userResponseDto);
 		log.info("request finished");
 		return "redirect:login";
 	}
-
 
 	@PostMapping("/deleteAccount")
 	public String deleteAccount(
