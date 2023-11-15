@@ -74,8 +74,7 @@ public class FeedService {
 	}
 
 	public Page<FeedPageableResponse> findMostClickedFeedList(Pageable pageable) {
-		return feedRepository.findAllByOrderByVisitCountDesc(pageable)
-				.map(FeedPageableResponse::fromEntity);
+		return feedRepository.findAll(pageable).map(FeedPageableResponse::fromEntity);
 	}
 
 	public void increaseDailyVisitCount(Long feedId) {

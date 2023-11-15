@@ -18,7 +18,5 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
 	List<Feed> searchFeedsByKeyword(@Param("keyword") String keyword);
 
 	Page<Feed> findAll(Pageable request);
-	
-	Page<Feed> findAllByOrderByVisitCountDesc(Pageable request);
 
 }
