@@ -60,7 +60,7 @@ public class FeedService {
 					.feedDescription(feedData.getDescription())
 					.feedCreatedAt(feedData.getPubDate())
 					.feedContent(feedData.getContent())
-					.visitCount(0)
+					.feedVisitCount(0)
 					.build();
 			feedRepository.save(feed);
 		}
