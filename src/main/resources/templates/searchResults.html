@@ -56,7 +56,7 @@
         <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="/assets/mainLogo.png">
         <div class="input-group mb-3">
             <input aria-describedby="search-button" aria-label="검색어 입력" class="form-control" id="search-input"
-                   name="query" placeholder="검색어를 입력하세요" type="text">
+                   name="q" placeholder="검색어를 입력하세요" type="text">
         </div>
     </form>
 </div>
@@ -65,28 +65,13 @@
     <h1>검색 결과</h1>
     <div class="container" id="feed-list-block">
         <form id="feed-list">
-            <div th:each="feed : ${feedList}">
-                <!--                <div>-->
-                <!--                    <form id="feed-box">-->
-                <!--                        <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">-->
-                <!--                            <div class="col-md-auto">-->
-                <!--                                <p id="feedId" style="display:none;">${feed.feedId}</p>-->
-                <!--                                <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>-->
-
-                <!--                                <p id="feedTitle">제목: ${feed.feedTitle}</p>-->
-                <!--                                <p id="blogWriterName">작성자: ${feed.blogWriterName}</p>-->
-                <!--                                <p id="feedDescription">내용: ${feed.feedDescription}</p>-->
-                <!--                                <p id="feedCreatedAt">생성일: ${feed.feedCreatedAt}</p>-->
-                <!--                            </div>-->
-                <!--                        </div>-->
-                <!--                    </form>-->
-                <!--                </div>-->
-                <!--                <form id="feed-box" th:action="@{/redirectToFeedUrl}" th:object="${feed}">-->
+            <div th:each="feed : ${feedPage}">
                 <script th:inline="javascript">
                     /* feed 객체 정보를 콘솔에 출력 */
                     console.log([[${feed.feedUrl}]]);
                 </script>
-                <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}'); increaseDailyAccessCount('${feed.feedId}');">
+                <div class="row justify-content-md-center"
+                     onclick="redirectToFeedUrl('${feed.feedUrl}'); increaseDailyAccessCount('${feed.feedId}');">
                     <div class="col-md-auto">
                         <p id="feedId" style="display:none;" th:text="${feed.feedId}"></p>
                         <p id="feedUrl" style="display:none;" th:text="${feed.feedUrl}"></p>
@@ -98,6 +83,21 @@
                     </div>
                 </div>
                 <!--                </form>-->
+            </div>
+            <div class="container">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:if="${feedPage.hasPrevious()}">
+                        <a class="page-link" th:href="@{/api/v1/feeds/search(q=${query}, page=${feedPage.number - 1})}">이전</a>
+                    </li>
+                    <li class="page-item" th:classappend="${pageNum == feedPage.number} ? 'active'"
+                        th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
+                        <a class="page-link" th:href="@{/api/v1/feeds/search(q=${query}, page=${pageNum})}"
+                           th:text="${pageNum + 1}"></a>
+                    </li>
+                    <li class="page-item" th:if="${feedPage.hasNext()}">
+                        <a class="page-link" th:href="@{/api/v1/feeds/search(q=${query}, page=${feedPage.number + 1})}">다음</a>
+                    </li>
+                </ul>
             </div>
         </form>
     </div>
@@ -118,6 +118,7 @@
         function redirectToFeedUrl(feedUrl) {
             window.location.href = feedUrl;
         }
+
         function increaseDailyAccessCount(feedId) {
             const xhr = new XMLHttpRequest();
             xhr.open(`POST`, `/api/v1/feeds/visit/` + feedId, true);

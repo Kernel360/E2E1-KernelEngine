@@ -1,7 +1,6 @@
 package com.example.e2ekernelengine.domain.feed.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,14 +28,12 @@ public class FeedService {
 	}
 
 	@Transactional
-	public List<FeedPageableResponse> searchFeedsByKeyword(String keyword) {
+	public Page<FeedPageableResponse> searchFeedsByKeyword(String keyword, Pageable pageable) {
 
-		List<Feed> searchFeedsByKeyword = feedRepository.searchFeedsByKeyword(keyword);
+		Page<Feed> page = feedRepository.searchFeedsByKeyword(keyword, pageable);
 		// List<Long> searchBlogsByBlogWriterName = blogJpaRepository.findBlogIdsByBlogWriterName(keyword);
 
-		return searchFeedsByKeyword.stream()
-				.map(FeedPageableResponse::fromEntity)
-				.collect(Collectors.toList());
+		return page.map(FeedPageableResponse::fromEntity);
 
 		// for (Long blogId : searchBlogsByBlogWriterName) {
 		// 	List<Feed> blogFeeds = feedRepository.searchFeedsByBlog_BlogId(blogId);

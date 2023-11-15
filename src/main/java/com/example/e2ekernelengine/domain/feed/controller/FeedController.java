@@ -1,7 +1,5 @@
 package com.example.e2ekernelengine.domain.feed.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -31,11 +29,20 @@ public class FeedController {
 
 	@GetMapping("/search")
 	public ModelAndView searchFeedByKeyword(
-			@RequestParam(value = "q") String keyword) {
+			@RequestParam(value = "q") String keyword,
+			@PageableDefault(size = 5, sort = "feedCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
 		ModelAndView model = new ModelAndView("searchResults");
-		List<FeedPageableResponse> feedList = feedService.searchFeedsByKeyword(keyword);
-		log.debug("after service logic {}", feedList);
-		model.addObject("feedList", feedList);
+		Page<FeedPageableResponse> feedPage = feedService.searchFeedsByKeyword(keyword, pageable);
+		log.debug("after service logic {}", feedPage);
+		int currentPage = feedPage.getNumber();
+		int totalPages = feedPage.getTotalPages();
+		int startPage = Math.max(0, currentPage - 2);
+		int endPage = Math.min(currentPage + 2, totalPages - 1);
+
+		model.addObject("feedPage", feedPage);
+		model.addObject("query", keyword);
+		model.addObject("startPage", startPage);
+		model.addObject("endPage", endPage);
 		return model;
 	}
 
