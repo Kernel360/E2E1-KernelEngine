@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AddDailyRegisteredUserJobConfig {
 	private final JobBuilderFactory jbf;
 	private final StepBuilderFactory sbf;
-	private final addDailyRegisteredUserTasklet dailyRegisteredUserTasklet;
+	private final AddDailyRegisteredUserTasklet dailyRegisteredUserTasklet;
 
 	@Bean
 	public Job addDailyRegisteredUserJob() {
