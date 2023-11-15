@@ -59,7 +59,7 @@ public class BatchJobScheduler {
 		}
 	}
 	// @Scheduled(initialDelay = 150000, fixedRate = 300000000)
-	@Scheduled(cron = "0 0 3 30 0 ?")
+	@Scheduled(cron = "0 0 3 * * ?")
 	public void runMakeUserStatistics() {
 		Map<String, JobParameter> confMap = new HashMap<>();
 		confMap.put("time", new JobParameter(System.currentTimeMillis()));
