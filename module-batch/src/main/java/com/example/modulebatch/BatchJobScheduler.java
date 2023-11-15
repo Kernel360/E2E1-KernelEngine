@@ -13,8 +13,9 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.example.modulebatch.count.job.MakeFeedStatisticsJobConfig;
+import com.example.modulebatch.feed.job.MakeFeedStatisticsJobConfig;
 import com.example.modulebatch.loadData.job.AddFeedFromBlogJobConfig;
+import com.example.modulebatch.user.job.AddDailyRegisteredUserJobConfig;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +27,10 @@ public class BatchJobScheduler {
 	private final JobLauncher jobLauncher;
 	private final AddFeedFromBlogJobConfig addFeedFromBlogJobConfig;
 	private final MakeFeedStatisticsJobConfig makeFeedStatisticsJobConfig;
+	private final AddDailyRegisteredUserJobConfig addDailyRegisteredUserJobConfig;
 
-	@Scheduled(initialDelay = 0, fixedRate = 6000000)
-	// @Scheduled(cron = "0 0 4 * * ?")
+	// @Scheduled(initialDelay = 0, fixedRate = 600000000)
+	@Scheduled(cron = "0 0 4 * * ?")
 	public void runJob() {
 		Map<String, JobParameter> confMap = new HashMap<>();
 		confMap.put("time", new JobParameter(System.currentTimeMillis()));
@@ -38,18 +40,33 @@ public class BatchJobScheduler {
 			jobLauncher.run(addFeedFromBlogJobConfig.addFeedFromDataLoaderJob(), jobParameters);
 		} catch (JobInstanceAlreadyCompleteException | JobExecutionAlreadyRunningException | JobParametersInvalidException |
 						 JobRestartException e) {
-				log.error(String.valueOf(e));
+			log.error(String.valueOf(e));
 		}
 	}
-	@Scheduled(initialDelay = 240000, fixedRate = 6000000)
-	// @Scheduled(cron = "0 0 3 * * ?")
-	public void runMakeDailyStatistics(){
+
+	// @Scheduled(initialDelay = 300000, fixedRate = 60000000)
+	@Scheduled(cron = "0 0 3 * * ?")
+	public void runMakeDailyStatistics() {
 		Map<String, JobParameter> confMap = new HashMap<>();
 		confMap.put("time", new JobParameter(System.currentTimeMillis()));
 		JobParameters jobParameters = new JobParameters(confMap);
 
 		try {
-			jobLauncher.run(makeFeedStatisticsJobConfig.makeStatisticsJob(),jobParameters);
+			jobLauncher.run(makeFeedStatisticsJobConfig.makeStatisticsJob(), jobParameters);
+		} catch (JobExecutionAlreadyRunningException | JobParametersInvalidException | JobInstanceAlreadyCompleteException |
+						 JobRestartException e) {
+			log.error(String.valueOf(e));
+		}
+	}
+	// @Scheduled(initialDelay = 150000, fixedRate = 300000000)
+	@Scheduled(cron = "0 0 3 * * ?")
+	public void runMakeUserStatistics() {
+		Map<String, JobParameter> confMap = new HashMap<>();
+		confMap.put("time", new JobParameter(System.currentTimeMillis()));
+		JobParameters jobParameters = new JobParameters(confMap);
+
+		try {
+			jobLauncher.run(addDailyRegisteredUserJobConfig.addDailyRegisteredUserJob(), jobParameters);
 		} catch (JobExecutionAlreadyRunningException | JobParametersInvalidException | JobInstanceAlreadyCompleteException |
 						 JobRestartException e) {
 			log.error(String.valueOf(e));
