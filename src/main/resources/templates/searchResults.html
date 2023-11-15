@@ -59,6 +59,15 @@
                    name="q" placeholder="검색어를 입력하세요" type="text">
         </div>
     </form>
+    <div class="col-sm-2 offset-sm-10">
+        <div class="form-group">
+            <label for="sort-option">정렬 기준</label>
+            <select class="form-control" id="sort-option">
+                <option value="recent">최신순</option>
+                <option value="clicked">조회순</option>
+            </select>
+        </div>
+    </div>
 </div>
 
 <div id="search-results">
@@ -114,6 +123,23 @@
             increaseDailyAccessCount(feedId);
             redirectToFeedUrl(feedUrl);
         });
+
+        $('#sort-option').on("change", function (event) {
+            event.preventDefault();
+
+            const selectedOption = $(this).val();
+            const queryParams = new URLSearchParams(window.location.search);
+            const query = queryParams.get('q');
+            console.log(query);
+            let url = '/api/v1/feeds/search?q=' + encodeURIComponent(query);
+
+            if (selectedOption === 'clicked') {
+                url = '/api/v1/feeds/search/most-visited?q=' + encodeURIComponent(query);
+            }
+
+            window.location.href = url;
+        });
+
 
         function redirectToFeedUrl(feedUrl) {
             window.location.href = feedUrl;

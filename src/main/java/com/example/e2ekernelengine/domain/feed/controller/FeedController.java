@@ -46,6 +46,25 @@ public class FeedController {
 		return model;
 	}
 
+	@GetMapping("/search/most-visited")
+	public ModelAndView searchFeedByKeywordOrderByMostVisited(
+			@RequestParam(value = "q") String keyword,
+			@PageableDefault(size = 5, sort = "feedVisitCount", direction = Sort.Direction.DESC) Pageable pageable) {
+		ModelAndView model = new ModelAndView("searchResults");
+		Page<FeedPageableResponse> feedPage = feedService.searchFeedsByKeyword(keyword, pageable);
+		log.debug("after service logic {}", feedPage);
+		int currentPage = feedPage.getNumber();
+		int totalPages = feedPage.getTotalPages();
+		int startPage = Math.max(0, currentPage - 2);
+		int endPage = Math.min(currentPage + 2, totalPages - 1);
+
+		model.addObject("feedPage", feedPage);
+		model.addObject("query", keyword);
+		model.addObject("startPage", startPage);
+		model.addObject("endPage", endPage);
+		return model;
+	}
+
 	@GetMapping("")
 	public ResponseEntity<Page<FeedPageableResponse>> findRecentFeedList(
 			@PageableDefault(size = 5, sort = "feedCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
