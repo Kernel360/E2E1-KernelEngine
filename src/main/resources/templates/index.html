@@ -63,6 +63,16 @@
                            name="query" placeholder="검색어를 입력하세요" type="text">
                 </div>
             </form>
+            <div class="col-sm-2 offset-sm-10">
+                <div class="form-group">
+                    <label for="sort-option">정렬 기준</label>
+                    <select class="form-control" id="sort-option">
+                        <!--<select class="form-control" id="sort-option" onchange="redirectToFeedUrl('${feed.feedUrl}')">-->
+                        <option value="recent">최신순</option>
+                        <option value="clicked">조회순</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <div class="container" id="feed-list-block">
@@ -119,11 +129,28 @@
             blogWriterName: ""
         };
 
+        const sortOption = document.getElementById("sort-option");
+        sortOption.addEventListener("change", function (event) {
+            event.preventDefault();
+            handleSortChange();
+        });
+
+        function handleSortChange() {
+            fetchFeedList();
+        }
+
         function fetchFeedList() {
-            fetch(`http://localhost:8080/api/v1/feeds`, {
+            const sortOption = document.getElementById("sort-option").value;
+            let url = `http://localhost:8080/api/v1/feeds`;
+
+            if (sortOption === "clicked") {
+                url = `http://localhost:8080/api/v1/feeds/most-clicked`;
+            }
+
+            fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Content-Type': 'application/json', // JSON 형태의 데이터 전송
+                    'Content-Type': 'application/json',
                 },
             })
                 .then(response => {
@@ -133,19 +160,17 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
                     const feedList = data.content;
-                    console.log(feedList);
                     renderFeedList(feedList);
                 })
                 .catch(error => {
-                    // 오류 처리
                     console.error('Error:', error);
                 });
         }
 
         // 피드 목록을 화면에 표시
         function renderFeedList(feedList) {
+            commentListContainer.innerHTML = '';
             feedList.forEach(feed => {
                 const feedDiv = document.createElement("div");
                 feedDiv.innerHTML = `
@@ -176,6 +201,7 @@
     function redirectToFeedUrl(feedUrl) {
         window.location.href = feedUrl;
     }
+
     function increaseDailyAccessCount(feedId) {
         const xhr = new XMLHttpRequest();
         xhr.open(`POST`, `/api/v1/feeds/visit/` + feedId, true);
