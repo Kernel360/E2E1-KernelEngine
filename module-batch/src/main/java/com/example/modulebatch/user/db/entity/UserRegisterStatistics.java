@@ -12,7 +12,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class UserStatistics {
+public class UserRegisterStatistics {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long user_stat_id;
@@ -23,8 +23,8 @@ public class UserStatistics {
 	@Column(name = "registered_count")
 	private Integer registeredCount;
 
-	public static UserStatistics create(int registeredCount) {
-		UserStatistics statistics = new UserStatistics();
+	public static UserRegisterStatistics create(int registeredCount) {
+		UserRegisterStatistics statistics = new UserRegisterStatistics();
 		statistics.registeredCount = registeredCount;
 		statistics.statisticsAt = LocalDateTime.now().minusDays(1);
 		return statistics;

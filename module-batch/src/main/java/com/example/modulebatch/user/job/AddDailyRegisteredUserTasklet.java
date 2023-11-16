@@ -2,8 +2,6 @@ package com.example.modulebatch.user.job;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,8 +15,8 @@ import org.springframework.stereotype.Component;
 
 import com.example.e2ekernelengine.domain.user.db.entity.User;
 import com.example.e2ekernelengine.domain.user.db.repository.UserRepository;
-import com.example.modulebatch.user.db.repository.UserStatisticsRepository;
-import com.example.modulebatch.user.db.entity.UserStatistics;
+import com.example.modulebatch.user.db.entity.UserRegisterStatistics;
+import com.example.modulebatch.user.db.repository.UserRegisterStatisticsRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,19 +25,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @StepScope
 @RequiredArgsConstructor
-public class addDailyRegisteredUserTasklet implements Tasklet {
-	private final UserStatisticsRepository userStatisticsRepository;
+public class AddDailyRegisteredUserTasklet implements Tasklet {
+	private final UserRegisterStatisticsRepository userRegisterStatisticsRepository;
 	private final UserRepository userRepository;
 
 	@Transactional
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		LocalDateTime startDatetime = LocalDateTime.of(LocalDate.now()/*.minusDays(1)*/, LocalTime.of(0, 0, 0));
-		LocalDateTime endDatetime = LocalDateTime.of(LocalDate.now()/*.minusDays(1)*/, LocalTime.of(23, 59, 59));
-
-		List<User> registeredLastDay = userRepository.findAllByUserRegisteredAtBetween(Timestamp.valueOf(startDatetime),
-				Timestamp.valueOf(endDatetime));
-		userStatisticsRepository.save(UserStatistics.create(registeredLastDay.size()));
+		Timestamp startDatetime = Timestamp.valueOf(LocalDate.now().atStartOfDay());
+		Timestamp endDatetime = Timestamp.valueOf(LocalDate.now().atTime(23, 59, 59));
+		List<User> registeredLastDay = userRepository.findAllByUserRegisteredAtBetween(startDatetime, endDatetime);
+		userRegisterStatisticsRepository.save(UserRegisterStatistics.create(registeredLastDay.size()));
 		return RepeatStatus.FINISHED;
 	}
 }

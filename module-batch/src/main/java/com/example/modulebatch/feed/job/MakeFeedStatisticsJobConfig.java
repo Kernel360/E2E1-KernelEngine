@@ -10,10 +10,10 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.database.JpaCursorItemReader;
 import org.springframework.batch.item.database.JpaItemWriter;
-import org.springframework.batch.item.database.builder.JpaCursorItemReaderBuilder;
+import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
+import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,13 +36,9 @@ public class MakeFeedStatisticsJobConfig {
 		Flow makeDailyStatisticsFlow = new FlowBuilder<Flow>("makeDailyStatisticsFlow")
 				.start(makeDailyVisitCountStep())
 				.build();
-		Flow resetFeedVisitCountFlow = new FlowBuilder<Flow>("resetFeedVisitCountFlow")
-				.start(resetFeedVisitCountStep())
-				.build();
 
 		return this.jbf.get("makeStatisticsJob")
 				.start(makeDailyStatisticsFlow)
-				.next(resetFeedVisitCountFlow)
 				.build()
 				.build();
 	}
@@ -59,8 +55,8 @@ public class MakeFeedStatisticsJobConfig {
 
 	@Bean
 	@StepScope
-	public JpaCursorItemReader<Feed> makeDailyVisitCountItemReader() {
-		return new JpaCursorItemReaderBuilder<Feed>()
+	public JpaPagingItemReader<Feed> makeDailyVisitCountItemReader() {
+		return new JpaPagingItemReaderBuilder<Feed>()
 				.name("makeDailyVisitCountItemReader")
 				.entityManagerFactory(emf)
 				.queryString("select f from Feed f")
@@ -70,50 +66,19 @@ public class MakeFeedStatisticsJobConfig {
 	@Bean
 	@StepScope
 	public ItemProcessor<Feed, FeedStatistics> makeDailyVisitCountItemProcessor() {
-		return FeedStatistics::create;
+		return item -> {
+			FeedStatistics statistics = FeedStatistics.create(item);
+			if (statistics.getVisitCount() == 0) {
+				return null;
+			}
+			return statistics;
+		};
 	}
 
 	@Bean
 	@StepScope
 	public JpaItemWriter<FeedStatistics> makeDailyVisitCountItemWriter() {
 		return new JpaItemWriterBuilder<FeedStatistics>()
-				.entityManagerFactory(emf)
-				.build();
-	}
-
-	@Bean
-	public Step resetFeedVisitCountStep() {
-		return sbf.get("resetFeedVisitCountStep")
-				.<Feed, Feed>chunk(20)
-				.reader(resetFeedVisitCountItemReader())
-				.processor(resetFeedVisitCountItemProcessor())
-				.writer(resetFeedVisitCountItemWriter())
-				.build();
-	}
-
-	@Bean
-	@StepScope
-	public JpaCursorItemReader<Feed> resetFeedVisitCountItemReader() {
-		return new JpaCursorItemReaderBuilder<Feed>()
-				.name("resetFeedVisitCountItemReader")
-				.entityManagerFactory(emf)
-				.queryString("select f from Feed f where f.accessCount > 0")
-				.build();
-	}
-
-	@Bean
-	@StepScope
-	public ItemProcessor<Feed, Feed> resetFeedVisitCountItemProcessor() {
-		return item -> {
-			item.resetVisitCount();
-			return item;
-		};
-	}
-
-	@Bean
-	@StepScope
-	public JpaItemWriter<Feed> resetFeedVisitCountItemWriter() {
-		return new JpaItemWriterBuilder<Feed>()
 				.entityManagerFactory(emf)
 				.build();
 	}
