@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.example.e2ekernelengine.domain.user.db.entity.User;
 import com.example.e2ekernelengine.domain.user.db.repository.UserRepository;
 import com.example.modulebatch.user.db.entity.UserRegisterStatistics;
-import com.example.modulebatch.user.db.repository.RegisterUserStatisticsRepository;
+import com.example.modulebatch.user.db.repository.UserRegisterStatisticsRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @StepScope
 @RequiredArgsConstructor
 public class AddDailyRegisteredUserTasklet implements Tasklet {
-	private final RegisterUserStatisticsRepository registerUserStatisticsRepository;
+	private final UserRegisterStatisticsRepository userRegisterStatisticsRepository;
 	private final UserRepository userRepository;
 
 	@Transactional
@@ -35,7 +35,7 @@ public class AddDailyRegisteredUserTasklet implements Tasklet {
 		Timestamp startDatetime = Timestamp.valueOf(LocalDate.now().atStartOfDay());
 		Timestamp endDatetime = Timestamp.valueOf(LocalDate.now().atTime(23, 59, 59));
 		List<User> registeredLastDay = userRepository.findAllByUserRegisteredAtBetween(startDatetime, endDatetime);
-		registerUserStatisticsRepository.save(UserRegisterStatistics.create(registeredLastDay.size()));
+		userRegisterStatisticsRepository.save(UserRegisterStatistics.create(registeredLastDay.size()));
 		return RepeatStatus.FINISHED;
 	}
 }

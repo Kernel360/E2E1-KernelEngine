@@ -17,7 +17,7 @@ public class UserRegisterStatistics {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long user_stat_id;
 
-	@Column(name = "statistics_at")
+	@Column(name = "statistics_at", unique = true)
 	private LocalDateTime statisticsAt;
 
 	@Column(name = "registered_count")
