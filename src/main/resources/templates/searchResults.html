@@ -63,8 +63,8 @@
         <div class="form-group">
             <label for="sort-option">정렬 기준</label>
             <select class="form-control" id="sort-option">
-                <option value="recent">최신순</option>
-                <option value="clicked">조회순</option>
+                <option th:selected="${selectedSortOption == 'recent'}" value="recent">최신순</option>
+                <option th:selected="${selectedSortOption == 'clicked'}" value="clicked">조회순</option>
             </select>
         </div>
     </div>
@@ -96,15 +96,18 @@
             <div class="container">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:if="${feedPage.hasPrevious()}">
-                        <a class="page-link" th:href="@{/api/v1/feeds/search(q=${query}, page=${feedPage.number - 1})}">이전</a>
+                        <a class="page-link"
+                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${feedPage.number - 1}, sort=${selectedSortOption})}">이전</a>
                     </li>
                     <li class="page-item" th:classappend="${pageNum == feedPage.number} ? 'active'"
                         th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
-                        <a class="page-link" th:href="@{/api/v1/feeds/search(q=${query}, page=${pageNum})}"
+                        <a class="page-link"
+                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${pageNum}, sort=${selectedSortOption})}"
                            th:text="${pageNum + 1}"></a>
                     </li>
                     <li class="page-item" th:if="${feedPage.hasNext()}">
-                        <a class="page-link" th:href="@{/api/v1/feeds/search(q=${query}, page=${feedPage.number + 1})}">다음</a>
+                        <a class="page-link"
+                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${feedPage.number + 1}, sort=${selectedSortOption})}">다음</a>
                     </li>
                 </ul>
             </div>
@@ -131,10 +134,10 @@
             const queryParams = new URLSearchParams(window.location.search);
             const query = queryParams.get('q');
             console.log(query);
-            let url = '/api/v1/feeds/search?q=' + encodeURIComponent(query);
+            let url = '/api/v1/feeds/search/recent?q=' + encodeURIComponent(query);
 
             if (selectedOption === 'clicked') {
-                url = '/api/v1/feeds/search/most-visited?q=' + encodeURIComponent(query);
+                url = '/api/v1/feeds/search/clicked?q=' + encodeURIComponent(query);
             }
 
             window.location.href = url;
@@ -167,13 +170,24 @@
     document.addEventListener("DOMContentLoaded", function () {
         const searchForm = document.getElementById("search-form");
         const searchInput = document.getElementById("search-input");
+        const sortOptionSelect = document.getElementById("sort-option");
+
         console.log("addEventListener 동작 1")
         searchForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
             const query = searchInput.value;
+            const selectedSortOption = sortOptionSelect.value;
+
             if (query) {
-                window.location.href = "/api/v1/feeds/search?q=" + encodeURIComponent(query);
+                let url;
+                if (selectedSortOption === 'clicked') {
+                    url = "/api/v1/feeds/search/clicked?q=" + encodeURIComponent(query);
+                } else {
+                    url = "/api/v1/feeds/search/recent?q=" + encodeURIComponent(query);
+                }
+
+                window.location.href = url;
             }
         });
     });

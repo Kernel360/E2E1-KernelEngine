@@ -100,7 +100,7 @@
 
             const query = searchInput.value;
             if (query) {
-                window.location.href = "/api/v1/feeds/search?q=" + encodeURIComponent(query);
+                window.location.href = "/api/v1/feeds/search/recent?q=" + encodeURIComponent(query);
             }
         });
     });
@@ -176,6 +176,7 @@
     function redirectToFeedUrl(feedUrl) {
         window.location.href = feedUrl;
     }
+
     function increaseDailyAccessCount(feedId) {
         const xhr = new XMLHttpRequest();
         xhr.open(`POST`, `/api/v1/feeds/visit/` + feedId, true);

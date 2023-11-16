@@ -27,7 +27,7 @@ public class FeedController {
 
 	private final FeedService feedService;
 
-	@GetMapping("/search")
+	@GetMapping("/search/recent")
 	public ModelAndView searchFeedByKeyword(
 			@RequestParam(value = "q") String keyword,
 			@PageableDefault(size = 5, sort = "feedCreatedAt", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -43,10 +43,11 @@ public class FeedController {
 		model.addObject("query", keyword);
 		model.addObject("startPage", startPage);
 		model.addObject("endPage", endPage);
+		model.addObject("selectedSortOption", "recent");
 		return model;
 	}
 
-	@GetMapping("/search/most-visited")
+	@GetMapping("/search/clicked")
 	public ModelAndView searchFeedByKeywordOrderByMostVisited(
 			@RequestParam(value = "q") String keyword,
 			@PageableDefault(size = 5, sort = "feedVisitCount", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -62,6 +63,7 @@ public class FeedController {
 		model.addObject("query", keyword);
 		model.addObject("startPage", startPage);
 		model.addObject("endPage", endPage);
+		model.addObject("selectedSortOption", "clicked");
 		return model;
 	}
 
