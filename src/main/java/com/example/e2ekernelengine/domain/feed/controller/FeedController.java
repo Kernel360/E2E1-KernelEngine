@@ -43,7 +43,6 @@ public class FeedController {
 			@PageableDefault(size = 5, sort = "feedVisitCount", direction = Sort.Direction.DESC) Pageable pageable,
 			Model model) {
 		Page<FeedPageableResponse> feedPage = feedService.searchFeedsByKeyword(keyword, pageable);
-		log.debug("after service logic {}", feedPage);
 		prepareModel(model, feedPage, keyword, "clicked");
 		return "searchResults";
 	}
