@@ -1,7 +1,5 @@
 package com.example.e2ekernelengine.domain.feed.db.repository;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,7 +13,7 @@ import com.example.e2ekernelengine.domain.feed.db.entity.Feed;
 public interface FeedRepository extends JpaRepository<Feed, Long> {
 
 	@Query("SELECT f FROM Feed f WHERE LOWER(f.feedTitle) LIKE %:keyword% OR LOWER(f.feedContent) LIKE %:keyword%")
-	List<Feed> searchFeedsByKeyword(@Param("keyword") String keyword);
+	Page<Feed> searchFeedsByKeyword(@Param("keyword") String keyword, Pageable request);
 
 	Page<Feed> findAll(Pageable request);
 
