@@ -56,7 +56,7 @@
         <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="/assets/mainLogo.png">
         <div class="input-group mb-3">
             <input aria-describedby="search-button" aria-label="검색어 입력" class="form-control" id="search-input"
-                   name="q" placeholder="검색어를 입력하세요" type="text">
+                   name="q" placeholder="검색어를 입력하세요" th:value="${query}" type="text"/>
         </div>
     </form>
     <div class="col-sm-2 offset-sm-10">
