@@ -47,7 +47,7 @@ public class FeedController {
 		return ResponseEntity.ok(feedList);
 	}
 
-	@GetMapping("/most-clicked")
+	@GetMapping("/clicked")
 	public ResponseEntity<Page<FeedPageableResponse>> findMostClickedFeedList(
 			@PageableDefault(size = 5, sort = "visitCount", direction = Sort.Direction.DESC) Pageable pageable) {
 
