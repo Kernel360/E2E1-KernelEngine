@@ -1,0 +1,38 @@
+{
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "feedId": {
+      "type": "long"
+    },
+    "blogTitle": {
+      "type": "string",
+      "analyzer": "my_korean_analyzer"
+    },
+    "feedUrl": {
+      "type": "string"
+    },
+    "feedTitle": {
+      "type": "string",
+      "analyzer": "my_korean_analyzer"
+    },
+    "feedContent": {
+      "type": "string",
+      "analyzer": "my_korean_analyzer"
+    },
+    "feedCreatedAt": {
+      "type": "date",
+      "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+    },
+    "feedDescription": {
+      "type": "string",
+      "analyzer": "my_korean_analyzer"
+    },
+    "visitCount": {
+      "type": "integer"
+    }
+  }
+}
+
+

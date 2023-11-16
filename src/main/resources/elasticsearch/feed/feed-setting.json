@@ -1,0 +1,9 @@
+{
+  "analysis": {
+    "analyzer": {
+      "my_korean_analyzer": {
+        "type": "nori"
+      }
+    }
+  }
+}
