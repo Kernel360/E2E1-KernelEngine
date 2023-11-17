@@ -140,10 +140,13 @@
         - [x] 조회순, 최신순 필터 적용하기
     - [ ] elastic search 기반 API 만들기
           `in progress`
+          elastic search에 feed data를 어떻게 저장해야 원하는 검색 결과를 얻을 수 있을지 학습 중
         - [ ] 필터 적용까지
 
 - [ ] 가장 간단한 아키텍처 구조로 AWS에 서버 띄우기
           `in progress`
+          멀티 모듈을 돌리는 것 + 사소한 설정(jar 파일 관리)에서 생긴 문제를 해결 중
+          차안으로 db와 application server를 docker container로 올리고 docker network로 연결하여 한번에 EC2로 올리는 방안을 고려 중
 
 ### 5주차 TODO
 
