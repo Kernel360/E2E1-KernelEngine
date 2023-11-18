@@ -127,13 +127,36 @@
 ### 4주차 TODO
 
 - [ ] 관리자 페이지
-    - [ ] 많이 검색된 키워드 통계
+    [ problem ] : 통계테이블을 주기적으로 만들어야 했음
+    - [ ] 일별 가입한 사용자 수 통계에 spring batch 적용하기 
+          -> spring batch 적용 완료
+          프론트 연결 못함
     - [ ] 많이 접속된 게시글 통계
+          -> spring batch 적용 완료
+          프론트 연결 못함
 
 - [ ] 검색 기능
-    - [ ] mysql 기반 API
-        - [ ] 조회순, 최신순 필터 적용하기
+    - [x] mysql 기반 API
+        - [x] 조회순, 최신순 필터 적용하기
     - [ ] elastic search 기반 API 만들기
+          `in progress`
+          elastic search에 feed data를 어떻게 저장해야 원하는 검색 결과를 얻을 수 있을지 학습 중
         - [ ] 필터 적용까지
 
 - [ ] 가장 간단한 아키텍처 구조로 AWS에 서버 띄우기
+          `in progress`
+          멀티 모듈을 돌리는 것 + 사소한 설정(jar 파일 관리)에서 생긴 문제를 해결 중
+          차안으로 db와 application server를 docker container로 올리고 docker network로 연결하여 한번에 EC2로 올리는 방안을 고려 중
+
+### 5주차 TODO
+
+- [ ] elastic search 기반 검색 API와 mysql 기반 search API 성능 비교하기
+      1. elastic search
+      2. mysql 의 like
+      3. mysql 의 n-gram 기반의 Full-Text 검색
+
+- [ ] 아키텍처 구조 리팩터링하기
+    - 더 빠른 검색을 위한 엘라스틱 서치 아키텍처 구조
+    - 멀티 모듈 분리하기
+    - 장애를 대비할 수 있는 아키텍처 구조 고민해보기 
+- [ ] 코드 리팩터링

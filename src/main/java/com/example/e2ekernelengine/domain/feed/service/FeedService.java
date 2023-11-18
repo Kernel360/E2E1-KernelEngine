@@ -34,14 +34,16 @@ public class FeedService {
 	//	}
 
 	@Transactional
-	public List<FeedPageableResponse> searchFeedsByKeyword(String keyword) {
+	public Page<FeedPageableResponse> searchFeedsByKeyword(String keyword, Pageable pageable) {
 
-		List<Feed> searchFeedsByKeyword = feedRepository.searchFeedsByKeyword(keyword);
+		Page<Feed> page = feedRepository.searchFeedsByKeyword(keyword, pageable);
 		// List<Long> searchBlogsByBlogWriterName = blogJpaRepository.findBlogIdsByBlogWriterName(keyword);
 
-		return searchFeedsByKeyword.stream()
-						.map(FeedPageableResponse::fromEntity)
-						.collect(Collectors.toList());
+// 		return searchFeedsByKeyword.stream()
+// 						.map(FeedPageableResponse::fromEntity)
+// 						.collect(Collectors.toList());
+    
+		return page.map(FeedPageableResponse::fromEntity);
 
 		// for (Long blogId : searchBlogsByBlogWriterName) {
 		// 	List<Feed> blogFeeds = feedRepository.searchFeedsByBlog_BlogId(blogId);
@@ -62,6 +64,16 @@ public class FeedService {
 		Blog blog = blogJpaRepository.findById(blogId).orElseThrow(() -> new NotFoundException("해당 블로그가 존재하지 않습니다."));
 		for (FeedDataDto feedData : feedDataList) {
 			Feed feed = feedData.toEntity(blog);
+// 			Feed feed = Feed.builder()
+// 					.blog(blog)
+// 					.feedUrl(feedData.getLink())
+// 					.feedTitle(feedData.getTitle())
+// 					.feedDescription(feedData.getDescription())
+// 					.feedCreatedAt(feedData.getPubDate())
+// 					.feedContent(feedData.getContent())
+// 					.feedVisitCount(0)
+// 					.build();
+
 			feedRepository.save(feed);
 			feedSearchRepository.save(feedData.toDocument(blog, feed.getFeedId()));
 		}
