@@ -26,7 +26,7 @@
       "type": "text",
       "analyzer": "korean"
     },
-    "visitCount": {
+    "feedVisitCount": {
       "type": "integer"
     }
   }

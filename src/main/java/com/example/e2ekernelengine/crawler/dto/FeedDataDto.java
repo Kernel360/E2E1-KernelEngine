@@ -41,7 +41,7 @@ public class FeedDataDto {
 						.feedDescription(description)
 						.feedCreatedAt(pubDate)
 						.feedContent(content)
-						.visitCount(0)
+						.feedVisitCount(0)
 						.build();
 	}
 
@@ -54,7 +54,7 @@ public class FeedDataDto {
 						.feedDescription(description)
 						.feedCreatedAt(pubDate)
 						.feedContent(content)
-						.visitCount(0)
+						.feedVisitCount(0)
 						.build();
 	}
 }

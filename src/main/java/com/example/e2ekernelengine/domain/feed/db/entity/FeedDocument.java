@@ -25,21 +25,21 @@ public class FeedDocument {
 
 	private final String feedDescription;
 
-	private final Integer visitCount;
+	private final Integer feedVisitCount;
 
 	@Id
 	private final Long id;
 
 	@Builder
 	public FeedDocument(String blogTitle, String feedUrl, String feedTitle, String feedContent, Timestamp feedCreatedAt,
-					String feedDescription, Integer visitCount, Long feedId) {
+					String feedDescription, Integer feedVisitCount, Long feedId) {
 		this.blogTitle = blogTitle;
 		this.feedUrl = feedUrl;
 		this.feedTitle = feedTitle;
 		this.feedContent = feedContent;
 		this.feedCreatedAt = feedCreatedAt;
 		this.feedDescription = feedDescription;
-		this.visitCount = visitCount;
+		this.feedVisitCount = feedVisitCount;
 		this.id = feedId;
 	}
 }
