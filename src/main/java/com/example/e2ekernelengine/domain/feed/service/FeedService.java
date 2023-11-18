@@ -1,5 +1,12 @@
 package com.example.e2ekernelengine.domain.feed.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
 import com.example.e2ekernelengine.domain.blog.db.entity.Blog;
 import com.example.e2ekernelengine.domain.blog.db.repository.BlogJpaRepository;
@@ -8,13 +15,8 @@ import com.example.e2ekernelengine.domain.feed.db.repository.FeedRepository;
 import com.example.e2ekernelengine.domain.feed.dto.response.FeedPageableResponse;
 import com.example.e2ekernelengine.domain.search.repository.FeedSearchRepository;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
-import java.util.List;
-import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -27,6 +29,7 @@ public class FeedService {
 	private final FeedSearchRepository feedSearchRepository;
 
 	// TODO: @Autowired 대신 생성자 주입을 사용하자. 인줄 알ㄹ았는데 쓴 이유가 있으신지 물어보기
+	// TODO: 답변: 협의되기 전에 작성한 코드입니다. 리팩토링 주 때 통일시키는 작업 진행하도록 하겠습니다.
 	//	@Autowired
 	//	public FeedService(FeedRepository feedRepository, BlogJpaRepository blogJpaRepository) {
 	//		this.feedRepository = feedRepository;
@@ -39,10 +42,10 @@ public class FeedService {
 		Page<Feed> page = feedRepository.searchFeedsByKeyword(keyword, pageable);
 		// List<Long> searchBlogsByBlogWriterName = blogJpaRepository.findBlogIdsByBlogWriterName(keyword);
 
-// 		return searchFeedsByKeyword.stream()
-// 						.map(FeedPageableResponse::fromEntity)
-// 						.collect(Collectors.toList());
-    
+		// 		return searchFeedsByKeyword.stream()
+		// 						.map(FeedPageableResponse::fromEntity)
+		// 						.collect(Collectors.toList());
+
 		return page.map(FeedPageableResponse::fromEntity);
 
 		// for (Long blogId : searchBlogsByBlogWriterName) {
@@ -64,15 +67,15 @@ public class FeedService {
 		Blog blog = blogJpaRepository.findById(blogId).orElseThrow(() -> new NotFoundException("해당 블로그가 존재하지 않습니다."));
 		for (FeedDataDto feedData : feedDataList) {
 			Feed feed = feedData.toEntity(blog);
-// 			Feed feed = Feed.builder()
-// 					.blog(blog)
-// 					.feedUrl(feedData.getLink())
-// 					.feedTitle(feedData.getTitle())
-// 					.feedDescription(feedData.getDescription())
-// 					.feedCreatedAt(feedData.getPubDate())
-// 					.feedContent(feedData.getContent())
-// 					.feedVisitCount(0)
-// 					.build();
+			// 			Feed feed = Feed.builder()
+			// 					.blog(blog)
+			// 					.feedUrl(feedData.getLink())
+			// 					.feedTitle(feedData.getTitle())
+			// 					.feedDescription(feedData.getDescription())
+			// 					.feedCreatedAt(feedData.getPubDate())
+			// 					.feedContent(feedData.getContent())
+			// 					.feedVisitCount(0)
+			// 					.build();
 
 			feedRepository.save(feed);
 			feedSearchRepository.save(feedData.toDocument(blog, feed.getFeedId()));
@@ -89,7 +92,7 @@ public class FeedService {
 
 	public void increaseDailyVisitCount(Long feedId) {
 		Feed feed = feedRepository.findById(feedId)
-						.orElseThrow(() -> new NotFoundException("해당 피드가 존재하지 않습니다"));
+				.orElseThrow(() -> new NotFoundException("해당 피드가 존재하지 않습니다"));
 		feed.increaseVisitCount();
 		feedRepository.save(feed);
 	}

@@ -1,11 +1,20 @@
 package com.example.e2ekernelengine.domain.search.repository;
 
-import com.example.e2ekernelengine.domain.feed.db.entity.FeedDocument;
-import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+
+import com.example.e2ekernelengine.domain.feed.db.entity.FeedDocument;
 
 public interface FeedSearchRepository extends ElasticsearchRepository<FeedDocument, String> {
 
-	List<FeedDocument> findByBlogTitle(String blogTitle, Pageable pageable);
+	// List<FeedDocument> findByBlogTitle(String blogTitle, Pageable pageable);
+
+	@Query("{\"bool\": {\"should\": [" +
+			"{\"match\": {\"feedTitle\": \"?0\"}}," +
+			"{\"match\": {\"feedContent\": \"?0\"}}," +
+			"{\"match\": {\"blogTitle\": \"?0\"}}" +
+			"]}}")
+	Page<FeedDocument> searchFeedsByKeyword(String keyword, Pageable pageable);
 }
