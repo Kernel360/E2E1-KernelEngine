@@ -2,6 +2,7 @@ package com.example.e2ekernelengine.domain.feed.db.entity;
 
 import java.sql.Timestamp;
 import javax.persistence.Id;
+import lombok.Builder;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
@@ -11,23 +12,34 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 @Setting(settingPath = "elasticsearch/feed/feed-setting.json")
 public class FeedDocument {
 
-	@Id
-	private String id;
-
-	private Long feedId;
-
 	//	private Blog blog;
-	private String blogTitle;
+	private final String blogTitle;
 
-	private String feedUrl;
+	private final String feedUrl;
 
-	private String feedTitle;
+	private final String feedTitle;
 
-	private String feedContent;
+	private final String feedContent;
 
-	private Timestamp feedCreatedAt;
+	private final Timestamp feedCreatedAt;
 
-	private String feedDescription;
+	private final String feedDescription;
 
-	private Integer visitCount;
+	private final Integer visitCount;
+
+	@Id
+	private final Long id;
+
+	@Builder
+	public FeedDocument(String blogTitle, String feedUrl, String feedTitle, String feedContent, Timestamp feedCreatedAt,
+					String feedDescription, Integer visitCount, Long feedId) {
+		this.blogTitle = blogTitle;
+		this.feedUrl = feedUrl;
+		this.feedTitle = feedTitle;
+		this.feedContent = feedContent;
+		this.feedCreatedAt = feedCreatedAt;
+		this.feedDescription = feedDescription;
+		this.visitCount = visitCount;
+		this.id = feedId;
+	}
 }
