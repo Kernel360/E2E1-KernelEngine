@@ -1,33 +1,30 @@
 {
   "properties": {
     "id": {
-      "type": "string"
-    },
-    "feedId": {
-      "type": "long"
+      "type": "keyword"
     },
     "blogTitle": {
-      "type": "string",
-      "analyzer": "my_korean_analyzer"
+      "type": "text",
+      "analyzer": "korean"
     },
     "feedUrl": {
-      "type": "string"
+      "type": "keyword"
     },
     "feedTitle": {
-      "type": "string",
-      "analyzer": "my_korean_analyzer"
+      "type": "text",
+      "analyzer": "korean"
     },
     "feedContent": {
-      "type": "string",
-      "analyzer": "my_korean_analyzer"
+      "type": "text",
+      "analyzer": "korean"
     },
     "feedCreatedAt": {
       "type": "date",
       "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
     },
     "feedDescription": {
-      "type": "string",
-      "analyzer": "my_korean_analyzer"
+      "type": "text",
+      "analyzer": "korean"
     },
     "visitCount": {
       "type": "integer"
