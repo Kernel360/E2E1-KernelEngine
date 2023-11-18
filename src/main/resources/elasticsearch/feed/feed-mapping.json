@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "id": {
+      "type": "long"
+    },
+    "blogTitle": {
+      "type": "text",
+      "analyzer": "korean"
+    },
+    "feedUrl": {
+      "type": "keyword"
+    },
+    "feedTitle": {
+      "type": "text",
+      "analyzer": "korean"
+    },
+    "feedContent": {
+      "type": "text",
+      "analyzer": "korean"
+    },
+    "feedCreatedAt": {
+      "type": "date",
+      "format": "yyyy-MM-dd HH:mm:ss||epoch_millis"
+    },
+    "feedDescription": {
+      "type": "text",
+      "analyzer": "korean"
+    },
+    "feedVisitCount": {
+      "type": "integer"
+    }
+  }
+}
+
+

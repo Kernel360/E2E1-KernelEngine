@@ -1,29 +1,28 @@
 package com.example.e2ekernelengine.crawler.service;
 
+import com.example.e2ekernelengine.crawler.dto.BlogDataDto;
+import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
+import com.example.e2ekernelengine.domain.blog.service.BlogService;
+import com.example.e2ekernelengine.domain.feed.service.FeedService;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-import com.example.e2ekernelengine.crawler.dto.BlogDataDto;
-import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
-import com.example.e2ekernelengine.domain.blog.service.BlogService;
-import com.example.e2ekernelengine.domain.feed.service.FeedService;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler {
+public class ChannelRssCrawler extends AbstractRssCrawler {
+
 	private final BlogService blogService;
+
 	private final FeedService feedService;
 
 	/**
@@ -76,7 +75,7 @@ public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler
 			}
 
 			feedDataList.add(FeedDataDto.builder().title(title).link(link).pubDate(pubDate).description(description)
-					.content(content).build());
+							.content(content).build());
 		}
 		return feedDataList;
 	}
@@ -97,13 +96,13 @@ public class ChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler
 		String description = element.selectFirst("description").text();
 		String lastBuildDate = element.selectFirst("lastBuildDate").text();
 		return BlogDataDto.builder()
-				.title(title)
-				.rssLink(rssFeedUrl)
-				.urlLink(urlLink)
-				.description(description)
-				.lastBuildDate(convertStringToTimestamp(lastBuildDate))
-				.lastCrawlDate(new Timestamp(System.currentTimeMillis()))
-				.build();
+						.title(title)
+						.rssLink(rssFeedUrl)
+						.urlLink(urlLink)
+						.description(description)
+						.lastBuildDate(convertStringToTimestamp(lastBuildDate))
+						.lastCrawlDate(new Timestamp(System.currentTimeMillis()))
+						.build();
 	}
 
 }

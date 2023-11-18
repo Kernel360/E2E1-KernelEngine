@@ -7,11 +7,10 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class AbstractRssCrawler {
+public abstract class AbstractRssCrawler implements IRssCrawler {
 
 	// protected Document connectRSSUrlAndGetXML(String rssFeedUrl) {
 	// 	Document doc = null;

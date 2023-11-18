@@ -1,86 +1,34 @@
 package com.example.e2ekernelengine.crawler.service;
 
+import com.example.e2ekernelengine.crawler.dto.BlogDataDto;
+import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
+import com.example.e2ekernelengine.domain.blog.service.BlogService;
+import com.example.e2ekernelengine.domain.feed.service.FeedService;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
-import com.example.e2ekernelengine.crawler.dto.BlogDataDto;
-import com.example.e2ekernelengine.crawler.dto.FeedDataDto;
-import com.example.e2ekernelengine.domain.blog.service.BlogService;
-import com.example.e2ekernelengine.domain.feed.service.FeedService;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCrawler {
-	private final BlogService blogService;
-	private final FeedService feedService;
+public class NonChannelRssCrawler extends AbstractRssCrawler {
 
-	// public static void main(String[] args) {
-	// 	NonChannelRssCrawler r = new NonChannelRssCrawler();
-	// 	r.print();
-	// }
-	//
-	// /**
-	//  * 데이터 콘솔에 출력
-	//  */
-	// public void print() {
-	// 	// List<FeedDataDto> arr = crawlFeedFromBlog("https://hyperconnect.github.io/feed.xml", null);
-	// 	List<FeedDataDto> arr = test();
-	// 	for (int i = 0; i < arr.size(); i++) {
-	// 		System.out.println(arr.get(i).getTitle());
-	// 		System.out.println(arr.get(i).getLink());
-	// 		System.out.println("pubData: " + arr.get(i).getPubDate());
-	// 		System.out.println("description: " + arr.get(i).getDescription());
-	// 		System.out.println("content: " + arr.get(i).getContent());
-	// 		System.out.println();
-	// 	}
-	// }
-	//
-	// private Document connectRSSUrlAndGetXML(String rssFeedUrl) {
-	// 	Document doc = null;
-	// 	try {
-	// 		doc = Jsoup.connect(rssFeedUrl).get();
-	// 	} catch (IOException e) {
-	// 		e.printStackTrace();
-	// 	}
-	// 	return doc;
-	// }
+	private final BlogService blogService;
+
+	private final FeedService feedService;
 
 	private Timestamp convertStringToTimestamp(String dateString) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.ENGLISH);
 		return getTimestampFromDateStringWithDateFormat(dateString, dateFormat);
-		// dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-		//
-		// try {
-		// 	Date parsedDate = dateFormat.parse(dateString);
-		// 	return new Timestamp(parsedDate.getTime());
-		// } catch (ParseException e) {
-		// 	log.error(String.valueOf(e));
-		// 	return null;
-		// }
 	}
-
-	// public List<FeedDataDto> test() {
-	// 	// Document doc = connectRSSUrlAndGetXML("https://engineering-skcc.github.io/feed.xml");
-	// 	// BlogDataDto blogDataDto = getBlogData(doc, "https://engineering-skcc.github.io/feed.xml");
-	// 	Document doc = connectRSSUrlAndGetXML("https://hyperconnect.github.io/feed.xml");
-	// 	BlogDataDto blogDataDto = getBlogData(doc, "https://hyperconnect.github.io/feed.xml");
-	// 	System.out.println(blogDataDto.toString());
-	//
-	// 	return getNewFeeds(doc, null);
-	//
-	// }
 
 	private BlogDataDto getBlogData(Document doc, String rssFeedUrl) {
 		Element element = doc.selectFirst("feed");
@@ -89,13 +37,13 @@ public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCraw
 		String description = element.selectFirst("subtitle").text();
 		String lastBuildDate = element.selectFirst("updated").text();
 		return BlogDataDto.builder()
-				.title(title)
-				.rssLink(rssFeedUrl)
-				.urlLink(urlLink)
-				.description(description)
-				.lastBuildDate(convertStringToTimestamp(lastBuildDate))
-				.lastCrawlDate(new Timestamp(System.currentTimeMillis()))
-				.build();
+						.title(title)
+						.rssLink(rssFeedUrl)
+						.urlLink(urlLink)
+						.description(description)
+						.lastBuildDate(convertStringToTimestamp(lastBuildDate))
+						.lastCrawlDate(new Timestamp(System.currentTimeMillis()))
+						.build();
 	}
 
 	private List<FeedDataDto> getNewFeeds(Document document, Timestamp lastCrawlDate) {
@@ -122,7 +70,7 @@ public class NonChannelRssCrawler extends AbstractRssCrawler implements IRssCraw
 			}
 
 			feedDataList.add(FeedDataDto.builder().title(title).link(link).pubDate(pubDate).description(description)
-					.content(content).build());
+							.content(content).build());
 		}
 		return feedDataList;
 	}
