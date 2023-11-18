@@ -9,6 +9,9 @@
 <div class="container">
     <form class="form-signin" method="post" th:action="@{/login}">
         <h2 class="form-signin-heading">로그인</h2>
+
+        <input id="preLoginUrl" name="preLoginUrl" type="hidden" value="">
+
         <p>
             <label class="sr-only" for="userEmail">UserEmail</label>
             <input autofocus class="form-control" id="userEmail" name="userEmail" placeholder="이메일" required
@@ -25,6 +28,11 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
     </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById('preLoginUrl').value = localStorage.getItem('preLoginUrl') || '/';
+        });
+    </script>
 </div>
 </body>
 </html>

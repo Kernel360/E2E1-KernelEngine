@@ -63,6 +63,7 @@
                         <!-- 로그인 안한 사람만 -->
                         <a
                                 class="nav-link active"
+                                id="loginLink"
                                 sec:authorize="!isAuthenticated()"
                                 th:href="@{/login}"
                         >
@@ -93,6 +94,16 @@
             </div>
         </div>
     </nav>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var loginLink = document.getElementById('loginLink');
+            if (loginLink) {
+                loginLink.addEventListener('click', function () {
+                    localStorage.setItem('preLoginUrl', window.location.href);
+                });
+            }
+        });
+    </script>
 </div>
 </body>
 </html>
