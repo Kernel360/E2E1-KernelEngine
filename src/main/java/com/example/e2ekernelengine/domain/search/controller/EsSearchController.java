@@ -19,12 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class EsSearchController {
 
 	private final EsSearchService esSearchService;
-
-	/*@GetMapping()
-	public ResponseEntity<List<FeedPageableResponse>> search(@RequestParam(name = "keyword") String keyword) {
-		List<FeedPageableResponse> feedList = esSearchService.search(keyword);
-		return null;
-	}*/
+	
 	@GetMapping()
 	public ResponseEntity<Page<EsFeedPageableResponse>> search(
 			@RequestParam(value = "q") String keyword,

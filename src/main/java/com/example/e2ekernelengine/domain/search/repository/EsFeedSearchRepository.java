@@ -9,8 +9,6 @@ import com.example.e2ekernelengine.domain.feed.db.entity.FeedDocument;
 
 public interface EsFeedSearchRepository extends ElasticsearchRepository<FeedDocument, String> {
 
-	// List<FeedDocument> findByBlogTitle(String blogTitle, Pageable pageable);
-
 	@Query("{\"bool\": {\"should\": [" +
 			"{\"match\": {\"feedTitle\": \"?0\"}}," +
 			"{\"match\": {\"feedContent\": \"?0\"}}," +

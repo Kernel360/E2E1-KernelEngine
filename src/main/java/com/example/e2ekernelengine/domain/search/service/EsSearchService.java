@@ -20,14 +20,6 @@ public class EsSearchService {
 
 	private final EsFeedSearchRepository esFeedSearchRepository;
 
-
-	/*public List<FeedPageableResponse> search(String keyword) {
-		//		SearchQuery
-		//		feedSearchRepository.searchByKeyword(keyword);
-		feedSearchRepository.findByBlogTitle(keyword, null);
-		return null;
-	}*/
-
 	public Page<EsFeedPageableResponse> searchFeedsByKeyword(String keyword, Pageable pageable) {
 
 		Page<FeedDocument> page = esFeedSearchRepository.searchFeedsByKeyword(
