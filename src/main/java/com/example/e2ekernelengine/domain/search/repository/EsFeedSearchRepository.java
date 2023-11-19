@@ -14,6 +14,7 @@ public interface EsFeedSearchRepository extends ElasticsearchRepository<FeedDocu
 	@Query("{\"bool\": {\"should\": [" +
 			"{\"match\": {\"feedTitle\": \"?0\"}}," +
 			"{\"match\": {\"feedContent\": \"?0\"}}," +
+			"{\"match\": {\"feedDescription\": \"?0\"}}," +
 			"{\"match\": {\"blogTitle\": \"?0\"}}" +
 			"]}}")
 	Page<FeedDocument> searchFeedsByKeyword(String keyword, Pageable pageable);
