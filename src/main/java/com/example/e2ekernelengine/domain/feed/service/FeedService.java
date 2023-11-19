@@ -30,35 +30,11 @@ public class FeedService {
 
 	// TODO: @Autowired 대신 생성자 주입을 사용하자. 인줄 알ㄹ았는데 쓴 이유가 있으신지 물어보기
 	// TODO: 답변: 협의되기 전에 작성한 코드입니다. 리팩토링 주 때 통일시키는 작업 진행하도록 하겠습니다.
-	//	@Autowired
-	//	public FeedService(FeedRepository feedRepository, BlogJpaRepository blogJpaRepository) {
-	//		this.feedRepository = feedRepository;
-	//		this.blogJpaRepository = blogJpaRepository;
-	//	}
 
 	@Transactional
 	public Page<FeedPageableResponse> searchFeedsByKeyword(String keyword, Pageable pageable) {
-
 		Page<Feed> page = feedRepository.searchFeedsByKeyword(keyword, pageable);
-		// List<Long> searchBlogsByBlogWriterName = blogJpaRepository.findBlogIdsByBlogWriterName(keyword);
-
-		// 		return searchFeedsByKeyword.stream()
-		// 						.map(FeedPageableResponse::fromEntity)
-		// 						.collect(Collectors.toList());
-
 		return page.map(FeedPageableResponse::fromEntity);
-
-		// for (Long blogId : searchBlogsByBlogWriterName) {
-		// 	List<Feed> blogFeeds = feedRepository.searchFeedsByBlog_BlogId(blogId);
-		// 	List<FeedSearchResponseDto> blogFeedResponses = blogFeeds.stream()
-		// 			.map(feed -> FeedSearchResponseDto
-		// 					.create(feed.getFeedId(),
-		// 							feed.getFeedUrl(),
-		// 							feed.getFeedTitle(),
-		// 							feed.getFeedContent()))
-		// 			.collect(Collectors.toList());
-		// 	feedResponseList.addAll(blogFeedResponses);
-		// }
 	}
 
 	@Transactional
