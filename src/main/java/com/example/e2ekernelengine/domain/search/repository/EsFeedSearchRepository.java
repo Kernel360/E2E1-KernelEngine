@@ -7,7 +7,7 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 
 import com.example.e2ekernelengine.domain.feed.db.entity.FeedDocument;
 
-public interface FeedSearchRepository extends ElasticsearchRepository<FeedDocument, String> {
+public interface EsFeedSearchRepository extends ElasticsearchRepository<FeedDocument, String> {
 
 	// List<FeedDocument> findByBlogTitle(String blogTitle, Pageable pageable);
 

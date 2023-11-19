@@ -13,7 +13,7 @@ import com.example.e2ekernelengine.domain.blog.db.repository.BlogJpaRepository;
 import com.example.e2ekernelengine.domain.feed.db.entity.Feed;
 import com.example.e2ekernelengine.domain.feed.db.repository.FeedRepository;
 import com.example.e2ekernelengine.domain.feed.dto.response.FeedPageableResponse;
-import com.example.e2ekernelengine.domain.search.repository.FeedSearchRepository;
+import com.example.e2ekernelengine.domain.search.repository.EsFeedSearchRepository;
 import com.example.e2ekernelengine.global.exception.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class FeedService {
 
 	private final BlogJpaRepository blogJpaRepository;
 
-	private final FeedSearchRepository feedSearchRepository;
+	private final EsFeedSearchRepository esFeedSearchRepository;
 
 	// TODO: @Autowired 대신 생성자 주입을 사용하자. 인줄 알ㄹ았는데 쓴 이유가 있으신지 물어보기
 	// TODO: 답변: 협의되기 전에 작성한 코드입니다. 리팩토링 주 때 통일시키는 작업 진행하도록 하겠습니다.
@@ -78,7 +78,7 @@ public class FeedService {
 			// 					.build();
 
 			feedRepository.save(feed);
-			feedSearchRepository.save(feedData.toDocument(blog, feed.getFeedId()));
+			esFeedSearchRepository.save(feedData.toDocument(blog, feed.getFeedId()));
 		}
 	}
 

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.e2ekernelengine.domain.feed.db.entity.FeedDocument;
 import com.example.e2ekernelengine.domain.search.dto.response.EsFeedPageableResponse;
-import com.example.e2ekernelengine.domain.search.repository.FeedSearchRepository;
+import com.example.e2ekernelengine.domain.search.repository.EsFeedSearchRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class EsSearchService {
 
-	private final FeedSearchRepository feedSearchRepository;
+	private final EsFeedSearchRepository esFeedSearchRepository;
 
 
 	/*public List<FeedPageableResponse> search(String keyword) {
@@ -30,7 +30,7 @@ public class EsSearchService {
 
 	public Page<EsFeedPageableResponse> searchFeedsByKeyword(String keyword, Pageable pageable) {
 
-		Page<FeedDocument> page = feedSearchRepository.searchFeedsByKeyword(
+		Page<FeedDocument> page = esFeedSearchRepository.searchFeedsByKeyword(
 				keyword, pageable);
 		return page.map(EsFeedPageableResponse::fromDocument);
 
