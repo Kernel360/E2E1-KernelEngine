@@ -3,7 +3,7 @@ package com.example.e2ekernelengine.domain.admin.service;
 import com.example.e2ekernelengine.domain.admin.dto.DateAndTotalUserCountDto;
 import com.example.e2ekernelengine.domain.admin.dto.MostVisitedFeedDto;
 import com.example.e2ekernelengine.domain.admin.dto.response.DailyTop10FeedListResponse;
-import com.example.e2ekernelengine.domain.admin.dto.response.UserCountResponse;
+import com.example.e2ekernelengine.domain.admin.dto.response.RegistrationCountResponse;
 import com.example.e2ekernelengine.domain.feed.db.repository.FeedRepository;
 import com.example.e2ekernelengine.domain.statistics.db.entity.FeedStatistics;
 import com.example.e2ekernelengine.domain.statistics.db.repository.DailyFeedStatisticsRepository;
@@ -35,7 +35,7 @@ public class AdminService {
 
 	private final DailyFeedStatisticsRepository dailyFeedStatisticsRepository;
 
-	public UserCountResponse getTotalUserCountByJpa() {
+	public RegistrationCountResponse getTotalUserCountByJpa() {
 		// TODO: 지난주부터 이번주까지 USer 기록을 꺼내온다.
 		LocalDateTime startDatetime = LocalDateTime.of(LocalDate.now().minusDays(14), LocalTime.of(0, 0, 0));
 		LocalDateTime endDatetime = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59));
@@ -69,7 +69,7 @@ public class AdminService {
 		return null;
 	}
 
-	public UserCountResponse getTotalUserCountByNativeQuery() {
+	public RegistrationCountResponse getTotalUserCountByNativeQuery() {
 		List<Object[]> result = userRepository.getCountAndDateInRangeOrdered();
 		LocalDate beforeOneWeek = LocalDate.now().minusDays(7);
 
@@ -96,7 +96,7 @@ public class AdminService {
 			}
 		}
 
-		return UserCountResponse.builder()
+		return RegistrationCountResponse.builder()
 						.thisWeekTotalUserCountList(thisWeeKUserCountList)
 						.lastWeekTotalUserCountList(lastWeekUserCountList)
 						.build();
@@ -115,5 +115,9 @@ public class AdminService {
 						.map(Optional::get)
 						.map(feed -> MostVisitedFeedDto.from(feed))
 						.collect(Collectors.toList());
+	}
+
+	public RegistrationCountResponse getDailyRegistrationCount(LocalDate date) {
+		return null;
 	}
 }
