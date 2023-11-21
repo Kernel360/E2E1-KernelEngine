@@ -1,7 +1,10 @@
 package com.example.modulebatch.feed.job;
 
+import com.example.e2ekernelengine.domain.feed.db.entity.Feed;
+import com.example.e2ekernelengine.domain.statistics.db.entity.FeedStatistics;
 import javax.persistence.EntityManagerFactory;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -17,50 +20,47 @@ import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.e2ekernelengine.domain.feed.db.entity.Feed;
-import com.example.modulebatch.feed.db.entity.FeedStatistics;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
 public class MakeFeedStatisticsJobConfig {
+
 	private final JobBuilderFactory jbf;
+
 	private final StepBuilderFactory sbf;
+
 	private final EntityManagerFactory emf;
 
 	@Bean
 	public Job makeStatisticsJob() {
 		Flow makeDailyStatisticsFlow = new FlowBuilder<Flow>("makeDailyStatisticsFlow")
-				.start(makeDailyVisitCountStep())
-				.build();
+						.start(makeDailyVisitCountStep())
+						.build();
 
 		return this.jbf.get("makeStatisticsJob")
-				.start(makeDailyStatisticsFlow)
-				.build()
-				.build();
+						.start(makeDailyStatisticsFlow)
+						.build()
+						.build();
 	}
 
 	@Bean
 	public Step makeDailyVisitCountStep() {
 		return sbf.get("makeDailyVisitCountStep")
-				.<Feed, FeedStatistics>chunk(20)
-				.reader(makeDailyVisitCountItemReader())
-				.processor(makeDailyVisitCountItemProcessor())
-				.writer(makeDailyVisitCountItemWriter())
-				.build();
+						.<Feed, FeedStatistics>chunk(20)
+						.reader(makeDailyVisitCountItemReader())
+						.processor(makeDailyVisitCountItemProcessor())
+						.writer(makeDailyVisitCountItemWriter())
+						.build();
 	}
 
 	@Bean
 	@StepScope
 	public JpaPagingItemReader<Feed> makeDailyVisitCountItemReader() {
 		return new JpaPagingItemReaderBuilder<Feed>()
-				.name("makeDailyVisitCountItemReader")
-				.entityManagerFactory(emf)
-				.queryString("select f from Feed f")
-				.build();
+						.name("makeDailyVisitCountItemReader")
+						.entityManagerFactory(emf)
+						.queryString("select f from Feed f")
+						.build();
 	}
 
 	@Bean
@@ -79,7 +79,7 @@ public class MakeFeedStatisticsJobConfig {
 	@StepScope
 	public JpaItemWriter<FeedStatistics> makeDailyVisitCountItemWriter() {
 		return new JpaItemWriterBuilder<FeedStatistics>()
-				.entityManagerFactory(emf)
-				.build();
+						.entityManagerFactory(emf)
+						.build();
 	}
 }

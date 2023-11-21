@@ -361,8 +361,11 @@ to get the desired effect
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
+        var currentDate = new Date();
+        var formattedDate = currentDate.toISOString().slice(0, 10);
+
         $.ajax({
-            url: `http://localhost:8080/api/v1/admin/user-count/query`,
+            url: `http://localhost:8080/api/v1/admin/registration-count/daily?date=` + formattedDate,
             method: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -373,12 +376,13 @@ to get the desired effect
 
                 var tableData = google.visualization.arrayToDataTable([
                     ['Date', '지난주', '이번주'],
-                    [thisWeek[0].date, lastWeek[0].totalUserCount, thisWeek[0].totalUserCount],
-                    [thisWeek[1].date, lastWeek[1].totalUserCount, thisWeek[1].totalUserCount],
-                    [thisWeek[2].date, lastWeek[2].totalUserCount, thisWeek[2].totalUserCount],
-                    [thisWeek[3].date, lastWeek[3].totalUserCount, thisWeek[3].totalUserCount],
-                    [thisWeek[4].date, lastWeek[4].totalUserCount, thisWeek[4].totalUserCount],
-                    [thisWeek[5].date, lastWeek[5].totalUserCount, thisWeek[5].totalUserCount]
+                    [thisWeek[0].date, lastWeek[0].totalRegistrationCount, thisWeek[0].totalRegistrationCount],
+                    [thisWeek[1].date, lastWeek[1].totalRegistrationCount, thisWeek[1].totalRegistrationCount],
+                    [thisWeek[2].date, lastWeek[2].totalRegistrationCount, thisWeek[2].totalRegistrationCount],
+                    [thisWeek[3].date, lastWeek[3].totalRegistrationCount, thisWeek[3].totalRegistrationCount],
+                    [thisWeek[4].date, lastWeek[4].totalRegistrationCount, thisWeek[4].totalRegistrationCount],
+                    [thisWeek[5].date, lastWeek[5].totalRegistrationCount, thisWeek[5].totalRegistrationCount],
+                    [thisWeek[6].date, lastWeek[6].totalRegistrationCount, thisWeek[6].totalRegistrationCount],
                 ]);
 
                 var options = {
