@@ -12,7 +12,10 @@ import com.example.e2ekernelengine.domain.feed.db.entity.Feed;
 @Repository
 public interface FeedRepository extends JpaRepository<Feed, Long> {
 
-	@Query("SELECT f FROM Feed f WHERE LOWER(f.feedTitle) LIKE %:keyword% OR LOWER(f.feedContent) LIKE %:keyword%")
+	@Query("select f from Feed f where lower(f.feedTitle) like lower(concat('%', :keyword, '%')) "
+			+ "or lower(f.feedContent) like lower(concat('%', :keyword, '%')) "
+			+ "or lower(f.feedDescription) like lower(concat('%', :keyword, '%'))"
+			+ "or lower(f.blog.blogWriterName) like lower(concat('%', :keyword, '%')) ")
 	Page<Feed> searchFeedsByKeyword(@Param("keyword") String keyword, Pageable request);
 
 	Page<Feed> findAll(Pageable request);
