@@ -14,7 +14,7 @@ public class UserRegisterStatistics {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long user_stat_id;
+	private Long userStatId;
 
 	@Column(name = "statistics_at", unique = true)
 	private LocalDateTime statisticsAt;
