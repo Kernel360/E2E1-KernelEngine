@@ -3,13 +3,14 @@ package com.example.e2ekernelengine.domain.admin.service;
 import com.example.e2ekernelengine.domain.admin.dto.DateAndTotalUserCountDto;
 import com.example.e2ekernelengine.domain.admin.dto.MostVisitedFeedDto;
 import com.example.e2ekernelengine.domain.admin.dto.response.DailyTop10FeedListResponse;
-import com.example.e2ekernelengine.domain.admin.dto.response.UserCountResponse;
+import com.example.e2ekernelengine.domain.admin.dto.response.RegistrationCountResponse;
 import com.example.e2ekernelengine.domain.feed.db.repository.FeedRepository;
 import com.example.e2ekernelengine.domain.statistics.db.entity.FeedStatistics;
+import com.example.e2ekernelengine.domain.statistics.db.entity.UserRegisterStatistics;
 import com.example.e2ekernelengine.domain.statistics.db.repository.DailyFeedStatisticsRepository;
+import com.example.e2ekernelengine.domain.statistics.db.repository.UserRegisterStatisticsRepository;
 import com.example.e2ekernelengine.domain.user.db.entity.User;
 import com.example.e2ekernelengine.domain.user.db.repository.UserRepository;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +37,9 @@ public class AdminService {
 
 	private final DailyFeedStatisticsRepository dailyFeedStatisticsRepository;
 
-	public UserCountResponse getTotalUserCountByJpa() {
+	private final UserRegisterStatisticsRepository userRegisterStatisticsRepository;
+
+	public RegistrationCountResponse getTotalUserCountByJpa() {
 		// TODO: 지난주부터 이번주까지 USer 기록을 꺼내온다.
 		LocalDateTime startDatetime = LocalDateTime.of(LocalDate.now().minusDays(14), LocalTime.of(0, 0, 0));
 		LocalDateTime endDatetime = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59));
@@ -69,7 +73,7 @@ public class AdminService {
 		return null;
 	}
 
-	public UserCountResponse getTotalUserCountByNativeQuery() {
+	public RegistrationCountResponse getTotalUserCountByNativeQuery() {
 		List<Object[]> result = userRepository.getCountAndDateInRangeOrdered();
 		LocalDate beforeOneWeek = LocalDate.now().minusDays(7);
 
@@ -86,17 +90,17 @@ public class AdminService {
 			if (date.isAfter(beforeOneWeek)) {
 				thisWeeKUserCountList.add(DateAndTotalUserCountDto.builder()
 								.date(date)
-								.totalUserCount((BigInteger) result.get(i)[0])
+								.totalRegistrationCount(3)
 								.build());
 			} else {
 				lastWeekUserCountList.add(DateAndTotalUserCountDto.builder()
 								.date(date)
-								.totalUserCount((BigInteger) result.get(i)[0])
+								.totalRegistrationCount(3)
 								.build());
 			}
 		}
 
-		return UserCountResponse.builder()
+		return RegistrationCountResponse.builder()
 						.thisWeekTotalUserCountList(thisWeeKUserCountList)
 						.lastWeekTotalUserCountList(lastWeekUserCountList)
 						.build();
@@ -115,5 +119,18 @@ public class AdminService {
 						.map(Optional::get)
 						.map(feed -> MostVisitedFeedDto.from(feed))
 						.collect(Collectors.toList());
+	}
+
+	public RegistrationCountResponse getDailyRegistrationCount(LocalDate date) {
+		List<UserRegisterStatistics> registrationCountList = userRegisterStatisticsRepository.findAllByStatisticsAtBetweenSort(
+						date.minusWeeks(2).atStartOfDay(), date.atTime(23, 59, 59));
+
+		LocalDateTime beforeOneWeek = LocalDate.now().minusDays(7).atTime(23, 59, 59);
+		Map<Boolean, List<DateAndTotalUserCountDto>> userCountByWeek = registrationCountList.stream()
+						.collect(Collectors.partitioningBy(data -> data.getStatisticsAt().isAfter(beforeOneWeek),
+										Collectors.mapping(data -> DateAndTotalUserCountDto.of(data.getStatisticsAt().toLocalDate(),
+														data.getRegisteredCount()), Collectors.toList())));
+
+		return RegistrationCountResponse.of(userCountByWeek.get(true), userCountByWeek.get(false));
 	}
 }
