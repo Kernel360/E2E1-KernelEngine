@@ -126,27 +126,11 @@ public class AdminService {
 						date.minusWeeks(2).atStartOfDay(), date.atTime(23, 59, 59));
 
 		LocalDateTime beforeOneWeek = LocalDate.now().minusDays(7).atTime(23, 59, 59);
-		//		List<DateAndTotalUserCountDto> thisWeeKUserCountList = new ArrayList<>();
-		//		List<DateAndTotalUserCountDto> lastWeekUserCountList = new ArrayList<>();
-		//
-		//		for (int i = 0; i < registrationCountList.size(); i++) {
-		//			UserRegisterStatistics data = registrationCountList.get(i);
-		//			if (data.getStatisticsAt().isAfter(beforeOneWeek)) {
-		//				thisWeeKUserCountList.add(
-		//								DateAndTotalUserCountDto.of(data.getStatisticsAt().toLocalDate(), data.getRegisteredCount()));
-		//			} else {
-		//				lastWeekUserCountList.add(
-		//								DateAndTotalUserCountDto.of(data.getStatisticsAt().toLocalDate(), data.getRegisteredCount()));
-		//			}
-		//		}
-		//		return RegistrationCountResponse.of(thisWeeKUserCountList, lastWeekUserCountList);
-
 		Map<Boolean, List<DateAndTotalUserCountDto>> userCountByWeek = registrationCountList.stream()
 						.collect(Collectors.partitioningBy(data -> data.getStatisticsAt().isAfter(beforeOneWeek),
 										Collectors.mapping(data -> DateAndTotalUserCountDto.of(data.getStatisticsAt().toLocalDate(),
 														data.getRegisteredCount()), Collectors.toList())));
 
 		return RegistrationCountResponse.of(userCountByWeek.get(true), userCountByWeek.get(false));
-
 	}
 }

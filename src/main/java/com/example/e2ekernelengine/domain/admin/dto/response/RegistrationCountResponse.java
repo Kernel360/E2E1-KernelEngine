@@ -18,4 +18,12 @@ public class RegistrationCountResponse {
 		this.thisWeekTotalUserCountList = thisWeekTotalUserCountList;
 		this.lastWeekTotalUserCountList = lastWeekTotalUserCountList;
 	}
+
+	public static RegistrationCountResponse of(List<DateAndTotalUserCountDto> thisWeekTotalUserCountList,
+					List<DateAndTotalUserCountDto> lastWeekTotalUserCountList) {
+		return RegistrationCountResponse.builder()
+						.thisWeekTotalUserCountList(thisWeekTotalUserCountList)
+						.lastWeekTotalUserCountList(lastWeekTotalUserCountList)
+						.build();
+	}
 }
