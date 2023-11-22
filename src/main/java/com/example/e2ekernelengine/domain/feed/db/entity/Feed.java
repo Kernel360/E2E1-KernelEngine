@@ -1,7 +1,7 @@
 package com.example.e2ekernelengine.domain.feed.db.entity;
 
-import com.example.e2ekernelengine.domain.blog.db.entity.Blog;
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.example.e2ekernelengine.domain.blog.db.entity.Blog;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
