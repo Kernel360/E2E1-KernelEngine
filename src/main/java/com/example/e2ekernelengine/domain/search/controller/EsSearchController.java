@@ -2,13 +2,12 @@ package com.example.e2ekernelengine.domain.search.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.example.e2ekernelengine.domain.search.dto.response.EsFeedPageableResponse;
 import com.example.e2ekernelengine.domain.search.service.EsSearchService;
@@ -16,30 +15,20 @@ import com.example.e2ekernelengine.domain.search.service.EsSearchService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @RequestMapping("api/v1/feeds")
 public class EsSearchController {
 
 	private final EsSearchService esSearchService;
-	
-	/*@GetMapping("/search/accurate")
-	public ResponseEntity<Page<EsFeedPageableResponse>> search(
-			@RequestParam(value = "q") String keyword,
-			Pageable pageable) {
-		Page<EsFeedPageableResponse> feedPage = esSearchService.searchFeedsByKeyword(keyword, pageable);
-		if (feedPage.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(feedPage);
-	}*/
 
 	@GetMapping("/search/accurate")
 	public String searchFeedBy(
 			@RequestParam(value = "q") String keyword,
-			@PageableDefault(size = 5, sort = "feedAccurate", direction = Sort.Direction.DESC) Pageable pageable,
+			@PageableDefault(size = 5) Pageable pageable,
 			Model model) {
 		Page<EsFeedPageableResponse> feedPage = esSearchService.searchFeedsByKeyword(keyword, pageable);
 		prepareModel(model, feedPage, keyword, "accurate");
+
 		return "searchResults";
 	}
 
