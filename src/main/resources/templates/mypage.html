@@ -29,11 +29,78 @@
 <body>
 <header th:replace="fragments :: nav"></header>
 
+<div>
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <tr>
+                            <th>
+                                <div class="form-floating mb-3">
+                                    <label for="blogRSS">RSS 주소</label>
+                                    <input class="form-control" id="blogRSS"
+                                           placeholder="rss 주소 ex) https://www.d2.naver.rss/atom"
+                                           required type="text">
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="form-floating mb-3">
+                                    <label for="blogWriterName">블로그 주인장 이름</label>
+                                    <input class="form-control" id="blogWriterName"
+                                           placeholder="블로그 주인장 이름 ex) 네이버" required type="text">
+                                </div>
+                            </th>
+
+                            <td>
+                                <button class="btn btn-block btn-primary" id="add-blog" type="button">등록
+                                </button>
+                            </td>
+                        </tr>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
 <form action="http://localhost:8080/deleteAccount" method="post">
     <input type="hidden">
     <button class="btn btn-block btn-primary" id="leave" type="submit">회원 탈퇴</button>
 </form>
+
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+
 <script>
+
+    $(document).ready(function () {
+        $('#add-blog').on('click', function () {
+            $.ajax({
+                url: 'http://localhost:8080/api/v1/blogs/user',
+                method: 'POST',
+                data: JSON.stringify({
+                    blogWriterName: $('#blogWriterName').val(),
+                    blogRssUrl: $('#blogRSS').val(),
+                }),
+                contentType: 'application/json',
+
+                success: function (response) {
+                    console.log('API 요청 성공', response);
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('API 요청 실패', error);
+                }
+            });
+        });
+    });
 
     document.addEventListener("DOMContentLoaded", function () {
         const leave = document.getElementById("leave");

@@ -3,24 +3,37 @@ package com.example.e2ekernelengine.domain.blog.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.Cookie;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.e2ekernelengine.crawler.service.CustomRssCrawler;
 import com.example.e2ekernelengine.domain.blog.db.entity.Blog;
 import com.example.e2ekernelengine.domain.blog.db.repository.BlogJpaRepository;
 import com.example.e2ekernelengine.domain.blog.db.repository.BlogRepository;
 import com.example.e2ekernelengine.domain.blog.dto.request.BlogRequestDto;
 import com.example.e2ekernelengine.domain.blog.dto.response.BlogResponseDto;
 import com.example.e2ekernelengine.domain.blog.util.BlogOwnerType;
+import com.example.e2ekernelengine.domain.user.db.entity.User;
+import com.example.e2ekernelengine.domain.user.db.repository.UserRepository;
+import com.example.e2ekernelengine.domain.user.dto.request.SaveUserBlogRequest;
+import com.example.e2ekernelengine.domain.user.token.service.TokenService;
 import com.example.e2ekernelengine.global.exception.ConflictException;
+import com.example.e2ekernelengine.global.exception.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BlogService {
 	private final BlogRepository blogRepository;
 	private final BlogJpaRepository blogJpaRepository;
+	private final UserRepository userRepository;
+	private final BlogCrawlerService blogCrawlerService;
+	private final TokenService tokenService;
 
 	// ComPany or Individual에 대한 로직 추가
 	// TODO: 등록하려는 블로그가 유효한 블로그인지 확인하는 로직 추가
@@ -61,4 +74,22 @@ public class BlogService {
 		return BlogResponseDto.fromEntity(blogRepository.deleteById(blogId));
 	}
 
+	@Transactional
+	public void saveUserBlog(Cookie[] cookies, SaveUserBlogRequest request) {
+		String userEmail = "";
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				log.debug("cookie name: {}, cookie value: {}", cookie.getName(), cookie.getValue());
+				String token = cookie.getValue();
+				log.debug("token: {}", token);
+				userEmail = tokenService.getUserEmail(token);
+				log.debug("userEmail: {}", userEmail);
+			}
+		}
+		User user = userRepository.findUserByUserEmail(userEmail)
+				.orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
+		blogCrawlerService.isExistBlogThrowException(request.getBlogRssUrl());
+		CustomRssCrawler customRssCrawler = new CustomRssCrawler(request.getBlogRssUrl(), BlogOwnerType.INDIVIDUAL, user);
+		customRssCrawler.crawl();
+	}
 }
