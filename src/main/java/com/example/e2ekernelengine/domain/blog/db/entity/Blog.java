@@ -32,6 +32,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Blog {
+
 	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
 	private final List<Feed> feedList = new ArrayList<>();
 
@@ -43,6 +44,9 @@ public class Blog {
 	@OneToOne
 	@JoinColumn(name = "user_id", columnDefinition = "BIGINT")
 	private User user;
+
+	@Column(name = "blog_title", columnDefinition = "VARCHAR(255)", nullable = false)
+	private String blogTitle;
 
 	@Column(name = "blog_writer_name", columnDefinition = "VARCHAR(50)")
 	private String blogWriterName;
@@ -67,10 +71,11 @@ public class Blog {
 	private Timestamp blogLastCrawlAt;
 
 	@Builder
-	public Blog(Long blogId, User user, String blogWriterName, String blogRssUrl, String blogUrl, String blogDescription,
-			String blogOwnerType, Timestamp blogLastBuildAt, Timestamp blogLastCrawlAt) {
+	public Blog(Long blogId, User user, String blogTitle, String blogWriterName, String blogRssUrl, String blogUrl,
+			String blogDescription, String blogOwnerType, Timestamp blogLastBuildAt, Timestamp blogLastCrawlAt) {
 		this.blogId = blogId;
 		this.user = user;
+		this.blogTitle = blogTitle;
 		this.blogWriterName = blogWriterName;
 		this.blogRssUrl = blogRssUrl;
 		this.blogUrl = blogUrl;
@@ -87,5 +92,41 @@ public class Blog {
 		} else {
 			this.blogLastCrawlAt = blogLastCrawlAt;
 		}
+	}
+
+	public static Blog of(User user, String blogTitle, String blogWriterName, String blogRssUrl, String blogUrl,
+			String blogDescription, BlogOwnerType blogOwnerType, Timestamp blogLastBuildAt, Timestamp blogLastCrawlAt) {
+		return Blog.builder()
+				.user(user)
+				.blogTitle(blogTitle)
+				.blogWriterName(blogWriterName)
+				.blogRssUrl(blogRssUrl)
+				.blogUrl(blogUrl)
+				.blogDescription(blogDescription)
+				.blogOwnerType(blogOwnerType.toString())
+				.blogLastBuildAt(blogLastBuildAt)
+				.blogLastCrawlAt(blogLastCrawlAt)
+				.build();
+	}
+
+	public static Blog of(Long blogId, User user, String blogTitle, String blogWriterName, String blogRssUrl,
+			String blogUrl, String blogDescription, BlogOwnerType blogOwnerType, Timestamp blogLastBuildAt,
+			Timestamp blogLastCrawlAt) {
+		return Blog.builder()
+				.blogId(blogId)
+				.user(user)
+				.blogTitle(blogTitle)
+				.blogWriterName(blogWriterName)
+				.blogRssUrl(blogRssUrl)
+				.blogUrl(blogUrl)
+				.blogDescription(blogDescription)
+				.blogOwnerType(blogOwnerType.toString())
+				.blogLastBuildAt(blogLastBuildAt)
+				.blogLastCrawlAt(blogLastCrawlAt)
+				.build();
+	}
+
+	public void updateLastCrawlAt() {
+		this.blogLastCrawlAt = new Timestamp(new Date().getTime());
 	}
 }

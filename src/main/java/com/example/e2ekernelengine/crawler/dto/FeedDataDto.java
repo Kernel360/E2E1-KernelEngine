@@ -35,6 +35,16 @@ public class FeedDataDto {
 		this.content = content;
 	}
 
+	public static FeedDataDto of(String link, String title, Timestamp pubDate, String description, String content) {
+		return FeedDataDto.builder()
+				.link(link)
+				.title(title)
+				.pubDate(pubDate)
+				.description(description)
+				.content(content)
+				.build();
+	}
+
 	public Feed toEntity(Blog blog) {
 		return Feed.builder()
 				.blog(blog)

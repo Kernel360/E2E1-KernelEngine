@@ -22,12 +22,13 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private static final Logger log = LoggerFactory.getLogger("USER_ACCOUNT_LOG");
+
 	private final UserService userService;
 
 	@PostMapping("/signup")
 	public String register(
 			@Valid
-			Optional<UserRegisterRequestDto> userRegisterRequestDto
+					Optional<UserRegisterRequestDto> userRegisterRequestDto
 	) {
 		log.info("register request | {}",
 				userRegisterRequestDto.get().getUserName() + " " + userRegisterRequestDto.get().getUserEmail() + " "

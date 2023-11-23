@@ -1,7 +1,7 @@
 package com.example.e2ekernelengine.domain.feed.db.entity;
 
-import com.example.e2ekernelengine.domain.blog.db.entity.Blog;
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.example.e2ekernelengine.domain.blog.db.entity.Blog;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +37,7 @@ public class Feed {
 	@Column(name = "feed_url", columnDefinition = "TEXT", nullable = false)
 	private String feedUrl;
 
-	@Column(name = "feed_title", columnDefinition = "VARCHAR(100)", nullable = false)
+	@Column(name = "feed_title", columnDefinition = "VARCHAR(255)", nullable = false)
 	private String feedTitle;
 
 	@Column(name = "feed_content", columnDefinition = "TEXT", nullable = false)
