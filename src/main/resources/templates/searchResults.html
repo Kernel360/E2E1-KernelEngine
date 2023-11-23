@@ -63,7 +63,7 @@
         <div class="form-group">
             <label for="sort-option">정렬 기준</label>
             <select class="form-control" id="sort-option">
-                <option th:selected="${selectedSortOption == 'accurate'}" value="clicked">정확도순</option>
+                <option th:selected="${selectedSortOption == 'accurate'}" value="accurate">정확도순</option>
                 <option th:selected="${selectedSortOption == 'recent'}" value="recent">최신순</option>
                 <option th:selected="${selectedSortOption == 'clicked'}" value="clicked">조회순</option>
             </select>
@@ -138,16 +138,18 @@
         $('#sort-option').on("change", function (event) {
             event.preventDefault();
 
-            const selectedOption = $(this).val();
+            const selectedSortOption = $(this).val();
             const queryParams = new URLSearchParams(window.location.search);
             const query = queryParams.get('q');
             console.log(query);
-            let url = '/api/v1/feeds/search/accurate?q=' + encodeURIComponent(query);
+            let url;
 
-            if (selectedOption === 'clicked') {
+            if (selectedSortOption === 'clicked') {
                 url = '/api/v1/feeds/search/clicked?q=' + encodeURIComponent(query);
-            } else if (selectedOption === 'recent') {
+            } else if (selectedSortOption === 'recent') {
                 url = '/api/v1/feeds/search/recent?q=' + encodeURIComponent(query);
+            } else {
+                url = '/api/v1/feeds/search/accurate?q=' + encodeURIComponent(query);
             }
 
             window.location.href = url;
@@ -190,12 +192,14 @@
             const selectedSortOption = sortOptionSelect.value;
 
             if (query) {
-                let url = "/api/v1/feeds/search/accurate?q=" + encodeURIComponent(query);
+                let url;
 
                 if (selectedSortOption === 'clicked') {
-                    url = "/api/v1/feeds/search/clicked?q=" + encodeURIComponent(query);
+                    url = '/api/v1/feeds/search/clicked?q=' + encodeURIComponent(query);
+                } else if (selectedSortOption === 'recent') {
+                    url = '/api/v1/feeds/search/recent?q=' + encodeURIComponent(query);
                 } else {
-                    url = "/api/v1/feeds/search/recent?q=" + encodeURIComponent(query);
+                    url = '/api/v1/feeds/search/accurate?q=' + encodeURIComponent(query);
                 }
 
                 window.location.href = url;
