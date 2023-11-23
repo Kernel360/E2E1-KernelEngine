@@ -1,21 +1,20 @@
-package com.example.modulebatch.user.db.entity;
+package com.example.e2ekernelengine.domain.statistics.db.entity;
 
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import lombok.Getter;
 
 @Entity
 @Getter
 public class UserRegisterStatistics {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long user_stat_id;
+	private Long userStatId;
 
 	@Column(name = "statistics_at", unique = true)
 	private LocalDateTime statisticsAt;

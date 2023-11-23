@@ -1,14 +1,11 @@
-package com.example.modulebatch.feed.db.entity;
+package com.example.e2ekernelengine.domain.statistics.db.entity;
 
+import com.example.e2ekernelengine.domain.feed.db.entity.Feed;
 import java.time.LocalDateTime;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.example.e2ekernelengine.domain.feed.db.entity.Feed;
-
 import lombok.Getter;
 import lombok.ToString;
 
@@ -16,10 +13,14 @@ import lombok.ToString;
 @Getter
 @ToString
 public class FeedStatistics {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long feedStatId;
+
+
 	private Long feedId;
+
 	private LocalDateTime statisticsAt;
 
 	private Integer visitCount;

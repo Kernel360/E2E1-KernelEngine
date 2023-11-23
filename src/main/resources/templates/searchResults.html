@@ -63,6 +63,7 @@
         <div class="form-group">
             <label for="sort-option">정렬 기준</label>
             <select class="form-control" id="sort-option">
+                <option th:selected="${selectedSortOption == 'accurate'}" value="clicked">정확도순</option>
                 <option th:selected="${selectedSortOption == 'recent'}" value="recent">최신순</option>
                 <option th:selected="${selectedSortOption == 'clicked'}" value="clicked">조회순</option>
             </select>
@@ -71,7 +72,7 @@
 </div>
 
 <div id="search-results">
-    <h1>검색 결과</h1>
+    <!--<h1>검색 결과</h1>-->
     <div class="container" id="feed-list-block">
         <form id="feed-list">
             <div th:each="feed : ${feedPage}">
@@ -79,25 +80,30 @@
                     /* feed 객체 정보를 콘솔에 출력 */
                     console.log([[${feed.feedUrl}]]);
                 </script>
-                <div class="row justify-content-md-center"
+                <div class="card-body"
                      onclick="redirectToFeedUrl('${feed.feedUrl}'); increaseDailyAccessCount('${feed.feedId}');">
-                    <div class="col-md-auto">
-                        <p id="feedId" style="display:none;" th:text="${feed.feedId}"></p>
-                        <p id="feedUrl" style="display:none;" th:text="${feed.feedUrl}"></p>
-
-                        <p id="feedTitle" th:text="'제목: ' + ${feed.feedTitle}"></p>
-                        <p id="blogWriterName" th:text="'작성자: ' + ${feed.blogWriterName}"></p>
-                        <p id="feedDescription" th:text="'내용: ' + ${feed.feedDescription}"></p>
-                        <p id="feedCreatedAt" th:text="'생성일: ' + ${feed.feedCreatedAt}"></p>
+                    <div class="post">
+                        <div class="user-block">
+                            <p id="feedId" style="display:none;" th:text="${feed.feedId}"></p>
+                            <p id="feedUrl" style="display:none;" th:text="${feed.feedUrl}"></p>
+                            <p id="feedTitle" style="font-size: 20px; font-weight: bold;"
+                               th:text="'제목: ' + ${feed.feedTitle}"></p>
+                            <p id="blogWriterName" th:text="'작성자: ' + ${feed.blogWriterName}"></p>
+                            <p id="feedCreatedAt" th:text="'생성일: ' + ${feed.feedCreatedAt}"></p>
+                            <p id="feedDescription" th:text="'내용: ' + ${feed.feedDescription}"></p>
+                        </div>
+                        <br>
                     </div>
                 </div>
                 <!--                </form>-->
             </div>
             <div class="container">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item" th:if="${feedPage.hasPrevious()}">
+                    <li class="page-item" th:if="${!feedPage.isFirst()}">
                         <a class="page-link"
-                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${feedPage.number - 1}, sort=${selectedSortOption})}">이전</a>
+                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=0, sort=${selectedSortOption})}">
+                            처음
+                        </a>
                     </li>
                     <li class="page-item" th:classappend="${pageNum == feedPage.number} ? 'active'"
                         th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
@@ -105,9 +111,11 @@
                            th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${pageNum}, sort=${selectedSortOption})}"
                            th:text="${pageNum + 1}"></a>
                     </li>
-                    <li class="page-item" th:if="${feedPage.hasNext()}">
+                    <li class="page-item" th:if="${!feedPage.isLast()}">
                         <a class="page-link"
-                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${feedPage.number + 1}, sort=${selectedSortOption})}">다음</a>
+                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${endPage - 1}, sort=${selectedSortOption})}">
+                            마지막
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -134,10 +142,12 @@
             const queryParams = new URLSearchParams(window.location.search);
             const query = queryParams.get('q');
             console.log(query);
-            let url = '/api/v1/feeds/search/recent?q=' + encodeURIComponent(query);
+            let url = '/api/v1/feeds/search/accurate?q=' + encodeURIComponent(query);
 
             if (selectedOption === 'clicked') {
                 url = '/api/v1/feeds/search/clicked?q=' + encodeURIComponent(query);
+            } else if (selectedOption === 'recent') {
+                url = '/api/v1/feeds/search/recent?q=' + encodeURIComponent(query);
             }
 
             window.location.href = url;
@@ -180,7 +190,8 @@
             const selectedSortOption = sortOptionSelect.value;
 
             if (query) {
-                let url;
+                let url = "/api/v1/feeds/search/accurate?q=" + encodeURIComponent(query);
+
                 if (selectedSortOption === 'clicked') {
                     url = "/api/v1/feeds/search/clicked?q=" + encodeURIComponent(query);
                 } else {

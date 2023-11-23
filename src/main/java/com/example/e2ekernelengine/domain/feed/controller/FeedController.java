@@ -47,7 +47,10 @@ public class FeedController {
 		return "searchResults";
 	}
 
-	private void prepareModel(Model model, Page<FeedPageableResponse> feedPage, String keyword,
+	private void prepareModel(
+			Model model,
+			Page<FeedPageableResponse> feedPage,
+			String keyword,
 			String selectedSortOption) {
 		int currentPage = feedPage.getNumber();
 		int totalPages = feedPage.getTotalPages();
