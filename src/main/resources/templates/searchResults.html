@@ -72,7 +72,7 @@
 </div>
 
 <div id="search-results">
-    <h1>검색 결과</h1>
+    <!--<h1>검색 결과</h1>-->
     <div class="container" id="feed-list-block">
         <form id="feed-list">
             <div th:each="feed : ${feedPage}">
@@ -99,9 +99,11 @@
             </div>
             <div class="container">
                 <ul class="pagination justify-content-center">
-                    <li class="page-item" th:if="${feedPage.hasPrevious()}">
+                    <li class="page-item" th:if="${!feedPage.isFirst()}">
                         <a class="page-link"
-                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${feedPage.number - 1}, sort=${selectedSortOption})}">이전</a>
+                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=0, sort=${selectedSortOption})}">
+                            처음
+                        </a>
                     </li>
                     <li class="page-item" th:classappend="${pageNum == feedPage.number} ? 'active'"
                         th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
@@ -109,9 +111,11 @@
                            th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${pageNum}, sort=${selectedSortOption})}"
                            th:text="${pageNum + 1}"></a>
                     </li>
-                    <li class="page-item" th:if="${feedPage.hasNext()}">
+                    <li class="page-item" th:if="${!feedPage.isLast()}">
                         <a class="page-link"
-                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${feedPage.number + 1}, sort=${selectedSortOption})}">다음</a>
+                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${endPage - 1}, sort=${selectedSortOption})}">
+                            마지막
+                        </a>
                     </li>
                 </ul>
             </div>
