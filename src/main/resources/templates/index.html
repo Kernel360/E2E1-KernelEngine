@@ -65,7 +65,7 @@
             </form>
             <div class="col-sm-2 offset-sm-10">
                 <div class="form-group">
-                    <label for="sort-option">정렬 기준</label>
+                    <label for="sort-option">Top 5 정렬 기준</label>
                     <select class="form-control" id="sort-option">
                         <!--<select class="form-control" id="sort-option" onchange="redirectToFeedUrl('${feed.feedUrl}')">-->
                         <option value="recent">최신순</option>
@@ -80,18 +80,21 @@
                 <div th:each="feed : ${feedPageableResponse}">
                     <div>
                         <form id="feed-box">
-                            <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">
+                            <div class="feed-block" onclick="redirectToFeedUrl('${feed.feedUrl}')">
                                 <div class="col-md-auto">
                                     <p id="feedId" style="display:none;">${feed.feedId}</p>
                                     <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>
 
-                                    <p id="feedTitle">제목: ${feed.feedTitle}</p>
+                                    <p id="feedTitle" style="font-size: 20px; font-weight: bold;">제목:
+                                        ${feed.feedTitle}</p>
                                     <p id="blogWriterName">작성자: ${feed.blogWriterName}</p>
                                     <p id="feedDescription">내용: ${feed.feedDescription}</p>
                                     <p id="feedCreatedAt">생성일: ${feed.feedCreatedAt}</p>
                                 </div>
                             </div>
+                            <br>
                         </form>
+                        <br>
                     </div>
                 </div>
             </form>
@@ -176,16 +179,19 @@
                 feedDiv.innerHTML = `
             <div>
                 <form id="feed-box">
-                    <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}'); increaseDailyAccessCount('${feed.feedId}');">
-                        <div class="col-md-auto">
-                                <p id="feedId" style="display:none;">${feed.feedId}</p>
-                                <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>
+                        <div class="feed-block" onclick="redirectToFeedUrl('${feed.feedUrl}')">
+                                <div class="col-md-auto">
+                                    <p id="feedId" style="display:none;">${feed.feedId}</p>
+                                    <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>
 
-                                <p id="feedTitle">제목: ${feed.feedTitle}</p>
-                                <p id="blogWriterName">작성자: ${feed.blogWriterName}</p>
-                                <p id="feedDescription">내용: ${feed.feedDescription}</p>
-                                <p id="feedCreatedAt">생성일: ${feed.feedCreatedAt}</p>
-                        </div>
+                                    <p id="feedTitle" style="font-size: 20px; font-weight: bold;">제목:
+                                        ${feed.feedTitle}</p>
+                                    <p id="blogWriterName">작성자: ${feed.blogWriterName}</p>
+                                    <p id="feedDescription">내용: ${feed.feedDescription}</p>
+                                    <p id="feedCreatedAt">생성일: ${feed.feedCreatedAt}</p>
+                                </div>
+                            </div>
+                            <br>
                     </div>
                 </form>
             </div>
