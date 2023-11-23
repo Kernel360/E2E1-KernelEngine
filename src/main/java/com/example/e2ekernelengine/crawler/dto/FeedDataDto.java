@@ -46,7 +46,6 @@ public class FeedDataDto {
 	}
 
 	public Feed toEntity(Blog blog) {
-		System.out.println("title: " + title);
 		return Feed.builder()
 				.blog(blog)
 				.feedUrl(link)

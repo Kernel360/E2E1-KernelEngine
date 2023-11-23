@@ -26,7 +26,7 @@ public class FeedStatistics {
 
 	public static FeedStatistics create(final Feed feed) {
 		FeedStatistics statistics = new FeedStatistics();
-		statistics.visitCount = feed.getVisitCount();
+		statistics.visitCount = feed.getFeedVisitCount();
 		statistics.feedId = feed.getFeedId();
 		statistics.statisticsAt = LocalDateTime.now().minusDays(1);
 		return statistics;
