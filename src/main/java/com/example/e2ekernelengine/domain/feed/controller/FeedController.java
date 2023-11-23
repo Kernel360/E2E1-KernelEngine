@@ -61,6 +61,7 @@ public class FeedController {
 		model.addAttribute("query", keyword);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("selectedSortOption", selectedSortOption);
 	}
 
