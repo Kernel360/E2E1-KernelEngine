@@ -14,16 +14,24 @@ public class BlogDataDto {
 	private final String rssLink;
 	private final String description;
 	private final Timestamp lastBuildDate;
-	private final Timestamp lastCrawlDate;
 
 	@Builder
-	public BlogDataDto(String title, String urlLink, String rssLink, String description, Timestamp lastBuildDate,
-			Timestamp lastCrawlDate) {
+	public BlogDataDto(String title, String urlLink, String rssLink, String description, Timestamp lastBuildDate) {
 		this.title = title;
 		this.urlLink = urlLink;
 		this.rssLink = rssLink;
 		this.lastBuildDate = lastBuildDate;
 		this.description = description;
-		this.lastCrawlDate = lastCrawlDate;
+	}
+
+	public static BlogDataDto of(String title, String urlLink, String rssLink, String description,
+			Timestamp lastBuildDate) {
+		return BlogDataDto.builder()
+				.title(title)
+				.urlLink(urlLink)
+				.rssLink(rssLink)
+				.description(description)
+				.lastBuildDate(lastBuildDate)
+				.build();
 	}
 }

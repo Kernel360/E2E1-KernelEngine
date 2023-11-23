@@ -21,6 +21,6 @@ public class E2eKernelEngineApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		// dataLoader.loadInitialData();
+		dataLoader.loadInitialData();
 	}
 }

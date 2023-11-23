@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.e2ekernelengine.DataLoader;
-import com.example.e2ekernelengine.crawler.service.RssCrawler;
+import com.example.e2ekernelengine.crawler.service.CustomRssCrawler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AddFeedFromBlogJobConfig {
 	private final JobBuilderFactory jbf;
 	private final StepBuilderFactory sbf;
-	private final RssCrawler rssCrawler;
+	private final CustomRssCrawler customRssCrawler;
 	// private final RssParser rssParser;
 	private final EntityManagerFactory emf;
 
@@ -39,7 +39,7 @@ public class AddFeedFromBlogJobConfig {
 		log.info("Step 시작");
 		return sbf.get("addFeedFromBlogStep")
 				.tasklet((contribution, chunkContext) -> {
-					DataLoader dataLoader = new DataLoader(rssCrawler);
+					DataLoader dataLoader = new DataLoader(customRssCrawler);
 					dataLoader.loadInitialData();
 					return RepeatStatus.FINISHED;
 				})
