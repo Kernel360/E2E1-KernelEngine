@@ -29,7 +29,6 @@ public class BatchJobScheduler {
 	private final MakeFeedStatisticsJobConfig makeFeedStatisticsJobConfig;
 	private final AddDailyRegisteredUserJobConfig addDailyRegisteredUserJobConfig;
 
-	// @Scheduled(initialDelay = 300000, fixedRate = 60000000)
 	@Scheduled(cron = "0 0 2 * * ?")
 	public void runMakeDailyFeedStatistics() {
 		Map<String, JobParameter> confMap = new HashMap<>();
@@ -59,7 +58,6 @@ public class BatchJobScheduler {
 		}
 	}
 
-	// @Scheduled(initialDelay = 600000, fixedRate = 300000000)
 	@Scheduled(cron = "0 0 4 * * ?")
 	public void runMakeUserStatistics() {
 		Map<String, JobParameter> confMap = new HashMap<>();
@@ -73,20 +71,5 @@ public class BatchJobScheduler {
 			log.error(String.valueOf(e));
 		}
 	}
-
 	// TODO:: 오래 지난 조회수 통계 기록 지우기 -> Backlog
-	// @Scheduled(initialDelay = 0, fixedRate = 60000000)
-	// // @Scheduled(cron = "0 0 3 * * ?")
-	// public void runDeleteDailyFeedStatistics() {
-	// 	Map<String, JobParameter> confMap = new HashMap<>();
-	// 	confMap.put("time", new JobParameter(System.currentTimeMillis()));
-	// 	JobParameters jobParameters = new JobParameters(confMap);
-	// 	try {
-	// 		jobLauncher.run(deleteDeprecatedFeedStatisticsJobConfig.deleteDeprecatedFeedStatisticsJob(), jobParameters);
-	// 	} catch (JobExecutionAlreadyRunningException | JobParametersInvalidException | JobInstanceAlreadyCompleteException |
-	// 					 JobRestartException e) {
-	// 		log.error(String.valueOf(e));
-	// 	}
-	// }
-
 }
