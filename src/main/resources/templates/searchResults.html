@@ -78,8 +78,10 @@
             <div th:each="feed : ${feedPage}">
                 <script th:inline="javascript">
                     /* feed 객체 정보를 콘솔에 출력 */
+                    console.log("dwjfhkdjh");
                     console.log([[${feed.feedUrl}]]);
                 </script>
+
                 <div class="card-body"
                      onclick="redirectToFeedUrl('${feed.feedUrl}'); increaseDailyAccessCount('${feed.feedId}');">
                     <div class="post">
@@ -128,7 +130,7 @@
 <script>
 
     $(document).ready(function () {
-        $(".row.justify-content-md-center").on("click", function () {
+        $(".card-body").on("click", function () {
             const feedUrl = $(this).find("#feedUrl").text();
             const feedId = $(this).find("#feedId").text();
             increaseDailyAccessCount(feedId);
@@ -154,7 +156,6 @@
 
             window.location.href = url;
         });
-
 
         function redirectToFeedUrl(feedUrl) {
             window.location.href = feedUrl;
