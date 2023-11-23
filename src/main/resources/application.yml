@@ -6,7 +6,7 @@ spring:
       database: mysql
       dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
 
   datasource:
     url: ${MYSQL_DATABASE_URL}

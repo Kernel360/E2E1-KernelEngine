@@ -7,19 +7,18 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class AbstractRssCrawler implements IRssCrawler {
+public abstract class AbstractRssCrawler implements RssCrawler {
 
-	// protected Document connectRSSUrlAndGetXML(String rssFeedUrl) {
-	// 	Document doc = null;
-	// 	try {
-	// 		doc = Jsoup.connect(rssFeedUrl).get();
-	// 	} catch (IOException e) {
-	// 		e.printStackTrace();
-	// 	}
-	// 	return doc;
+	// protected getBlogDataFromTag(Document doc, ) {
+	// 	Element element = doc.selectFirst("channel");
+	// 	String title = element.selectFirst("title").text();
+	// 	String urlLink = element.selectFirst("link").text();
+	// 	String description = element.selectFirst("description").text();
+	// 	String lastBuildDate = element.selectFirst("lastBuildDate").text();
 	// }
 
 	protected static Timestamp getTimestampFromDateStringWithDateFormat(String dateString, SimpleDateFormat dateFormat) {
