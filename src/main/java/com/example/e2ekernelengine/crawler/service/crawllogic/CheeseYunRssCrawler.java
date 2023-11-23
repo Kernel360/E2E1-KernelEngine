@@ -19,19 +19,20 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class EbayKoreaRssCrawler implements RssCrawler {
+public class CheeseYunRssCrawler implements RssCrawler {
 
-	private final String dateFormat = "EEE, dd MMM yyyy HH:mm:ss z";
+	private final String dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
 	@Override
 	public BlogDataDto getBlogData(Document document, String rssUrl) {
 		return RssCrawlerUtil.getBlogData(document, rssUrl, dateFormat,
-				BlogTagDto.of("channel", "title", "link", "description", "pubDate"));
+				BlogTagDto.of("feed", "title", "id", "subtitle", "updated"));
 	}
 
 	@Override
 	public List<FeedDataDto> getNewFeedList(Document document, Timestamp lastCrawlDate) {
 		return RssCrawlerUtil.getNewFeedList(document, lastCrawlDate, dateFormat,
-				FeedTagDto.of("item", "pubDate", "link", "title", "description", "content\\:encoded"));
+				FeedTagDto.of("entry", "published", "id", "title", "summary", "content"));
 	}
 }
+

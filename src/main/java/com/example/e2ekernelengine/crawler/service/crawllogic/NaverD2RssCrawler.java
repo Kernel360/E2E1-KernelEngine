@@ -19,20 +19,20 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class NonChannelRssCrawler implements RssCrawler {
+public class NaverD2RssCrawler implements RssCrawler {
 
 	private final String dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
 	@Override
 	public BlogDataDto getBlogData(Document document, String rssUrl) {
 		return RssCrawlerUtil.getBlogData(document, rssUrl, dateFormat,
-				BlogTagDto.of("feed", "title", "link", "subtitle", "updated"));
+				BlogTagDto.of("feed", "title", "id", "title", "updated"));
 	}
 
 	@Override
 	public List<FeedDataDto> getNewFeedList(Document document, Timestamp lastCrawlDate) {
 		return RssCrawlerUtil.getNewFeedList(document, lastCrawlDate, dateFormat,
-				FeedTagDto.of("entry", "published", "id", "title", "summary", "content"));
+				FeedTagDto.of("entry", "updated", "id", "title", "title", "content"));
 	}
 }
 

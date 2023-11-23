@@ -2,10 +2,11 @@ package com.example.e2ekernelengine.crawler.service;
 
 import org.jsoup.nodes.Document;
 
+import com.example.e2ekernelengine.crawler.service.crawllogic.ChannelPubDateRssCrawler;
 import com.example.e2ekernelengine.crawler.service.crawllogic.ChannelRssCrawler;
-import com.example.e2ekernelengine.crawler.service.crawllogic.EbayKoreaRssCrawler;
+import com.example.e2ekernelengine.crawler.service.crawllogic.CheeseYunRssCrawler;
+import com.example.e2ekernelengine.crawler.service.crawllogic.NaverD2RssCrawler;
 import com.example.e2ekernelengine.crawler.service.crawllogic.NonChannelRssCrawler;
-import com.example.e2ekernelengine.crawler.service.crawllogic.PosTypeRssCrawler;
 import com.example.e2ekernelengine.crawler.util.BeanUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +22,14 @@ public class RssCrawlerFactory {
 		String crawlerType = getCrawlerType(document);
 		if (crawlerType.equals("channel")) {
 			return (ChannelRssCrawler)BeanUtil.getBean(ChannelRssCrawler.class);
-		} else if (crawlerType.equals("nonChannel")) {
+		} else if (crawlerType.equals("non-channel")) {
 			return (NonChannelRssCrawler)BeanUtil.getBean(NonChannelRssCrawler.class);
-		} else if (crawlerType.equals("ebay-korea")) {
-			return (EbayKoreaRssCrawler)BeanUtil.getBean(EbayKoreaRssCrawler.class);
-		} else if (crawlerType.equals("postype")) {
-			return (PosTypeRssCrawler)BeanUtil.getBean(PosTypeRssCrawler.class);
+		} else if (crawlerType.equals("channel-pubdate")) {
+			return (ChannelPubDateRssCrawler)BeanUtil.getBean(ChannelPubDateRssCrawler.class);
+		} else if (crawlerType.equals("cheese-yun")) {
+			return (CheeseYunRssCrawler)BeanUtil.getBean(CheeseYunRssCrawler.class);
+		} else if (crawlerType.equals("naver-d2")) {
+			return (NaverD2RssCrawler)BeanUtil.getBean(NaverD2RssCrawler.class);
 		} else {
 			throw new RuntimeException("No crawler");
 		}
@@ -34,14 +37,18 @@ public class RssCrawlerFactory {
 
 	private static String getCrawlerType(Document document) {
 		String title = document.selectFirst("title").text();
-		if (title.equals("지마켓 기술블로그")) {
-			return "ebay-korea";
-		} else if (title.contains("포스타입 팀")) {
-			return "postype";
+		if (title.contains("Yun Blog")) {
+			return "cheese-yun";
+		} else if (title.contains("D2 Blog")) {
+			return "naver-d2";
 		} else if (document.selectFirst("channel") != null) {
-			return "channel";
+			if (document.selectFirst("lastBuildDate") != null) {
+				return "channel";
+			} else {
+				return "channel-pubdate";
+			}
 		} else if (document.selectFirst("feed") != null) {
-			return "nonChannel";
+			return "non-channel";
 		} else {
 			throw new RuntimeException("No crawler");
 		}

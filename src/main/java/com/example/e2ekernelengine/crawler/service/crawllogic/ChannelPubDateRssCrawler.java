@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class PosTypeRssCrawler implements RssCrawler {
+public class ChannelPubDateRssCrawler implements RssCrawler {
 	private final String dateFormat = "EEE, dd MMM yyyy HH:mm:ss z";
 
 	@Override
