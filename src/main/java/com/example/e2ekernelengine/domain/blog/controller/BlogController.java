@@ -2,9 +2,13 @@ package com.example.e2ekernelengine.domain.blog.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +22,7 @@ import com.example.e2ekernelengine.domain.blog.dto.request.SaveBlogRequest;
 import com.example.e2ekernelengine.domain.blog.dto.response.BlogResponseDto;
 import com.example.e2ekernelengine.domain.blog.service.BlogService;
 import com.example.e2ekernelengine.domain.blog.util.BlogOwnerType;
+import com.example.e2ekernelengine.domain.user.dto.request.SaveUserBlogRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -79,10 +84,14 @@ public class BlogController {
 				.accepted().body(deletedBlogDto);
 	}
 
-	// @PostMapping("/api/v1/user/blog")
-	// public void saveUserBlog(@RequestBody @Valid SaveUserBlogRequest request) {
-	// 	// TODO: UserId 뽑아내기
-	// 	Long userId = 1L;
-	// 	blogService.saveUserBlog(userId, request);
-	// }
+	@PostMapping("/user")
+	public void saveUserBlog(HttpServletRequest httpServletRequest, @RequestBody @Valid SaveUserBlogRequest request) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		// log.debug(authentication.getDetails().toString());
+		log.debug(authentication.getAuthorities().toString());
+		log.debug(authentication.getPrincipal().toString());
+
+		Cookie[] cookies = httpServletRequest.getCookies();
+		blogService.saveUserBlog(cookies, request);
+	}
 }

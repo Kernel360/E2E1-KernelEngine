@@ -40,7 +40,7 @@ public class Feed {
 	@Column(name = "feed_title", columnDefinition = "VARCHAR(255)", nullable = false)
 	private String feedTitle;
 
-	@Column(name = "feed_content", columnDefinition = "TEXT", nullable = false)
+	@Column(name = "feed_content", columnDefinition = "LONGTEXT", nullable = false)
 	private String feedContent;
 
 	@Column(name = "feed_created_at", columnDefinition = "TIMESTAMP", nullable = false)
