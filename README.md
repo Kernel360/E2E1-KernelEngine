@@ -22,24 +22,82 @@
 ![](docs/images/ke-function.png)
 ![](docs/images/ke-function-excel.png)
 
+### 팀 소개
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/cgk95">
+          <img src="https://avatars.githubusercontent.com/u/73059667?v=4" width="130px;" alt=""/>
+          <br /><sub><b>cgk95</b><br></sub>
+        </a>
+       </td>
+             <td align="center">
+        <a href="https://github.com/aacara">
+          <img src="https://avatars.githubusercontent.com/u/86637372?v=4" width="130px;" alt=""/>
+          <br /><sub><b>aacara</b><br></sub>
+        </a>
+       </td>
+      <td align="center">
+        <a href="https://github.com/anso33">
+          <img src="https://avatars.githubusercontent.com/u/68376744?s=400&u=23dc240688464522ead9b1fef7677b2196ce4704&v=4" width="130px;" alt=""/>
+          <br /><sub><b>anso33</b></sub>
+        </a>
+        <br />
+       </td>
+    </tr>
+    <tr>
+        <td align="center">
+        <sub><b>REST API <br>Batch Module <br> 서버 배포</b></sub>
+        </td>
+        <td align="center">
+        <sub><b>REST API <br>Spring Security <br>Search API</b></sub>
+        </td>
+        <td align="center">
+        <sub><b>REST API <br>Crawler</b></sub>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
 ### 기술 스택
 
-- Backend
-    - java 11
-    - springboot 2.7.17
-- Frontend
-    - css
-    - html
-    - thymeleaf
-- DB
-    - mysql
-    - elastic search
+#### Backend
+
+[![Java](https://img.shields.io/badge/Java-11-orange)](https://www.java.com)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7.17-brightgreen)](https://spring.io/projects/spring-boot)
+[![Spring Batch](https://img.shields.io/badge/Spring%20Batch-2.7.17-brightgreen)](https://spring.io/projects/spring-batch)
+[![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-2.7.17-brightgreen)](https://spring.io/projects/spring-data-jpa)
+
+#### Frontend
+
+[![CSS](https://img.shields.io/badge/CSS-3-blue)](https://www.w3.org/Style/CSS/)
+[![HTML](https://img.shields.io/badge/HTML-5-red)](https://html.spec.whatwg.org/)
+[![Thymeleaf](https://img.shields.io/badge/Thymeleaf-3.0.17-brightgreen)](https://www.thymeleaf.org/)
+[![Ajax](https://img.shields.io/badge/Ajax-2.7.17-brightgreen)](https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX)
+
+#### DB
+
+[![MySQL](https://img.shields.io/badge/MySQL-latest-blue)](https://www.mysql.com/)
+[![Elasticsearch](https://img.shields.io/badge/Elasticsearch-latest-blue)](https://www.elastic.co/)
+
+#### Others
+
+[![Docker](https://img.shields.io/badge/Docker-latest-blue)](https://www.docker.com/)
+[![Amazon EC2](https://img.shields.io/badge/Amazon%20EC2-latest-yellow)](https://aws.amazon.com/ec2/)
+[![Amazon RDS](https://img.shields.io/badge/Amazon%20RDS-latest-yellow)](https://aws.amazon.com/rds/)
+[![Jsoup](https://img.shields.io/badge/Jsoup-1.14.3-brightgreen)](https://jsoup.org/)
+[![Kibana](https://img.shields.io/badge/Kibana-latest-yellow)](https://www.elastic.co/kibana/)
 
 ### ERD
 
 ![](docs/images/ke-erd.png)
 
 ## 진행 상황
+
+<details open="">
+<summary>확인하기</summary>
 
 매주 2회 정도 스프린트 회의를 통해 전체적인 프로젝트의 진행상황 확인 중 매일 아침 스크럼을 통해 오늘 할일을 정리하고 목표 설정
 
@@ -126,37 +184,40 @@
 
 ### 4주차 TODO
 
-- [ ] 관리자 페이지
-    [ problem ] : 통계테이블을 주기적으로 만들어야 했음
-    - [ ] 일별 가입한 사용자 수 통계에 spring batch 적용하기 
-          -> spring batch 적용 완료
-          프론트 연결 못함
-    - [ ] 많이 접속된 게시글 통계
-          -> spring batch 적용 완료
-          프론트 연결 못함
+- [X] 관리자 페이지
+    - [x] 일별 가입한 사용자 수 통계에 spring batch 적용하기 -> spring batch 적용 완료
+    - [x] 많이 접속된 게시글 통계 -> spring batch 적용 완료
 
-- [ ] 검색 기능
+- [x] 검색 기능
     - [x] mysql 기반 API
         - [x] 조회순, 최신순 필터 적용하기
-    - [ ] elastic search 기반 API 만들기
-          `in progress`
-          elastic search에 feed data를 어떻게 저장해야 원하는 검색 결과를 얻을 수 있을지 학습 중
-        - [ ] 필터 적용까지
+    - [x] elastic search 기반 API 만들기
 
-- [ ] 가장 간단한 아키텍처 구조로 AWS에 서버 띄우기
-          `in progress`
-          멀티 모듈을 돌리는 것 + 사소한 설정(jar 파일 관리)에서 생긴 문제를 해결 중
-          차안으로 db와 application server를 docker container로 올리고 docker network로 연결하여 한번에 EC2로 올리는 방안을 고려 중
+        - elastic search에 feed data를 어떻게 저장해야 원하는 검색 결과를 얻을 수 있을지 학습 중
+        - [x] 필터 적용까지
+
+- [x] 가장 간단한 아키텍처 구조로 AWS에 서버 띄우기
+    - 멀티 모듈을 돌리는 것 + 사소한 설정(jar 파일 관리)에서 생긴 문제를 해결 중 차안으로 db와 application server를 docker container로 올리고 docker network로
+      연결하여 한번에 EC2로 올리는 방안을 고려 중
 
 ### 5주차 TODO
 
-- [ ] elastic search 기반 검색 API와 mysql 기반 search API 성능 비교하기
-      1. elastic search
-      2. mysql 의 like
-      3. mysql 의 n-gram 기반의 Full-Text 검색
+- [X] elastic search 기반 검색 API와 mysql 기반 search API 성능 비교하기 1. elastic search 2. mysql 의 like 3. mysql 의 n-gram 기반의
+  Full-Text 검색
 
 - [ ] 아키텍처 구조 리팩터링하기
     - 더 빠른 검색을 위한 엘라스틱 서치 아키텍처 구조
     - 멀티 모듈 분리하기
-    - 장애를 대비할 수 있는 아키텍처 구조 고민해보기 
-- [ ] 코드 리팩터링
+    - 장애를 대비할 수 있는 아키텍처 구조 고민해보기
+- [ ] 코드 리팩터링 -> `in progress`
+
+</details>
+
+## Architecture
+
+![architecture](docs/images/ke-architecture.png)
+
+##                          
+
+
+
