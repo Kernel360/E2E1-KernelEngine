@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.e2ekernelengine.crawler.dto.testRssBlogCrawlerDto;
-import com.example.e2ekernelengine.crawler.service.ChannelRssCrawler;
+import com.example.e2ekernelengine.crawler.service.crawllogic.ChannelRssCrawler;
 
 import lombok.RequiredArgsConstructor;
 

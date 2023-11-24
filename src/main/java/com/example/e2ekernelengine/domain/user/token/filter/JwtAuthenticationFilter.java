@@ -61,6 +61,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		addAuthenticationCookie(request, response, refreshToken, false);
 
 		response.sendRedirect("/");
+		/*String preLoginUrl = request.getParameter("preLoginUrl");
+		if (preLoginUrl != null && !preLoginUrl.isBlank()) {
+			response.sendRedirect(preLoginUrl);
+		} else {
+			response.sendRedirect("/");
+		}*/
 	}
 
 	private void addAuthenticationCookie(HttpServletRequest request, HttpServletResponse response, String token,

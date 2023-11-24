@@ -6,7 +6,7 @@ spring:
       database: mysql
       dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
 
   datasource:
     url: ${MYSQL_DATABASE_URL}
@@ -29,6 +29,8 @@ logging:
   level:
     com.example: debug
     org.springframework.security: debug
+    org.springframework.data.elasticsearch.client.WIRE: TRACE
+
 
 server:
   port: 8080

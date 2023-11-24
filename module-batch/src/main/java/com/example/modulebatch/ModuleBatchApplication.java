@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @EnableBatchProcessing
 @EnableScheduling
-// @SpringBootApplication
 @ComponentScan({"com.example.e2ekernelengine", "com.example.modulebatch"})
 public class ModuleBatchApplication {
 
