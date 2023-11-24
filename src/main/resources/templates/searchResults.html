@@ -56,68 +56,48 @@
         <img alt="mainLogo.png" class="img-fluid mb-4" id="logo" src="/assets/mainLogo.png">
         <div class="input-group mb-3">
             <input aria-describedby="search-button" aria-label="검색어 입력" class="form-control" id="search-input"
-                   name="q" placeholder="검색어를 입력하세요" th:value="${query}" type="text"/>
+                   name="query" placeholder="검색어를 입력하세요" type="text">
         </div>
     </form>
-    <div class="col-sm-2 offset-sm-10">
-        <div class="form-group">
-            <label for="sort-option">정렬 기준</label>
-            <select class="form-control" id="sort-option">
-                <option th:selected="${selectedSortOption == 'accurate'}" value="accurate">정확도순</option>
-                <option th:selected="${selectedSortOption == 'recent'}" value="recent">최신순</option>
-                <option th:selected="${selectedSortOption == 'clicked'}" value="clicked">조회순</option>
-            </select>
-        </div>
-    </div>
 </div>
 
 <div id="search-results">
-    <!--<h1>검색 결과</h1>-->
+    <h1>검색 결과</h1>
     <div class="container" id="feed-list-block">
         <form id="feed-list">
-            <div th:each="feed : ${feedPage}">
+            <div th:each="feed : ${feedList}">
+                <!--                <div>-->
+                <!--                    <form id="feed-box">-->
+                <!--                        <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">-->
+                <!--                            <div class="col-md-auto">-->
+                <!--                                <p id="feedId" style="display:none;">${feed.feedId}</p>-->
+                <!--                                <p id="feedUrl" style="display:none;">${feed.feedUrl}</p>-->
+
+                <!--                                <p id="feedTitle">제목: ${feed.feedTitle}</p>-->
+                <!--                                <p id="blogWriterName">작성자: ${feed.blogWriterName}</p>-->
+                <!--                                <p id="feedDescription">내용: ${feed.feedDescription}</p>-->
+                <!--                                <p id="feedCreatedAt">생성일: ${feed.feedCreatedAt}</p>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </form>-->
+                <!--                </div>-->
+                <!--                <form id="feed-box" th:action="@{/redirectToFeedUrl}" th:object="${feed}">-->
                 <script th:inline="javascript">
                     /* feed 객체 정보를 콘솔에 출력 */
                     console.log([[${feed.feedUrl}]]);
                 </script>
-                <div class="card-body"
-                     onclick="redirectToFeedUrl('${feed.feedUrl}'); increaseDailyAccessCount('${feed.feedId}');">
-                    <div class="post">
-                        <div class="user-block">
-                            <p id="feedId" style="display:none;" th:text="${feed.feedId}"></p>
-                            <p id="feedUrl" style="display:none;" th:text="${feed.feedUrl}"></p>
-                            <p id="feedTitle" style="font-size: 20px; font-weight: bold;"
-                               th:text="'제목: ' + ${feed.feedTitle}"></p>
-                            <p id="blogWriterName" th:text="'작성자: ' + ${feed.blogWriterName}"></p>
-                            <p id="feedCreatedAt" th:text="'생성일: ' + ${feed.feedCreatedAt}"></p>
-                            <p id="feedDescription" th:text="'내용: ' + ${feed.feedDescription}"></p>
-                        </div>
-                        <br>
+                <div class="row justify-content-md-center" onclick="redirectToFeedUrl('${feed.feedUrl}')">
+                    <div class="col-md-auto">
+                        <p id="feedId" style="display:none;" th:text="${feed.feedId}"></p>
+                        <p id="feedUrl" style="display:none;" th:text="${feed.feedUrl}"></p>
+
+                        <p id="feedTitle" th:text="'제목: ' + ${feed.feedTitle}"></p>
+                        <p id="blogWriterName" th:text="'작성자: ' + ${feed.blogWriterName}"></p>
+                        <p id="feedDescription" th:text="'내용: ' + ${feed.feedDescription}"></p>
+                        <p id="feedCreatedAt" th:text="'생성일: ' + ${feed.feedCreatedAt}"></p>
                     </div>
                 </div>
                 <!--                </form>-->
-            </div>
-            <div class="container">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" th:if="${!feedPage.isFirst()}">
-                        <a class="page-link"
-                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=0, sort=${selectedSortOption})}">
-                            처음
-                        </a>
-                    </li>
-                    <li class="page-item" th:classappend="${pageNum == feedPage.number} ? 'active'"
-                        th:each="pageNum : ${#numbers.sequence(startPage, endPage)}">
-                        <a class="page-link"
-                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${pageNum}, sort=${selectedSortOption})}"
-                           th:text="${pageNum + 1}"></a>
-                    </li>
-                    <li class="page-item" th:if="${!feedPage.isLast()}">
-                        <a class="page-link"
-                           th:href="@{/api/v1/feeds/search/{sort}(q=${query}, page=${endPage - 1}, sort=${selectedSortOption})}">
-                            마지막
-                        </a>
-                    </li>
-                </ul>
             </div>
         </form>
     </div>
@@ -129,80 +109,25 @@
 
     $(document).ready(function () {
         $(".row.justify-content-md-center").on("click", function () {
-            const feedUrl = $(this).find("#feedUrl").text();
-            const feedId = $(this).find("#feedId").text();
-            increaseDailyAccessCount(feedId);
+            var feedUrl = $(this).find("#feedUrl").text();
             redirectToFeedUrl(feedUrl);
         });
 
-        $('#sort-option').on("change", function (event) {
-            event.preventDefault();
-
-            const selectedSortOption = $(this).val();
-            const queryParams = new URLSearchParams(window.location.search);
-            const query = queryParams.get('q');
-            console.log(query);
-            let url;
-
-            if (selectedSortOption === 'clicked') {
-                url = '/api/v1/feeds/search/clicked?q=' + encodeURIComponent(query);
-            } else if (selectedSortOption === 'recent') {
-                url = '/api/v1/feeds/search/recent?q=' + encodeURIComponent(query);
-            } else {
-                url = '/api/v1/feeds/search/accurate?q=' + encodeURIComponent(query);
-            }
-
-            window.location.href = url;
-        });
-
-
         function redirectToFeedUrl(feedUrl) {
             window.location.href = feedUrl;
-        }
-
-        function increaseDailyAccessCount(feedId) {
-            const xhr = new XMLHttpRequest();
-            xhr.open(`POST`, `/api/v1/feeds/visit/` + feedId, true);
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        // 성공적으로 요청이 처리되었을 때의 로직
-                        console.log('Daily access count updated successfully.');
-                    } else {
-                        // 요청이 실패했을 때의 로직
-                        console.error('Failed to update daily access count.');
-                    }
-                }
-            };
-            xhr.send();
         }
     });
 
     document.addEventListener("DOMContentLoaded", function () {
         const searchForm = document.getElementById("search-form");
         const searchInput = document.getElementById("search-input");
-        const sortOptionSelect = document.getElementById("sort-option");
-
         console.log("addEventListener 동작 1")
         searchForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
             const query = searchInput.value;
-            const selectedSortOption = sortOptionSelect.value;
-
             if (query) {
-                let url;
-
-                if (selectedSortOption === 'clicked') {
-                    url = '/api/v1/feeds/search/clicked?q=' + encodeURIComponent(query);
-                } else if (selectedSortOption === 'recent') {
-                    url = '/api/v1/feeds/search/recent?q=' + encodeURIComponent(query);
-                } else {
-                    url = '/api/v1/feeds/search/accurate?q=' + encodeURIComponent(query);
-                }
-
-                window.location.href = url;
+                window.location.href = "/api/v1/feeds/search?q=" + encodeURIComponent(query);
             }
         });
     });

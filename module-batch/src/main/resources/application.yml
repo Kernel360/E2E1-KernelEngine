@@ -6,7 +6,7 @@ spring:
       database: mysql
       dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
 
   datasource:
     url: ${MYSQL_DATABASE_URL}
@@ -17,7 +17,6 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
-
 server:
   port: 8081
 

@@ -78,11 +78,4 @@ public class BlogController {
 		return ResponseEntity
 				.accepted().body(deletedBlogDto);
 	}
-
-	// @PostMapping("/api/v1/user/blog")
-	// public void saveUserBlog(@RequestBody @Valid SaveUserBlogRequest request) {
-	// 	// TODO: UserId 뽑아내기
-	// 	Long userId = 1L;
-	// 	blogService.saveUserBlog(userId, request);
-	// }
 }

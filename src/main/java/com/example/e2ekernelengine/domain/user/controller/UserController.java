@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private static final Logger log = LoggerFactory.getLogger("USER_ACCOUNT_LOG");
-
 	private final UserService userService;
 
 	@PostMapping("/signup")
@@ -34,9 +33,11 @@ public class UserController {
 				userRegisterRequestDto.get().getUserName() + " " + userRegisterRequestDto.get().getUserEmail() + " "
 						+ userRegisterRequestDto.get().getUserPassword());
 		UserResponseDto userResponseDto = userService.register(userRegisterRequestDto);
+		// System.out.println(userResponseDto);
 		log.info("request finished");
 		return "redirect:login";
 	}
+
 
 	@PostMapping("/deleteAccount")
 	public String deleteAccount(
